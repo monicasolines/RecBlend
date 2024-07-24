@@ -1,22 +1,37 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-from flask import Flask, request, jsonify, url_for, Blueprint
+import os
+from flask import Flask, request, jsonify, Blueprint
+from flask_cors import CORS
+from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from api.models import db, User
 from api.utils import generate_sitemap, APIException
-from flask_cors import CORS
 
 api = Blueprint('api', __name__)
+CORS(api)  # Enable CORS for this blueprint
 
-# Allow CORS requests to this API
-CORS(api)
+@api.route("/token", methods=["POST"])
+def create_token():
+    email = request.json.get("email", None)
+    password = request.json.get("password", None)
+    
+    if not email or not password:
+        return jsonify({"msg": "Email and password are required"}), 400
 
+    if email != "test" or password != "test":
+        return jsonify({"msg": "Bad username or password"}), 401
 
-@api.route('/hello', methods=['POST', 'GET'])
-def handle_hello():
+    access_token = create_access_token(identity=email)
+    return jsonify(access_token=access_token)
 
-    response_body = {
-        "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
+@api.route("/hello", methods=["GET"])
+@jwt_required()
+def get_hello():
+    # Get identity from JWT token
+    email = get_jwt_identity()
+    dictionary = {
+        "message": f"Hello world {email}"
     }
 
-    return jsonify(response_body), 200
+    return jsonify(dictionary)
