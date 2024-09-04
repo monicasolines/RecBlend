@@ -6,7 +6,9 @@ export const Navbar = () => {
     <div className="main-div">
       <h1>ThunderCats</h1>
 
+
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark"> {/* Dark background */}
+
         <div className="container-fluid">
           {/* Left Side */}
           <div
@@ -23,20 +25,6 @@ export const Navbar = () => {
               className="dropdown"
               style={{ marginRight: '15px' }}
             >
-              <button
-                className="btn btn-secondary dropdown-toggle"
-                type="button"
-                id="dropdownMenuButtonDark"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Categories
-              </button>
-              <ul className="dropdown-menu dropdown-menu-dark">
-                <li><a className="dropdown-item" id="actionGames" href="#">Action</a></li>
-                <li><a className="dropdown-item" id="roleplayingGames" href="#">RPG</a></li>
-                <li><a className="dropdown-item" id="strategy" href="#">Strategy</a></li>
-              </ul>
 
             </div>
             <button
