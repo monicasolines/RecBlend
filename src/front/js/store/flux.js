@@ -165,11 +165,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 
         },
         actions: {
-			filterGames: async(genre) => {
-				let options = {
+            filterGames: async (genre) => {
+                let options = {
                     headers: {
-						'X-RapidAPI-Host': 'free-to-play-games-database.p.rapidapi.com',
-        					'X-RapidAPI-Key': '2e240ebbcfmshe7dd173b3cb55d7p1e9497jsna56b128e8714',
+                        'X-RapidAPI-Host': 'free-to-play-games-database.p.rapidapi.com',
+                        'X-RapidAPI-Key': '2e240ebbcfmshe7dd173b3cb55d7p1e9497jsna56b128e8714',
                         "Content-Type": "application/json", // telling the server what type of data/request we're going to be sending
                     }
                 };
@@ -180,15 +180,58 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
                 let data = await response.json(); // will get the data out of the response
                 setStore({ games: data });
-				console.log(data, "Filter Games");
+                console.log(data, "Filter Games");
                 return true;
-			},
-            
-			fetchGames: async() => {
-				let options = {
+            },
+
+            addGamesToDb: async () => {
+                let store = getStore()
+                let resp = await fetch(process.env.BACKEND_URL + "api/add-games", {
+                    method: 'POST',
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(store.games)
+                })
+                if (!resp.ok) {
+                    console.log("Games were not added to the backend")
+                } else console.log("Games successfully added, check the backend")
+
+                // Once this fetch return the Array with games, call an API endpoint that will receive these games
+                // And store them in the backend
+                // POST REQUEST to backend and send games array, based on this you can then trigger backend endpoints
+                // with previously stored games from this fetch
+                // name, genre
+                // name, genre, release_date, image, description
+
+            },
+            getGames: async () => {
+                let options = {
                     headers: {
-						'X-RapidAPI-Host': 'free-to-play-games-database.p.rapidapi.com',
-        					'X-RapidAPI-Key': '2e240ebbcfmshe7dd173b3cb55d7p1e9497jsna56b128e8714',
+                        "Content-Type": "application/json", // telling the server what type of data/request we're going to be sending
+                    }
+                };
+                let response = await fetch(process.env.BACKEND_URL + "api/games", options);
+                if (response.status !== 200) {
+                    console.log("An Error Occurred While Trying to Load the Game", response.status);
+                    return false;
+                }
+                let data = await response.json(); // will get the data out of the response
+                console.log(data);
+                setStore({ games: data }); // games is FROM THE STORE above
+                return true;
+            },
+
+            fetchGames: async () => {
+                if (localStorage.getItem('gamesAdded')) {
+                    await getActions().getGames()
+                    console.log("Games have already been added.");
+
+                    return;
+                }
+
+                let options = {
+                    headers: {
+                        'X-RapidAPI-Host': 'free-to-play-games-database.p.rapidapi.com',
+                        'X-RapidAPI-Key': '2e240ebbcfmshe7dd173b3cb55d7p1e9497jsna56b128e8714',
                         "Content-Type": "application/json", // telling the server what type of data/request we're going to be sending
                     }
                 };
@@ -198,10 +241,27 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return false;
                 }
                 let data = await response.json(); // will get the data out of the response
-                setStore({ games: data });
-				console.log(data, "Fetch Games");
+                // setStore({ games: data });
+
+                let limitedGames = data.slice(0, 10);
+
+                let resp = await fetch(process.env.BACKEND_URL + "api/add-games", {
+                    method: 'POST',
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(limitedGames)
+                })
+                if (!resp.ok) {
+                    console.log("Games were not added to the backend")
+                } else {
+                    console.log("Games successfully added, check the backend")
+                    localStorage.setItem("gamesAdded", "true")
+                }
+                console.log(data, "Fetch Games");
+                await getActions().getGames()
                 return true;
-			},
+            },
+
+
 
             login: async (formData) => {
                 let options = {
@@ -219,7 +279,9 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.log("An Error Occurred while Signing in", response.status);
                     return false;
                 } else {
-                    console.log("Successfully Signed In", response.status);
+                    const data = await response.json()
+                    sessionStorage.setItem("token", data.token)
+                    console.log("Successfully Signed In", response.body);
                     return true;
                 }
             },
@@ -286,7 +348,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                 return true;
             },
 
-            addFavorites: async (newGameId) => {
+            addFavorites: async (newGameId, user) => {
+                console.log("clicked", user)
                 let options = {
                     method: 'POST',
                     headers: {
@@ -294,7 +357,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                         Authorization: "Bearer " + sessionStorage.getItem("token")
                     },
                     body: JSON.stringify({
-                        game_id: newGameId
+                        game_id: newGameId,
+                        user_id: user.id
                     })
                 };
                 let response = await fetch(process.env.BACKEND_URL + "api/favorites", options);
@@ -328,22 +392,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 return true;
             },
 
-            getGames: async () => {
-                let options = {
-                    headers: {
-                        "Content-Type": "application/json", // telling the server what type of data/request we're going to be sending
-                    }
-                };
-                let response = await fetch(process.env.BACKEND_URL + "api/games", options);
-                if (response.status !== 200) {
-                    console.log("An Error Occurred While Trying to Load the Game", response.status);
-                    return false;
-                }
-                let data = await response.json(); // will get the data out of the response
-                console.log(data);
-                setStore({ games: data }); // games is FROM THE STORE above
-                return true;
-            }
+
         }
     };
 };
