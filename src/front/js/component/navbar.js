@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export const Navbar = () => {
   return (
     <div className="main-div">
-      <h1>ThunderCats</h1>
+
 
 
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark"> {/* Dark background */}
@@ -18,9 +18,12 @@ export const Navbar = () => {
             <a
               className="btn btn-secondary"
               href="/"
-              style={{ marginRight: '15px', backgroundColor: '#6c757d', borderColor: '#6c757d' }}
+              style={{
+                marginRight: '15px', backgroundColor: 'inherit', borderColor: '#6c757d', padding: '10px 20px',
+                fontSize: '2.25rem',
+              }}
             >
-              Home
+              THUNDERCATS
             </a>
             <div
               className="dropdown"

@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 
 export const Footer = () => {
     return (
-        <footer className="footer mt-auto py-3 text-center bg-light">
-            <div className="container-flex">
-                <h3>subscribe to our email list</h3>
+        <footer className="footer mt-auto py-3 text-center bg-dark text-light">
+            <div className="container-fluid">
+                <h3>Subscribe to our email list</h3>
                 <div className="row justify-content-center">
                     <div className="col-6 col-md-3">
                         <input
