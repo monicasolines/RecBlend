@@ -13,13 +13,15 @@ const GameCard = () => {
     }, [])
     return (
         <>
-            {currentGame ? (<div className="container-fluid d-flex flex-wrap justify-content-center gap-3">
+            {currentGame ? (<div className="container-fluid d-flex flex-wrap justify-content-center gap-3 row">
                 <h1>{currentGame?.title}</h1>
                 <img
                     src={currentGame?.thumbnail}
                     className="card-img-top"
                     alt="..."
+                    style={{width: "50rem"}}
                 />
+                <div className="text-center text-light">
                 <p>{currentGame?.genre}</p>
                 <p>{currentGame?.short_description}</p>
                 <p>{currentGame?.release_date}</p>
@@ -27,6 +29,7 @@ const GameCard = () => {
                 <p>{currentGame?.developer}</p>
                 <p>{currentGame?.publisher}</p>
                 <a>{currentGame?.game_url}</a>
+                </div>
             </div>) : (<div class="d-flex justify-content-center">
                 <div class="spinner-border" role="status">
                     <span class="visually-hidden">Loading...</span>
