@@ -1,7 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { DisplayOrNone } from "./conditional_renderers";
+import { Context } from "../store/appContext";
+import { useContext } from "react";
+
 
 export const Navbar = () => {
+  const {store} = useContext(Context)
   return (
     <div className="main-div">
 
@@ -15,28 +20,30 @@ export const Navbar = () => {
             className="left-div"
             style={{ display: 'flex', alignItems: 'center' }}
           >
-            <a
+            <Link
               className="btn btn-secondary"
-              href="/"
+
+              to="/"
               style={{
                 marginRight: '15px', backgroundColor: 'inherit', borderColor: '#6c757d', padding: '10px 20px',
                 fontSize: '2.25rem',
               }}
             >
-              THUNDERCATS
-            </a>
+              Home
+            </Link>
             <div
               className="dropdown"
               style={{ marginRight: '15px' }}
             >
 
             </div>
-            <button
+            <Link
               className="btn btn-secondary"
+              to="/favorites"
               style={{ marginRight: '15px', backgroundColor: '#6c757d', borderColor: '#6c757d' }}
             >
               Favorites
-            </button>
+            </Link>
           </div>
 
           {/* Right Side */}

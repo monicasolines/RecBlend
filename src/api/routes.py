@@ -210,7 +210,12 @@ def add_games():
             genre = game.get('genre'),
             short_description = game.get('short_description'),
             thumbnail = game.get('thumbnail'),
-            game_url = game.get('game_url')
+            game_url = game.get('game_url'),
+            publisher = game.get('publisher'),
+            release_date = game.get('release_date'),
+            platform = game.get("platform"),
+            developer = game.get("developer")
+
         )
         games_to_add.append(new_game)
 

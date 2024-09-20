@@ -46,7 +46,11 @@ class Game(db.Model):
     genre = db.Column(db.String(1024), unique = False, nullable = False) 
     thumbnail = db.Column(db.String(1024), unique = False, nullable = False) 
     short_description = db.Column(db.String(1024), unique = False, nullable = False) 
-    game_url = db.Column(db.String(1024), unique = False, nullable = False) 
+    publisher = db.Column(db.String(128), unique = False, nullable = False)
+    game_url = db.Column(db.String(1024), unique = False, nullable = True) 
+    release_date = db.Column(db.String(1024), unique = False, nullable = True) 
+    developer = db.Column(db.String(1024), unique = False, nullable = True) 
+    platform = db.Column(db.String(1024), unique = False, nullable = True) 
     # thumbnail, short_description, game_url
     favorited_by = db.relationship('Favorite', back_populates='game', cascade='all, delete-orphan')
     # add an images column and return it in on like 57 in the serialize
@@ -61,7 +65,10 @@ class Game(db.Model):
             "thumbnail": self.thumbnail,
             "short_description": self.short_description,
             "game_url": self.game_url,
-
+            "publisher": self.publisher,
+            "release_date":self.release_date,
+            "developer": self.developer,
+            "platform": self.platform
             #"image": self.image
         }
 

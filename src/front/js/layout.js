@@ -11,6 +11,7 @@ import { Login } from "./pages/login";
 import { ContactUs } from "./pages/ContactUs";
 import injectContext from "./store/appContext";
 import GameCard from "./component/IndividualCardView";
+import { Favorites } from "./pages/favorites";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
@@ -27,7 +28,7 @@ const Layout = () => {
                     <Navbar />
                     <Routes>
                         <Route element={<Home />} path="/" />
-                        {/* <Route element={<Favorites />} path="/favorites" /> */}
+                        <Route element={<Favorites />} path="/favorites" />
                         <Route element={<SignUp />} path="/signup" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<Single />} path="/single/:theid" />
