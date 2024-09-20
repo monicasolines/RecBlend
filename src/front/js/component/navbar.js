@@ -9,7 +9,7 @@ export const Navbar = () => {
   const {store} = useContext(Context)
   return (
     <div className="main-div">
-      <h1>ThunderCats</h1>
+
 
 
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark"> {/* Dark background */}
@@ -22,8 +22,12 @@ export const Navbar = () => {
           >
             <Link
               className="btn btn-secondary"
+
               to="/"
-              style={{ marginRight: '15px', backgroundColor: '#6c757d', borderColor: '#6c757d' }}
+              style={{
+                marginRight: '15px', backgroundColor: 'inherit', borderColor: '#6c757d', padding: '10px 20px',
+                fontSize: '2.25rem',
+              }}
             >
               Home
             </Link>
