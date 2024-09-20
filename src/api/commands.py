@@ -50,6 +50,10 @@ def setup_commands(app):
                 thumbnail=game.get("thumbnail"),
                 short_description=game.get("short_description"),
                 game_url=game.get("game_url"),
+                publisher = game.get("publisher"),
+                release_date = game.get("release_date"),
+                platform = game.get("platform"),
+                developer = game.get("developer")
             ))
         db.session.commit()
 
