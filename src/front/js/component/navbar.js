@@ -7,6 +7,8 @@ import { useContext } from "react";
 
 export const Navbar = () => {
   const {store} = useContext(Context)
+  console.log("USER: ", store.user)
+  const isLoggedIn = () => store.user !== null;
   return (
     <div className="main-div">
 
@@ -47,6 +49,9 @@ export const Navbar = () => {
           </div>
 
           {/* Right Side */}
+          {store.user && (
+            <h1 className="text-danger">Welcome {store.user?.email}</h1>
+          )}
           <div className="right-div" style={{ display: 'flex', alignItems: 'center' }}>
             <Link
               to="/signup"
@@ -57,8 +62,11 @@ export const Navbar = () => {
             </Link>
             <Link
               to="/Login" className="btn btn-secondary"
-              style={{ backgroundColor: '#6c757d', borderColor: '#6c757d' }}>
-              Login
+              style={{ backgroundColor: '#6c757d', borderColor: '#6c757d' }}
+              // onClick={setFavorite}>
+              //   {addFavorite ? "Remove from Favorites" : "Add to Favorites"}
+                >
+              {isLoggedIn() ? "Logout" : "Login"}
             </Link>
           </div>
         </div>

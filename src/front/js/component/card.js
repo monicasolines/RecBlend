@@ -30,7 +30,7 @@ export const Card = (props) => {
   return (
     <div className="card bg-dark text-white" style={{ width: "15rem" }}>
       {/* onClick={() => { navigate(`/game/${id}`) }} */}
-      <Link to={`/game/${id}`}>
+      <Link to={`/game/${game_id}`}>
         <img
           src={imgurl}
           className="card-img-top"
@@ -38,7 +38,7 @@ export const Card = (props) => {
         />
       </Link>
       <div className="card-body">
-        <Link to={`/game/${id}`}>
+        <Link to={`/game/${game_id}`}>
           <h5 className="card-title">
             {title}
           </h5>

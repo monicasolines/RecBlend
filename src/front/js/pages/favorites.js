@@ -9,7 +9,6 @@ export const Favorites = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    // 
     const getUser = async () => {
       setIsLoading(true);
       await actions.getUser();
@@ -24,7 +23,7 @@ export const Favorites = () => {
         <div className="container-fluid d-flex flex-wrap justify-content-center gap-3">
           {store.games.filter(
             // This is kinda gory, ngl.
-            game => store.user?.favorite_game?.map(fav => fav.id).includes(game.id)
+            game => store.user?.favorite_game?.map(fav => fav.game_id).includes(game.id)
           ).map((game, index) => (
             <Card
               game_id={game.id}
