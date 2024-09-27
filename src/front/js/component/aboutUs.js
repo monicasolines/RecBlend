@@ -63,6 +63,7 @@ export const AboutUs = () => {
                 <h1 className="card-title">Kayla Wilson</h1>
                 <p className="card-text">Person who came up with name "Team Thundercats"</p>
                 <p className="card-text">Component creator</p>
+                <p className="card-text">HTML Wiz</p>
                 <p className="card-text">Voted Most Likely to End up on a Spaceship</p>
             </div>
         </div>
