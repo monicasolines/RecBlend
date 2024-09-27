@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import { DisplayOrNone } from "./conditional_renderers";
 import { Context } from "../store/appContext";
 import { useContext } from "react";
-
+import Gamepedia from "../../img/Gamepedia.png"
 
 export const Navbar = () => {
-  const {store} = useContext(Context)
+  const { store } = useContext(Context)
   console.log("USER: ", store.user)
   const isLoggedIn = () => store.user !== null;
   return (
@@ -20,18 +20,18 @@ export const Navbar = () => {
           {/* Left Side */}
           <div
             className="left-div"
-            style={{ display: 'flex', alignItems: 'center' }}
+            style={{ display: 'flex', alignItems: 'center', border: 'none' }}
           >
             <Link
               className="btn btn-secondary"
 
               to="/"
               style={{
-                marginRight: '15px', backgroundColor: 'inherit', borderColor: '#6c757d', padding: '10px 20px',
-                fontSize: '2.25rem',
+                marginRight: '15px',  padding: '10px 20px',
+                fontSize: '2.25rem', height:'100px', width: '200px'
               }}
             >
-              Home
+              <img src={Gamepedia} alt="Gamepedia Logo" style={{  width: '200px', height: '125px', margin: '-25px' }} />
             </Link>
             <div
               className="dropdown"
@@ -63,9 +63,9 @@ export const Navbar = () => {
             <Link
               to="/Login" className="btn btn-secondary"
               style={{ backgroundColor: '#6c757d', borderColor: '#6c757d' }}
-              // onClick={setFavorite}>
-              //   {addFavorite ? "Remove from Favorites" : "Add to Favorites"}
-                >
+            // onClick={setFavorite}>
+            //   {addFavorite ? "Remove from Favorites" : "Add to Favorites"}
+            >
               {isLoggedIn() ? "Logout" : "Login"}
             </Link>
           </div>
