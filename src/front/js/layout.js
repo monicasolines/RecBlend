@@ -19,6 +19,7 @@ import { RegistrationForm } from "./pages/registration_form.jsx";
 import { GenreSelection } from "./pages/genre_selection.jsx";
 import { CreateSession } from "./pages/create-session.jsx";
 import { Session } from "./pages/session.jsx";
+import { About } from "./pages/about.jsx";
 
 //create your first component
 const Layout = () => {
@@ -37,6 +38,7 @@ const Layout = () => {
           <Routes>
             <Route element={<Home />} path="/" />
             <Route element={<Login />} path="/login" />
+            <Route element={<About />} path="/about" />
             <Route element={<AgeVerification />} path="/age-verification" />
             <Route element={<Profile />} path="/profile" />
             <Route element={<Search />} path="/search" />
