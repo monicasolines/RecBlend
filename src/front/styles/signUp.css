@@ -1,0 +1,61 @@
+.divPrincipalLogin {
+    background-color: #f0f4f8;
+    width: 450px;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin: auto;
+    margin-top: 48px;
+}
+
+.centerContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.contenedor-password2 {
+    position: relative;
+    width: 100%;
+}
+
+.contenedor-password2 input {
+    width: 100%;
+    padding-right: 40px; 
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.contenedor-password2 .icon, 
+.contenedor-password2 .icon2 {
+    position: absolute;
+    right: 10px; 
+    top: 50%;
+    transform: translateY(-50%); 
+    cursor: pointer;
+    color: #888;
+    font-size: 18px;
+}
+
+#emailForm {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.btn-custom {
+    background-color: #6c63ff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+.btn-custom:hover {
+    background-color: #5a54d6;
+}

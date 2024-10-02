@@ -1,0 +1,17 @@
+#navbar1 {
+    background-color: #6c63ff;
+    padding: 15px;
+    text-align: center;
+}
+
+#button3 {
+    color: #ffffff;
+    background-color: rgba(207, 202, 219, 0.5);
+    margin-right: 10px;
+}
+
+#title {
+    margin-left: 10px;
+    color: #ffffff;
+    font-weight: bold;
+}
