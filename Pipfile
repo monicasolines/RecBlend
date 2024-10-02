@@ -19,7 +19,10 @@ cloudinary = "*"
 flask-admin = "*"
 typing-extensions = "*"
 flask-jwt-extended = "*"
+<<<<<<< HEAD
 alembic = "*"
+=======
+>>>>>>> 8c9abea63ebc5b91011e59735e4a59e27d3e64ee
 
 [requires]
 python_version = "3.10"
