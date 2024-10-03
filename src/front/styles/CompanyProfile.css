@@ -1,0 +1,90 @@
+.company-profile {
+    font-family: 'Arial', sans-serif;
+}
+
+.company-header {
+    position: relative;
+    width: 100%; 
+    max-width: 1000px;
+    margin: 0 auto; 
+}
+
+.company-header-bg {
+    width: 100%; 
+    height: 50%; 
+    object-fit: cover;
+    border-radius: 10px 10px 0 0; 
+    max-height: 150px; 
+    min-height: 100px; 
+    cursor: pointer;
+}
+
+.company-info {
+    display: flex;
+    align-items: center;
+    margin-top: -75px; 
+    padding: 20px;
+    background-color: white;
+    border-radius: 0 0 10px 10px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.company-info-logo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 5px solid white;
+    object-fit: cover;
+    margin-right: 20px;
+}
+
+.company-info-details {
+    flex-grow: 1;
+}
+
+.company-info-name {
+    font-size: 24px;
+}
+
+.company-info-tagline {
+    font-style: italic;
+    color: #555;
+}
+
+.company-info-location {
+    position: relative;
+    bottom: 10px;
+    color: #777;
+}
+
+.company-description, .company-careers, .company-extra {
+    margin: 20px auto;
+    max-width: 1000px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.company-description-title, 
+.company-careers-title, 
+.company-extra-title {
+    margin-bottom: 10px;
+    font-size: 20px;
+    color: #333;
+}
+
+.company-description-text, 
+.company-careers-text {
+    color: #555;
+}
+
+.company-extra-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.company-extra-item {
+    margin-bottom: 8px;
+    color: #555;
+}

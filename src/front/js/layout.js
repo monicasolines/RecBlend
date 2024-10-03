@@ -5,7 +5,7 @@ import { BackendURL } from "./component/backendURL";
 import { Context } from "../../front/js/store/appContext"
 import { Single } from "./pages/single";
 import { Userview } from "./pages/UserView";
-import { Companyview } from "./pages/CompanyView";
+import { CompanyProfile } from "./pages/CompanyProfile.jsx";
 import injectContext from "./store/appContext";
 import { Inicio } from "./pages/inicio"
 import { Contact } from "./pages/contact"
@@ -52,7 +52,7 @@ const Layout = () => {
                         <Route element={<FormOffer />} path="/formoffer" />
                         <Route element={<Userview />} path="/Userview" />
                         <Route element={<Form_Contact_Postulados />} path="/Form_Contact_Postulados/:id_programador" />
-                        <Route element={<Companyview />} path="/Companyview" />
+                        <Route element={<CompanyProfile />} path="/companyprofile" />
                         <Route element={<PreguntasFrecuentes />} path="/preguntasfrecuentes" />
                         <Route element={<SingleOffer />} path="/singleoffer/:id" />
                         <Route element={<FavoritosPage />} path="/favoritosPage" />
