@@ -1,3 +1,4 @@
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
@@ -30,9 +31,9 @@ class Vehiculo(db.Model):
     kilometraje = db.Column(db.Float, nullable=False)
     fallas = db.Column(db.String(200), nullable=False)
     capture_DTC = db.Column(db.String(100), nullable=False)
-    solución = db.Column(db.String(200), nullable=False)
+    solución = db.Column(db.String(300), nullable=False)
     técnico_id = db.Column(db.Integer)
-    #técnico = db.relationship('Usuario', backref='vehiculos')
+    técnico = db.relationship('Usuario', backref='vehiculos')
     fecha_ingreso = db.Column(db.Date, nullable=False)
     fecha_salida = db.Column(db.Date)
     costo_reparación = db.Column(db.Float)
@@ -40,7 +41,7 @@ class Vehiculo(db.Model):
 class Reparación(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     vehículo_id = db.Column(db.Integer,)
-    #vehículo = db.relationship('Vehiculo', backref='reparaciones')
+    vehículo = db.relationship('Vehiculo', backref='reparaciones')
     fecha_reparación = db.Column(db.Date, nullable=False)
     costo_reparación = db.Column(db.Float, nullable=False)
     monto_cancelado_cliente = db.Column(db.Float)
@@ -52,7 +53,7 @@ class Reparación(db.Model):
 class Reporte(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     vehículo_id = db.Column(db.Integer)
-   # vehículo = db.relationship('Vehiculo', backref='reportes')
+    vehículo = db.relationship('Vehiculo', backref='reportes')
     fecha_reporte = db.Column(db.Date, nullable=False)
     contenido_reporte = db.Column(db.String(500), nullable=False)
 
