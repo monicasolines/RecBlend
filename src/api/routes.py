@@ -15,39 +15,63 @@ CORS(api)
 @api.route('/usuarios', methods=['GET'])
 def get_usuarios():
     usuarios = Usuario.query.all()
-    return jsonify([u.serialize() for u in usuarios])
+    if usuarios == []:
+        return jsonify({"MSG":"No existen usuarios"}), 404
+    return jsonify([u.serialize() for u in usuarios]), 200
 
-# @api.route('/usuarios', methods=['POST'])
-# def crear_usuario():
-#     datos = request.json
-#     usuario = Usuario(nombre=datos['nombre'], apellido=datos['apellido'], email=datos['email'], contraseña=generate_password_hash(datos['contraseña']), rol=datos['rol'])
-#     db.session.add(usuario)
-#     db.session.commit()
-#     return jsonify({'mensaje': 'Usuario creado exitosamente'}), 201
+@api.route('/usuarios', methods=['POST'])
+def crear_usuario():
+    datos = request.json
+    exist_user = Usuario.query.filter_by(email=datos["email"]).first()
+    if exist_user: 
+        return jsonify({"MSG": "Ya existe el usuario"}), 404
+    
+    usuario = Usuario(
+        nombre=datos['nombre'],
+        apellido=datos['apellido'], 
+        email=datos['email'], 
+        #password=generate_password_hash(datos['contraseña']), 
+        password= datos["password"], 
+        rol=datos['rol'],
+        telefono = datos ["telefono"],
+        )
+    db.session.add(usuario)
+    db.session.commit()
+    return jsonify({'mensaje': 'Usuario creado exitosamente'}), 201
 
-# @api.route('/usuarios/<int:id>', methods=['GET'])
-# def get_usuario(id):
-#     usuario = Usuario.query.get(id)
-#     return jsonify(usuario.serialize())
+@api.route('/usuarios/<int:id>', methods=['GET'])
+def get_usuario(id):
+    usuario = Usuario.query.filter_by(id=id).first()
+    if usuario is None: 
+        return jsonify({"msg": "no existe el usuario"}), 404
+    return jsonify(usuario.serialize()), 200
 
-# @api.route('/usuarios/<int:id>', methods=['PUT'])
-# def actualizar_usuario(id):
-#     usuario = Usuario.query.get(id)
-#     datos = request.json
-#     usuario.nombre = datos['nombre']
-#     usuario.apellido = datos['apellido']
-#     usuario.email = datos['email']
-#     usuario.contraseña = generate_password_hash(datos['contraseña'])
-#     usuario.rol = datos['rol']
-#     db.session.commit()
-#     return jsonify({'mensaje': 'Usuario actualizado exitosamente'})
+@api.route('/usuarios/<int:id>', methods=['PUT'])
+def actualizar_usuario(id):
+    usuario = Usuario.query.filter_by(id=id).first()
+    if usuario is None: 
+        return jsonify({"msg": "no existe el usuario"}), 404
+    
+    datos = request.json
+    usuario.nombre = datos['nombre']
+    usuario.apellido = datos['apellido']
+    usuario.email = datos['email']
+   # usuario.contraseña = generate_password_hash(datos['contraseña'])
+    usuario.password = datos ["password"]
+    usuario.rol = datos['rol']
+    usuario.telefono = datos["telefono"]
+    db.session.commit()
+    return jsonify({'mensaje': 'Usuario actualizado exitosamente'})
 
-# @api.route('/usuarios/<int:id>', methods=['DELETE'])
-# def eliminar_usuario(id):
-#     usuario = Usuario.query.get(id)
-#     db.session.delete(usuario)
-#     db.session.commit()
-#     return jsonify({'mensaje': 'Usuario eliminado exitosamente'})
+@api.route('/usuarios/<int:id>', methods=['DELETE'])
+def eliminar_usuario(id):
+    usuario = Usuario.query.filter_by(id=id).first()
+    if usuario is None: 
+        return jsonify({"msg": "no existe el usuario"}), 404
+    
+    db.session.delete(usuario)
+    db.session.commit()
+    return jsonify({'mensaje': 'Usuario eliminado exitosamente'})
 
 # @api.route('/vehiculos', methods=['GET'])
 # def get_vehiculos():

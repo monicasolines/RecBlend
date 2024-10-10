@@ -11,8 +11,8 @@ class Usuario(db.Model):
     password = db.Column(db.String(500), nullable=False)
     rol = db.Column(db.String(100), nullable=False)
     telefono = db.Column(db.String(20), nullable=False)
-    chofer = db.relationship("Reparacion")
-    tecnico = db.relationship('Reparacion')
+    chofer = db.relationship("Reparacion", foreign_keys="[Reparacion.nombre_chofer_propietario]", backref="chofer_usuario")
+    tecnico = db.relationship('Reparacion', foreign_keys="[Reparacion.tecnico_id]", backref="tecnico_usuario")
 
     def __repr__(self):
         return f'<Usuario {self.email}>'
