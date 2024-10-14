@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
-import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
 import img from "../../img/ligthbox.jpg"
+
+
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
@@ -12,9 +13,9 @@ export const Home = () => {
 			<h3>Estudio creativo en Barcelona</h3>
 			<br />
 			<h1>Cómo crear tu <strong style={{ color: "rgba(var(--bs-warning-rgb)" }}>contenido</strong> de <strong style={{ color: "rgba(var(--bs-warning-rgb)" }}>1 mes en 1 día</strong></h1>
-			<a href="https://www.youtube.com/watch?app=desktop&v=UnlxN_QKPyI" target="_blank" className="color-black">Ver video</a>
+			<a href="https://www.youtube.com/watch?app=desktop&v=UnlxN_QKPyI" target="_blank" className="color-black  mt-5 mb-5">Ver video</a>
 			<div className="embed-responsive embed-responsive-16by9">
-				<iframe width="560" height="315" src="https://www.youtube.com/embed/UnlxN_QKPyI" title="YouTube video player" frameBorder="0" allowFullScreen></iframe>
+				<iframe width="560" className= "embed-responsive-item" height="315" src="https://www.youtube.com/embed/UnlxN_QKPyI" title="YouTube video player" frameBorder="0" allowFullScreen></iframe>
 			</div>
 			<div className="bg-warning text-start">
 				<h3 className="">

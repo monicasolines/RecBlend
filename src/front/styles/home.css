@@ -8,3 +8,8 @@
 color{
     background-color: rgb(255, 255, 17);
 }
+
+.profile-img{
+    height: 450px;
+    width: 450px;
+}
