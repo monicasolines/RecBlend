@@ -1,16 +1,50 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-from flask import Flask, request, jsonify, url_for, Blueprint
+from flask import Flask, request, jsonify, url_for, Blueprint, current_app
 from api.models import db, Usuario, Vehiculo, Reparacion
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
+import bcrypt
+
 
 api = Blueprint('api', __name__)
 
 # Allow CORS requests to this API
 CORS(api)
 
+@api.route('/login', methods=['POST'])
+def login(): 
+    body = request.get_json(silent=True)
+    if body is None: 
+        return jsonify({"msg": "el cuerpo esta vacio"}), 400
+    if 'email' not in body: 
+        return jsonify({"msg": "email es requerido"}), 400
+    if 'password' not in body: 
+        return jsonify({"msg": "password es requerido"}), 400
+    user = Usuario.query.filter_by(email=body["email"]).all()
+    #print(user[0].serialize())
+    if user == []:
+        return jsonify({"msg": "user or password invalid"}), 400
+    
+    correct_password = current_app.bcrypt.check_password_hash(user[0].password, body["password"]) 
+    if correct_password is False:
+        return jsonify({"msg": "user or password invalid"}), 400
+    access_token = create_access_token(identity=user[0].email)
+    return jsonify({"msg": "ok", 
+                    "access_token" : access_token, 
+                    "user": user[0].serialize()
+                    }), 200 
+
+@api.route('/private', methods=['GET'])
+@jwt_required()
+def private(): 
+    identity = get_jwt_identity()
+    print(identity)
+    return jsonify({"msg": "thi is a provate message"})
 
 @api.route('/usuarios', methods=['GET'])
 def get_usuarios():
@@ -26,12 +60,13 @@ def crear_usuario():
     if exist_user: 
         return jsonify({"MSG": "Ya existe el usuario"}), 404
     
+    new_password = current_app.bcrypt.generate_password_hash(datos['password']).decode('utf-8')
+
     usuario = Usuario(
         nombre=datos['nombre'],
         apellido=datos['apellido'], 
         email=datos['email'], 
-        #password=generate_password_hash(datos['contraseña']), 
-        password= datos["password"], 
+        password= new_password,   
         rol=datos['rol'],
         telefono = datos ["telefono"],
         )
@@ -135,15 +170,15 @@ def actualizar_vehiculo(id):
     return jsonify({'mensaje': 'Vehículo actualizado exitosamente'})
 
 
-@api.route('/usuarios/<int:id>', methods=['DELETE'])
-def eliminar_usuario(id):
-    usuario = Usuario.query.filter_by(id=id).first()
-    if usuario is None: 
-        return jsonify({"msg": "no existe el usuario"}), 404
+#@api.route('/usuarios/<int:id>', methods=['DELETE'])
+#def eliminar_usuario(id):
+#    usuario = Usuario.query.filter_by(id=id).first()
+#    if usuario is None: 
+#        return jsonify({"msg": "no existe el usuario"}), 404
     
-    db.session.delete(usuario)
-    db.session.commit()
-    return jsonify({'mensaje': 'Usuario eliminado exitosamente'})
+#    db.session.delete(usuario)
+#    db.session.commit()
+#    return jsonify({'mensaje': 'Usuario eliminado exitosamente'})
 
 @api.route('/reparaciones', methods=['GET'])
 def obtener_reparaciones():
