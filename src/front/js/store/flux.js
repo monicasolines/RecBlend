@@ -1,8 +1,9 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-		auth: false, 
-		user: {}
+			auth: false,
+			user: {},
+			vehiculos: []
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -21,14 +22,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 					const data = await resp.json()
 					if (resp.status == 200) {
-						
+
 						localStorage.setItem("token", data.access_token)
-						setStore({auth:true, user: data.user})
+						setStore({ auth: true, user: data.user })
 						//console.log(data.user)
 						// don't forget to return something, that is how the async resolves
 						return true;
 					} else {
-						setStore({auth:false})
+						setStore({ auth: false })
 						return false
 					}
 				} catch (error) {
@@ -46,9 +47,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 						body: JSON.stringify({
 							email: mail,
 							password: password,
-							nombre: nombre, 
-							apellido: apellido, 
-							telefono: telefono, 
+							nombre: nombre,
+							apellido: apellido,
+							telefono: telefono,
 							rol: rol
 
 						})
@@ -66,23 +67,44 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false
 				}
 			},
-            
+
 			logOut: () => {
 				localStorage.removeItem("token")
-				setStore({auth:false})
-			}, 
+				setStore({ auth: false })
+			},
 
 			valid: async () => {
 				try {
 					// fetching data from the backend
 					const resp = await fetch(process.env.BACKEND_URL + "validation", {
 						method: "GET",
-						headers: { "Content-Type": "application/json", 
+						headers: {
+							"Content-Type": "application/json",
 							"Authorization": "Bearer " + localStorage.getItem("token")
-						 },
+						},
 					})
 					const data = await resp.json()
 					//console.log(data)
+					return true
+				} catch (error) {
+					console.log("Error loading message from backend", error)
+					return false
+				}
+			},
+
+			obtenerVehiculos: async () => {
+				try {
+					// fetching data from the backend
+					const resp = await fetch(process.env.BACKEND_URL + "vehiculos", {
+						method: "GET",
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization": "Bearer " + localStorage.getItem("token")
+						},
+					})
+					const data = await resp.json()
+					console.log(data)
+					setStore({ vehiculos: data })
 					return true
 				} catch (error) {
 					console.log("Error loading message from backend", error)
