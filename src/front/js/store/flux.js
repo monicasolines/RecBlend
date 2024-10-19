@@ -37,15 +37,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			registro: async (mail, password) => {
+			registro: async (mail, password, nombre, apellido, telefono, rol) => {
 				try {
 					// fetching data from the backend
-					const resp = await fetch(process.env.BACKEND_URL + "signup", {
+					const resp = await fetch(process.env.BACKEND_URL + "usuarios", {
 						method: "POST",
 						headers: { "Content-Type": "application/json" },
 						body: JSON.stringify({
 							email: mail,
-							password: password
+							password: password,
+							nombre: nombre, 
+							apellido: apellido, 
+							telefono: telefono, 
+							rol: rol
+
 						})
 					})
 					const data = await resp.json()
