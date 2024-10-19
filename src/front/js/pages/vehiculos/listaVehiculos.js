@@ -12,7 +12,7 @@ const ListarVehiculos = () => {
     return (
         <div className="container mt-2">
             <h1> Vehiculos </h1>
-            <table class="table">
+            <table className="table">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -27,7 +27,7 @@ const ListarVehiculos = () => {
                 </thead>
                 <tbody>
 
-                    {store.vehiculos.map((item) => (
+                   {store.vehiculos.map((item) => (
                         <tr>
                             <th scope="row" key={item.id}>{item.id}</th>
                             <td>{item.codigo_producto}</td>
@@ -48,4 +48,4 @@ const ListarVehiculos = () => {
     )
 }
 
-export default ListarVehiculos
+export default ListarVehiculos 

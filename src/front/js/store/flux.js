@@ -3,7 +3,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			auth: false,
 			user: {},
-			vehiculos: []
+			vehiculos: [],
+			usuarios: []
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -111,6 +112,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false
 				}
 			},
+
+			obtenerUsuarios: async () => {
+				try {
+					// fetching data from the backend
+					const resp = await fetch(process.env.BACKEND_URL + "usuarios", {
+						method: "GET",
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization": "Bearer " + localStorage.getItem("token")
+						},
+					})
+					const data = await resp.json()
+					console.log(data)
+					setStore({ usuarios: data })
+					return true
+				} catch (error) {
+					console.log("Error loading message from backend", error)
+					return false
+				}
+			},
+			  
 		}
 	};
 
