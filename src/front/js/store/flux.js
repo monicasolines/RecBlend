@@ -121,9 +121,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 						body: JSON.stringify({
 							codigo_producto: codigo_producto,
 							kilometraje: kilometraje,
-							oem: oem, 
-							transporte: transporte, 
-							matricula: matricula, 
+							oem: oem,
+							transporte: transporte,
+							matricula: matricula,
 
 						})
 					})
@@ -144,7 +144,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			borrarVehiculos: async (id) => {
 				try {
 					// fetching data from the backend
-					const resp = await fetch(process.env.BACKEND_URL + "vehiculos/" + id , {
+					const resp = await fetch(process.env.BACKEND_URL + "vehiculos/" + id, {
 						method: "DELETE",
 						headers: { "Content-Type": "application/json" },
 					})
@@ -183,9 +183,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			
+			borrarUsuarios: async (id) => {
+				try {
+					// fetching data from the backend
+					const resp = await fetch(process.env.BACKEND_URL + "usuarios/" + id, {
+						method: "DELETE",
+						headers: { "Content-Type": "application/json" },
+					})
+					const data = await resp.json()
+					if (resp.status == 400) {
+						getActions().obtenerUsuarios()
+						//console.log(data)
+						// don't forget to return something, that is how the async resolves
+						return true;
+					} else {
+						return false
+					}
+				} catch (error) {
+					console.log("Error loading message from backend", error)
+					return false
+				}
+			},
 
-			  
+
+
 		}
 	};
 

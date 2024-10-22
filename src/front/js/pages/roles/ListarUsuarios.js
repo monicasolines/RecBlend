@@ -1,9 +1,31 @@
 import React, { useEffect, useContext } from "react";
 import { Context } from "../../store/appContext";
+import Swal from 'sweetalert2'
 
 const ListarUsuarios = () => {
-
     const { actions, store } = useContext(Context)
+
+    const borrar = (id) => {
+        Swal.fire({
+            title: "Deseas Borrar este Usuario",
+            text: "No podras recuperar este Usuario",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Si, eliminar!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                actions.borrarUsuarios(id)
+                Swal.fire({
+                    title: "Borrado!",
+                    text: "El Usuario se ha eliminado.",
+                    icon: "success"
+                });
+            }
+        });
+    }
+
     useEffect(() => {
         actions.obtenerUsuarios()
     }, [])
@@ -33,7 +55,7 @@ const ListarUsuarios = () => {
                             <td>{item.rol}</td>
                             <td>{item.telefono}</td>
                             <td><i className="fa fa-pen"></i></td>
-                            <td><i className="fa fa-trash"></i></td>
+                            <td><i className="fa fa-trash" onClick={() => borrar(item.id)}></i></td>
 
                         </tr>
                     ))}
