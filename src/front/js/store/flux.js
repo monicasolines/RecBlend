@@ -112,6 +112,56 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false
 				}
 			},
+			crearVehiculo: async (codigo_producto, kilometraje, matricula, oem, transporte) => {
+				try {
+					// fetching data from the backend
+					const resp = await fetch(process.env.BACKEND_URL + "vehiculos", {
+						method: "POST",
+						headers: { "Content-Type": "application/json" },
+						body: JSON.stringify({
+							codigo_producto: codigo_producto,
+							kilometraje: kilometraje,
+							oem: oem, 
+							transporte: transporte, 
+							matricula: matricula, 
+
+						})
+					})
+					const data = await resp.json()
+					if (resp.status == 201) {
+						//console.log(data)
+						// don't forget to return something, that is how the async resolves
+						return true;
+					} else {
+						return false
+					}
+				} catch (error) {
+					console.log("Error loading message from backend", error)
+					return false
+				}
+			},
+
+			borrarVehiculos: async (id) => {
+				try {
+					// fetching data from the backend
+					const resp = await fetch(process.env.BACKEND_URL + "vehiculos/" + id , {
+						method: "DELETE",
+						headers: { "Content-Type": "application/json" },
+					})
+					const data = await resp.json()
+					if (resp.status == 200) {
+						getActions().obtenerVehiculos()
+						//console.log(data)
+						// don't forget to return something, that is how the async resolves
+						return true;
+					} else {
+						return false
+					}
+				} catch (error) {
+					console.log("Error loading message from backend", error)
+					return false
+				}
+			},
 
 			obtenerUsuarios: async () => {
 				try {
@@ -132,6 +182,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false
 				}
 			},
+
+			
+
 			  
 		}
 	};

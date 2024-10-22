@@ -14,6 +14,7 @@ import { Registro } from "./pages/roles/registro";
 import { Login } from "./pages/roles/login";
 import ListarVehiculos from "./pages/vehiculos/listaVehiculos";
 import ListarUsuarios from "./pages/roles/ListarUsuarios";
+import CrearVehiculos from "./pages/vehiculos/crearVehiculos";
 
 //create your first component
 const Layout = () => {
@@ -37,6 +38,7 @@ const Layout = () => {
                         <Route element={<h1>Not found!</h1>} />
                         <Route element={<ListarVehiculos />} path="/Vehiculos" />
                         <Route element={<ListarUsuarios />} path="/Usuarios" />
+                        <Route element={<CrearVehiculos />} path="/CrearVehiculos" />
 
                     </Routes>
                     <Footer />

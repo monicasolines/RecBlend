@@ -1,10 +1,32 @@
 import React, { useEffect, useContext } from "react";
 import { Context } from "../../store/appContext";
-
+import Swal from 'sweetalert2'
 
 
 const ListarVehiculos = () => {
     const { actions, store } = useContext(Context)
+
+    const borrar = (id) => {
+        Swal.fire({
+            title: "Deseas Borrar este Vehiculo",
+            text: "No podras recuperar este vehiculo",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Si, eliminar!"
+          }).then((result) => {
+            if (result.isConfirmed) {
+            actions.borrarVehiculos(id) 
+              Swal.fire({
+                title: "Borrado!",
+                text: "El vehiculo se ha eliminado.",
+                icon: "success"
+              });
+            }
+          });
+    }
+
     useEffect(() => {
         actions.obtenerVehiculos()
     }, [])
@@ -36,7 +58,7 @@ const ListarVehiculos = () => {
                             <td>{item.kilometraje}</td>
                             <td>{item.oem}</td>
                             <td><i className="fa fa-pen"></i></td>
-                            <td><i className="fa fa-trash"></i></td>
+                            <td><i className="fa fa-trash" onClick={() => borrar(item.id)}></i></td>
 
                         </tr>
                     ))}
