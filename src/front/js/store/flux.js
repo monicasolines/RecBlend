@@ -4,7 +4,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			auth: false,
 			user: {},
 			vehiculos: [],
-			usuarios: []
+			usuarios: [],
+			choferes: [], 
+			tecnicos: []
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -191,7 +193,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						headers: { "Content-Type": "application/json" },
 					})
 					const data = await resp.json()
-					if (resp.status == 400) {
+					if (resp.status == 200) {
 						getActions().obtenerUsuarios()
 						//console.log(data)
 						// don't forget to return something, that is how the async resolves
@@ -204,9 +206,73 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false
 				}
 			},
+			
+			obtenerTecnicos: async () => {
+				try {
+					// fetching data from the backend
+					const resp = await fetch(process.env.BACKEND_URL + "usuarios_tecnico", {
+						method: "GET",
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization": "Bearer " + localStorage.getItem("token")
+						},
+					})
+					const data = await resp.json()
+					console.log(data)
+					setStore({ tecnicos: data })
+					return true
+				} catch (error) {
+					console.log("Error loading message from backend", error)
+					return false
+				}
+			},
+			obtenerChoferes: async () => {
+				try {
+					// fetching data from the backend
+					const resp = await fetch(process.env.BACKEND_URL + "usuarios_choferes", {
+						method: "GET",
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization": "Bearer " + localStorage.getItem("token")
+						},
+					})
+					const data = await resp.json()
+					console.log(data)
+					setStore({ choferes: data })
+					return true
+				} catch (error) {
+					console.log("Error loading message from backend", error)
+					return false
+				}
+			},
 
-
-
+			guardarReparacion: async (chofer, vehiculo, falla, tecnico, ingreso) => {
+				try {
+					// fetching data from the backend
+					const resp = await fetch(process.env.BACKEND_URL + "reparaciones", {
+						method: "POST",
+						headers: { "Content-Type": "application/json" },
+						body: JSON.stringify({
+							nombre_chofer_propietario: chofer,
+							vehiculo_id: vehiculo,
+							fallas: falla, 
+							tecnico_id: tecnico,
+							fecha_ingreso: ingreso
+						})
+					})
+					const data = await resp.json()
+					if (resp.status == 201) {
+						//console.log(data)
+						// don't forget to return something, that is how the async resolves
+						return true;
+					} else {
+						return false
+					}
+				} catch (error) {
+					console.log("Error loading message from backend", error)
+					return false
+				}
+			},
 		}
 	};
 

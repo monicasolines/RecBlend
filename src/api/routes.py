@@ -106,7 +106,7 @@ def eliminar_usuario(id):
     
     db.session.delete(usuario)
     db.session.commit()
-    return jsonify({'mensaje': 'Usuario eliminado exitosamente'})
+    return jsonify({'mensaje': 'Usuario eliminado exitosamente'}), 200
 
 @api.route('/vehiculos', methods=['GET'])
 def get_vehiculos():
@@ -146,12 +146,26 @@ def eliminar_vehiculo(id):
     return jsonify({'mensaje': 'Vehículo eliminado exitosamente'}), 200
 
 
-#@api.route('/usuarios/<int:id>', methods=['GET'])
-#def get_usuario(id):
+# @api.route('/usuarios/<int:id>', methods=['GET'])
+# def get_usuario(id):
 #    usuario = Usuario.query.filter_by(id=id).first()
 #    if usuario is None: 
 #        return jsonify({"msg": "no existe el usuario"}), 404
 #    return jsonify(usuario.serialize()), 200 
+
+@api.route('/usuarios_choferes', methods=['GET'])
+def get_choferes():
+   usuario = Usuario.query.filter_by(rol="Cliente").all()
+   if usuario == [] : 
+       return jsonify({"msg": "no existe el usuario"}), 404
+   return jsonify([u.serialize() for u in usuario]), 200
+
+@api.route('/usuarios_tecnico', methods=['GET'])
+def get_tecnico():
+   usuario = Usuario.query.filter_by(rol="Técnico").all()
+   if usuario == [] : 
+       return jsonify({"msg": "no existe el Tecnico"}), 404
+   return jsonify([u.serialize() for u in usuario]), 200
 
 @api.route('/vehiculos/<int:id>', methods=['PUT'])
 def actualizar_vehiculo(id):
@@ -198,21 +212,22 @@ def crear_reparacion():
     data = request.get_json()
 
     nueva_reparacion = Reparacion(
-        nombre_chofer_propietario=data.get('nombre_chofer_propietario'),
-        vehiculo_id=data.get('vehiculo_id'),
-        fallas=data.get('fallas'),
-        DTC=data.get('DTC'),
-        solucion=data.get('solucion'),
-        tecnico_id=data.get('tecnico_id'),
-        fecha_ingreso=data.get('fecha_ingreso'),
-        fecha_reparacion=data.get('fecha_reparacion'),
-        costo_reparacion=data.get('costo_reparacion'),
-        monto_cancelado_tecnico=data.get('monto_cancelado_tecnico'),
-        porcentaje_ganancia_tecnico=data.get('porcentaje_ganancia_tecnico'),
-        porcentaje_ganancia_empresa=data.get('porcentaje_ganancia_empresa'),
-        check_list_pago=data.get('check_list_pago'),
-        fecha_salida=data.get('fecha_salida'),
-        reporte=data.get('reporte')
+        nombre_chofer_propietario=data['nombre_chofer_propietario'],
+        vehiculo_id=data['vehiculo_id'],
+        fallas=data['fallas'],
+        tecnico_id=data['tecnico_id'],
+        fecha_ingreso=data['fecha_ingreso'],        
+        # diagnostico= data ["diagnostico"],
+        # DTC=data['DTC'],
+        # solucion=data['solucion'],
+        # fecha_reparacion=data.get('fecha_reparacion'),
+        # costo_reparacion=data.get('costo_reparacion'),
+        # monto_cancelado_tecnico=data.get('monto_cancelado_tecnico'),
+        # porcentaje_ganancia_tecnico=data.get('porcentaje_ganancia_tecnico'),
+        # porcentaje_ganancia_empresa=data.get('porcentaje_ganancia_empresa'),
+        # check_list_pago=data.get('check_list_pago'),
+        # fecha_salida=data.get('fecha_salida'),
+        # reporte=data.get('reporte')
     )
 
     db.session.add(nueva_reparacion)

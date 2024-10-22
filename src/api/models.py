@@ -54,19 +54,20 @@ class Reparacion(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre_chofer_propietario = db.Column(db.Integer, db.ForeignKey("usuario.id"))
     vehiculo_id = db.Column(db.Integer,db.ForeignKey("vehiculo.id"))
-    fallas = db.Column(db.String(200), nullable=False)
-    DTC = db.Column(db.String(100), nullable=False)
-    solucion = db.Column(db.String(300), nullable=False)
+    fallas = db.Column(db.String(200))
+    diagnostico = db.Column(db.String(200))
+    DTC = db.Column(db.String(100))
+    solucion = db.Column(db.String(300))
     tecnico_id = db.Column(db.Integer,  db.ForeignKey("usuario.id"))
-    fecha_ingreso = db.Column(db.Date, nullable=False)
-    fecha_reparacion = db.Column(db.Date, nullable=False)
-    costo_reparacion = db.Column(db.Float, nullable=False)
+    fecha_ingreso = db.Column(db.Date)
+    fecha_reparacion = db.Column(db.Date)
+    costo_reparacion = db.Column(db.Float)
     monto_cancelado_tecnico = db.Column(db.Float)
     porcentaje_ganancia_tecnico = db.Column(db.Float)
     porcentaje_ganancia_empresa = db.Column(db.Float)
     check_list_pago = db.Column(db.Boolean)
     fecha_salida = db.Column(db.Date) 
-    reporte = db.Column(db.String(500), nullable=False)
+    reporte = db.Column(db.String(500))
     
     def __repr__(self):
         return f'<Reparacion {self.id}>'
@@ -81,6 +82,7 @@ class Reparacion(db.Model):
           "nombre_chofer_propietario": chofer.serialize() if chofer else None,
           "vehiculo": vehiculo.serialize() if vehiculo else None,
           "fallas": self.fallas,
+          "diagnostico": self.diagnostico,
           "DTC": self.DTC,
           "solucion": self.solucion,
           "tecnico_id": tecnico.serialize() if tecnico else None,
