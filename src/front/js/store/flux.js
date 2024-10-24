@@ -6,7 +6,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			vehiculos: [],
 			usuarios: [],
 			choferes: [], 
-			tecnicos: []
+			tecnicos: [],
+			reparaciones: [], 
+			
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -268,6 +270,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 					} else {
 						return false
 					}
+				} catch (error) {
+					console.log("Error loading message from backend", error)
+					return false
+				}
+			},
+
+			obtenerReparaciones: async () => {
+				try {
+					// fetching data from the backend
+					const resp = await fetch(process.env.BACKEND_URL + "reparaciones", {
+						method: "GET",
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization": "Bearer " + localStorage.getItem("token")
+						},
+					})
+					const data = await resp.json()
+					console.log(data)
+					setStore({ reparaciones: data })
+					return true
 				} catch (error) {
 					console.log("Error loading message from backend", error)
 					return false

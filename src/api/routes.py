@@ -197,7 +197,9 @@ def actualizar_vehiculo(id):
 @api.route('/reparaciones', methods=['GET'])
 def obtener_reparaciones():
     reparaciones = Reparacion.query.all()
-    return jsonify([reparacion.serialize() for reparacion in reparaciones])
+    if reparaciones == [] : 
+        return jsonify({"msg": "No existen repraciones"}), 404
+    return jsonify([reparacion.serialize() for reparacion in reparaciones]), 200
 
 @api.route('/reparaciones/<int:id>', methods=['GET'])
 def obtener_reparacion(id):

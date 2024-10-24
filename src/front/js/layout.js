@@ -16,6 +16,7 @@ import ListarVehiculos from "./pages/vehiculos/listaVehiculos";
 import ListarUsuarios from "./pages/roles/ListarUsuarios";
 import CrearVehiculos from "./pages/vehiculos/crearVehiculos";
 import CrearReparacion from "./pages/reparacion/crearReparacion";
+import ListarReparaciones from "./pages/reparacion/listarReparaciones";
 
 //create your first component
 const Layout = () => {
@@ -41,6 +42,7 @@ const Layout = () => {
                         <Route element={<ListarUsuarios />} path="/Usuarios" />
                         <Route element={<CrearVehiculos />} path="/CrearVehiculos" />
                         <Route element={<CrearReparacion />} path="/CrearReparacion" />
+                        <Route element={<ListarReparaciones />} path="/ListarReparaciones" />
 
                     </Routes>
                     <Footer />

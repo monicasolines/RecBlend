@@ -1,18 +1,40 @@
 import React from "react";
 import { useContext, useState, useEffect } from "react";
 import { Context } from "../../store/appContext";
+import Swal from 'sweetalert2'
+import { Navigate, useNavigate } from "react-router-dom";
+
 
 
 const CrearReparacion = () => {
     const { actions, store } = useContext(Context)
-    const [chofer, setChofer] = useState ("")
-    const [tecnico, setTecnico] = useState ("")
-    const [vehiculo, setVehiculo] = useState ("")
-    const [falla, setFalla] = useState ("")
-    const [ingreso, setIngreso] = useState ("")
+    const [chofer, setChofer] = useState("")
+    const [tecnico, setTecnico] = useState("")
+    const [vehiculo, setVehiculo] = useState("")
+    const [falla, setFalla] = useState("")
+    const [ingreso, setIngreso] = useState("")
+    const navigate = useNavigate()
 
     const agregarReparacion = async () => {
-        let resp = await actions.guardarReparacion (chofer, vehiculo, falla, tecnico, ingreso)
+        if (chofer != "" && vehiculo != "" && falla != "" && tecnico != "" && ingreso != "") {
+            let resp = await actions.guardarReparacion(chofer, vehiculo, falla, tecnico, ingreso)
+            if (resp) {
+                navigate("/ListarReparaciones")
+            } else{
+                Swal.fire({
+                    icon: "error",
+                    title: "error al guardar",
+                    text: "No se guardaron los datos correctamente"
+                });                
+            }
+        } else {
+            Swal.fire({
+                icon: "error",
+                title: "Faltan Datos",
+                text: "Debe ingresar todos los Datos"
+            });
+        }
+
     }
 
     useEffect(() => {
@@ -36,7 +58,7 @@ const CrearReparacion = () => {
                                 Nombre del chofer
                             </label>
                             <select className="form-select" aria-label="Default select example"
-                            value={chofer} onChange={(e) => setChofer(e.target.value)}
+                                value={chofer} onChange={(e) => setChofer(e.target.value)}
                             >
                                 <option selected>Chofer</option>
                                 {store.choferes.map((item) => (
@@ -51,7 +73,7 @@ const CrearReparacion = () => {
                                 Vehiculo
                             </label>
                             <select className="form-select" aria-label="Default select example"
-                            value={vehiculo} onChange={(e) => setVehiculo(e.target.value)}
+                                value={vehiculo} onChange={(e) => setVehiculo(e.target.value)}
                             >
                                 <option selected>Vehiculos</option>
                                 {store.vehiculos.map((item) => (
@@ -83,7 +105,7 @@ const CrearReparacion = () => {
                                 Tecnico
                             </label>
                             <select className="form-select" aria-label="Default select example"
-                            value={tecnico} onChange={(e) => setTecnico(e.target.value)}
+                                value={tecnico} onChange={(e) => setTecnico(e.target.value)}
                             >
                                 <option selected>Tecnicos</option>
                                 {store.tecnicos.map((item) => (

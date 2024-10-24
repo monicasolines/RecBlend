@@ -28,12 +28,11 @@ export const Login = () => {
 			<h1>Inicie Sesion</h1>
 			<form>
 				<div className="mb-3">
-					<label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
+					<label htmlFor="exampleInputEmail1" className="form-label">Email</label>
 					<input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
 						value={mail}
 						onChange={(e) => setMail(e.target.value)}
 					/>
-					<div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
 				</div>
 				<div className="mb-3">
 					<label htmlFor="exampleInputPassword1" className="form-label">Password</label>
@@ -42,7 +41,7 @@ export const Login = () => {
 						onChange={(e) => setPassword(e.target.value)}
 					/>
 				</div>
-				<button type="button" className="btn btn-primary" onClick={(e) => handleSubmit(e)}>Submit</button>
+				<button type="button" className="btn btn-outline-primary mb-2" onClick={(e) => handleSubmit(e)}>Iniciar Sesion</button>
 			</form>
 		</div>
 	);
