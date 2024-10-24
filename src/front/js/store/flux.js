@@ -8,6 +8,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			choferes: [], 
 			tecnicos: [],
 			reparaciones: [], 
+			reparacion: {},
 			
 		},
 		actions: {
@@ -289,6 +290,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const data = await resp.json()
 					console.log(data)
 					setStore({ reparaciones: data })
+					return true
+				} catch (error) {
+					console.log("Error loading message from backend", error)
+					return false
+				}
+			},
+
+			obtenerReparacion: async (id) => {
+				try {
+					// fetching data from the backend
+					const resp = await fetch(process.env.BACKEND_URL + "reparaciones/" + id, {
+						method: "GET",
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization": "Bearer " + localStorage.getItem("token")
+						},
+					})
+					const data = await resp.json()
+					console.log(data)
+					setStore({ reparacion: data })
 					return true
 				} catch (error) {
 					console.log("Error loading message from backend", error)

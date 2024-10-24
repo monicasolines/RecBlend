@@ -1,6 +1,7 @@
 import React, { useEffect, useContext } from "react";
 import { Context } from "../../store/appContext";
 import Swal from 'sweetalert2'
+import { Link } from "react-router-dom";
 
 const ListarReparaciones = () => {
     const { actions, store } = useContext(Context)
@@ -59,7 +60,11 @@ const ListarReparaciones = () => {
                                 <td>{item.fallas}</td>
                                 <td>{item.tecnico_id.nombre} {item.tecnico_id.apellido}</td>
                                 <td><i className="fa fa-eye"></i></td>
-                                <td><i className="fa fa-pen"></i></td>
+                                <td>
+                                    <Link to={"/ModificarReparacion/" + item.id}> 
+                                    <i className="fa fa-pen"></i>
+                                    </Link>
+                                    </td>
                                 <td><i className="fa fa-trash" onClick={() => borrar(item.id)}></i></td>
                             </tr>
                         ))}

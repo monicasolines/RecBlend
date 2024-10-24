@@ -207,7 +207,7 @@ def obtener_reparacion(id):
     if reparacion is None:
         return jsonify({"msg": "No existe la reparación"}), 404
     
-    return jsonify(reparacion.serialize())
+    return jsonify(reparacion.serialize()), 200
 
 @api.route('/reparaciones', methods=['POST'])
 def crear_reparacion():
