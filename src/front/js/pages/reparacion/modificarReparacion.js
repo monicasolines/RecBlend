@@ -20,7 +20,10 @@ const ModificarReparacion = () => {
     const [costoReparacion, setCostoReparacion] = useState("")
     const [fechaReparacion, setFechaReparacion] = useState("")
     const [porcentajeTecnico, setPorcentajeTecnico] = useState("")
-
+    const [montoTecnico, setMontoTecnico] = useState("")
+    const [salida, setSalida] = useState("")
+    const [check, setCheck] = useState("")
+    const [reporte, setReporte] = useState("")
 
     const navigate = useNavigate()
     console.log(id)
@@ -47,11 +50,36 @@ const ModificarReparacion = () => {
 
     }
 
+    const obtenerReparacion = async () =>{
+        let resp = await actions.obtenerReparacion(id)
+        if( resp ) {
+            setChofer(store.reparacion.nombre_chofer_propietario.id)
+            setFalla(store.reparacion.fallas)
+            setIngreso(store.registro.fecha_ingreso)
+            setTecnico(store.reparacion.tecnico_id.id)
+            setVehiculo(store.reparacion.vehiculo.id)
+            setDiagnostico(store.reparacion.diagnostico)
+            setDtc(store.reparacion.DTC)
+            setSolucion(store.reparacion.solucion)
+            setCostoReparacion(store.reparacion.costo_reparacion)
+            setFechaReparacion(store.reparacion.fecha_reparacion)
+            setPorcentajeTecnico(store.reparacion.porcentaje_ganancia_tecnico)
+            setMontoTecnico(store.reparacion.monto_cancelado_tecnico)
+            setSalida(store.reparacion.fecha_salida)
+            setCheck(store.reparacion.check_list_pago)
+            setReporte(store.reparacion.reporte)
+            
+
+
+        }
+    }
+    
+
     useEffect(() => {
         // actions.obtenerChoferes()
         // actions.obtenerTecnicos()
         // actions.obtenerVehiculos()
-        actions.obtenerReparacion(id)
+        obtenerReparacion() 
 
     }, [])
 
@@ -223,20 +251,83 @@ const ModificarReparacion = () => {
                                 aria-describedby="emailHelp"
                             />
                         </div>
-                        <div className="col">
-                            <div className="mb-3">
-                                <label htmlFor="exampleInputEmail1" className="form-label">
-                                    Porcentaje Tecnico
-                                </label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    id="exampleInputEmail1"
-                                    value={porcentajeTecnico}
-                                    onChange={(e) => { setPorcentajeTecnico(e.target.value) }}
-                                    aria-describedby="emailHelp"
-                                />
-                            </div>
+                    </div>
+                    <div className="col">
+                        <div className="mb-3">
+                            <label htmlFor="exampleInputEmail1" className="form-label">
+                                Porcentaje Tecnico
+                            </label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="exampleInputEmail1"
+                                value={porcentajeTecnico}
+                                onChange={(e) => { setPorcentajeTecnico(e.target.value) }}
+                                aria-describedby="emailHelp"
+                            />
+
+                        </div>
+                    </div>
+                    <div className="col">
+                        <div className="mb-3">
+                            <label htmlFor="exampleInputEmail1" className="form-label">
+                                monto cancelado Tecnico
+                            </label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="exampleInputEmail1"
+                                value={montoTecnico}
+                                onChange={(e) => { setMontoTecnico(e.target.value) }}
+                                aria-describedby="emailHelp"
+                            />
+
+                        </div>
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col">
+                        <div className="mb-3">
+                            <label htmlFor="exampleInputEmail1" className="form-label">
+                                Fecha de salida
+                            </label>
+                            <input
+                                type="date"
+                                className="form-control"
+                                id="exampleInputEmail1"
+                                value={salida}
+                                onChange={(e) => { setSalida(e.target.value) }}
+                                aria-describedby="emailHelp"
+                            />
+                        </div>
+                    </div>
+                    <div className="col">
+                        <div className="mb-3">
+                            <label htmlFor="exampleInputEmail1" className="form-label">
+                               Check list pago
+                            </label> 
+                            <select className="form-select" aria-label="Default select example"
+                                value={check} onChange={(e) => setCheck(e.target.value)}
+                            >
+                                <option selected>Check list pago</option>
+                                
+                            </select>                      
+                        </div>
+                    </div>
+                    <div className="col">
+                        <div className="mb-3">
+                            <label htmlFor="exampleInputEmail1" className="form-label">
+                                Reporte
+                            </label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="exampleInputEmail1"
+                                value={reporte}
+                                onChange={(e) => { setReporte(e.target.value) }}
+                                aria-describedby="emailHelp"
+                            />
                         </div>
                     </div>
                 </div>
@@ -244,7 +335,7 @@ const ModificarReparacion = () => {
                 <button type="button"
                     // onClick={(e) => agregarReparacion(e)}
                     className="btn btn-outline-primary">
-                    Nueva Repracion
+                    Actualizar Repracion
                 </button>
             </form >
         </div >

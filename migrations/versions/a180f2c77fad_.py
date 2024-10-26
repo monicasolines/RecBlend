@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 32868a767b23
+Revision ID: a180f2c77fad
 Revises: 
-Create Date: 2024-10-10 00:40:53.886861
+Create Date: 2024-10-26 01:04:15.177998
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '32868a767b23'
+revision = 'a180f2c77fad'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -42,19 +42,20 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('nombre_chofer_propietario', sa.Integer(), nullable=True),
     sa.Column('vehiculo_id', sa.Integer(), nullable=True),
-    sa.Column('fallas', sa.String(length=200), nullable=False),
-    sa.Column('DTC', sa.String(length=100), nullable=False),
-    sa.Column('solucion', sa.String(length=300), nullable=False),
+    sa.Column('fallas', sa.String(length=200), nullable=True),
+    sa.Column('diagnostico', sa.String(length=200), nullable=True),
+    sa.Column('DTC', sa.String(length=100), nullable=True),
+    sa.Column('solucion', sa.String(length=300), nullable=True),
     sa.Column('tecnico_id', sa.Integer(), nullable=True),
-    sa.Column('fecha_ingreso', sa.Date(), nullable=False),
-    sa.Column('fecha_reparacion', sa.Date(), nullable=False),
-    sa.Column('costo_reparacion', sa.Float(), nullable=False),
+    sa.Column('fecha_ingreso', sa.Date(), nullable=True),
+    sa.Column('fecha_reparacion', sa.Date(), nullable=True),
+    sa.Column('costo_reparacion', sa.Float(), nullable=True),
     sa.Column('monto_cancelado_tecnico', sa.Float(), nullable=True),
     sa.Column('porcentaje_ganancia_tecnico', sa.Float(), nullable=True),
     sa.Column('porcentaje_ganancia_empresa', sa.Float(), nullable=True),
     sa.Column('check_list_pago', sa.Boolean(), nullable=True),
     sa.Column('fecha_salida', sa.Date(), nullable=True),
-    sa.Column('reporte', sa.String(length=500), nullable=False),
+    sa.Column('reporte', sa.String(length=500), nullable=True),
     sa.ForeignKeyConstraint(['nombre_chofer_propietario'], ['usuario.id'], ),
     sa.ForeignKeyConstraint(['tecnico_id'], ['usuario.id'], ),
     sa.ForeignKeyConstraint(['vehiculo_id'], ['vehiculo.id'], ),
