@@ -10,6 +10,14 @@ import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import { Registro } from "./pages/roles/registro";
+import { Login } from "./pages/roles/login";
+import ListarVehiculos from "./pages/vehiculos/listaVehiculos";
+import ListarUsuarios from "./pages/roles/ListarUsuarios";
+import CrearVehiculos from "./pages/vehiculos/crearVehiculos";
+import CrearReparacion from "./pages/reparacion/crearReparacion";
+import ListarReparaciones from "./pages/reparacion/listarReparaciones";
+import ModificarReparacion from "./pages/reparacion/modificarReparacion";
 
 //create your first component
 const Layout = () => {
@@ -27,8 +35,17 @@ const Layout = () => {
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
+                        <Route element={<Registro />} path="/Registro" />
+                        <Route element={<Login />} path="/Login" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />
+                        <Route element={<ListarVehiculos />} path="/Vehiculos" />
+                        <Route element={<ListarUsuarios />} path="/Usuarios" />
+                        <Route element={<CrearVehiculos />} path="/CrearVehiculos" />
+                        <Route element={<CrearReparacion />} path="/CrearReparacion" />
+                        <Route element={<ListarReparaciones />} path="/ListarReparaciones" />
+                        <Route element={<ModificarReparacion />} path="/ModificarReparacion/:id" />
+
                     </Routes>
                     <Footer />
                 </ScrollToTop>

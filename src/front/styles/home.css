@@ -1,7 +1,5 @@
-/*
-    home.css: This website contains selectors only used in home.css
-
-    All pages share the styles on index.css but you should create 
-    one more css for each page that will contain the selected used 
-    on that page only (the ones not reused in other pages).
-*/
+.homePage {
+    background-image: url('https://www.bse.com.uy/wps/wcm/connect/17e4a502-a584-49f4-b135-69b803edc67b/shutterstock_1714213732+%281%29.jpg?MOD=AJPERES');
+    background-size: cover;
+    height: 550px;
+}
