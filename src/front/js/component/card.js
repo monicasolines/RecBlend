@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Card = ({ img, titulo, linkListado, linkAgregar, modificarRepraciones }) => {
+const Card = ({ img, titulo, linkListado, linkAgregar, }) => {
 
     return (
 
@@ -14,7 +14,7 @@ const Card = ({ img, titulo, linkListado, linkAgregar, modificarRepraciones }) =
                     <div className="d-flex justify-content-between">
                         <Link to={linkListado} className="btn btn-outline-primary">Listado</Link>
                         <Link to={linkAgregar} className="btn btn-outline-primary">Agregar</Link>
-                        <Link to={modificarRepraciones} className="btn btn-outline-primary">Editar Reparaciones</Link>
+                        
                     </div>
 
                 </div>
