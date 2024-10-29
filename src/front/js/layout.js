@@ -19,6 +19,7 @@ import CrearReparacion from "./pages/reparacion/crearReparacion";
 import ListarReparaciones from "./pages/reparacion/listarReparaciones";
 import ModificarReparacion from "./pages/reparacion/modificarReparacion";
 import MenuAdmin from "./pages/roles/menuadmin";
+import MenuTecnico from "./pages/roles/menuTecnico";
 
 //create your first component
 const Layout = () => {
@@ -47,6 +48,7 @@ const Layout = () => {
                         <Route element={<ListarReparaciones />} path="/ListarReparaciones" />
                         <Route element={<ModificarReparacion />} path="/ModificarReparacion/:id" />
                         <Route element={<MenuAdmin />} path="/MenuAdmin" />
+                        <Route element={<MenuTecnico />} path="/MenuTecnico" />
 
                     </Routes>
                     <Footer />

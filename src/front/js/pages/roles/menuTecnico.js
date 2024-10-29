@@ -1,16 +1,10 @@
 import React from "react";
-import Card from "../../component/card";
+import Card from "../../component/card"
 
-
-const MenuAdmin = () => {
+const MenuTecnico = () => {
     let menu = [
 
-        {
-            "img": "https://cdn.pixabay.com/photo/2016/04/15/18/05/computer-1331579_640.png",
-            "titulo": "Usuarios",
-            "linkListado": "/Usuarios",
-            "linkAgregar": "/Registro",
-        },
+        
         {
             "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbDAbHn4t7HjcIFwE4hYyB7GgNufV5ABwL_UlA-McsQX1YzPZH0yraICw-Ze5JYlCsZl4&usqp=CAU",
             "titulo": "Vehiculos",
@@ -25,6 +19,13 @@ const MenuAdmin = () => {
             "linkListado": "/ListarReparaciones",
             "linkAgregar": "/CrearReparacion",
         },
+        {
+            "img": "https://cdn.pixabay.com/photo/2016/04/15/18/05/computer-1331579_640.png",
+            "titulo": "Reporte",
+            "linkListado": "/ListarReparaciones",
+            "linkAgregar": "/CrearReparacion",
+            "modificarReparaciones": "/ModificarReparacion/:id",
+        },
 
         
 
@@ -32,7 +33,7 @@ const MenuAdmin = () => {
 
     return (
         <div className="container">
-            <h1>Menu Administrador</h1>
+            <h1>Menu Tecnico</h1>
             <hr />
             <div className="row"> 
                 {menu.map((item, index) =>( 
@@ -42,6 +43,7 @@ const MenuAdmin = () => {
                     titulo={item.titulo}
                     linkListado={item.linkListado}
                     linkAgregar={item.linkAgregar}
+                    modificarRepraciones={item.modificarRepraciones} 
                     />
                 ) )}
             </div>
@@ -50,4 +52,4 @@ const MenuAdmin = () => {
     )
 }
 
-export default MenuAdmin
+export default MenuTecnico

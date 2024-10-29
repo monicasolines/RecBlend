@@ -16,6 +16,8 @@ export const Login = () => {
 			if (resp) {
 				if (store.user.rol == "Administrador") {
 					navigate("/MenuAdmin")
+				} else if (store.user.rol == "Técnico") {
+					navigate("/MenuTecnico") // Redirect to Técnico page
 				} else {
 					navigate("/demo")
 				}
