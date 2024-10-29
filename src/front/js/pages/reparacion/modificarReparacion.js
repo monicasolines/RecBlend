@@ -55,7 +55,7 @@ const ModificarReparacion = () => {
         if( resp ) {
             setChofer(store.reparacion.nombre_chofer_propietario.id)
             setFalla(store.reparacion.fallas)
-            setIngreso(store.registro.fecha_ingreso)
+            setIngreso(store.reparacion.fecha_ingreso)
             setTecnico(store.reparacion.tecnico_id.id)
             setVehiculo(store.reparacion.vehiculo.id)
             setDiagnostico(store.reparacion.diagnostico)

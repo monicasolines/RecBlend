@@ -1,11 +1,11 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../../store/appContext";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export const Login = () => {
 	const { store, actions } = useContext(Context);
 	const [mail, setMail] = useState("")
-	const [password, setPassword] = useState("") 
+	const [password, setPassword] = useState("")
 	const navigate = useNavigate()
 
 	const handleSubmit = async (e) => {
@@ -14,7 +14,12 @@ export const Login = () => {
 		if (mail != "" && password != "") {
 			let resp = await actions.login(mail, password)
 			if (resp) {
-				navigate("/demo")
+				if (store.user.rol == "Administrador") {
+					navigate("/MenuAdmin")
+				} else {
+					navigate("/demo")
+				}
+
 			} else {
 				alert("error de ingreso")
 			}

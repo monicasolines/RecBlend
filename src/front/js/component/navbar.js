@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export const Navbar = () => {
 	const { actions, store } = useContext(Context)
-	console.log(store.auth)
+	console.log(store.user)
 	return (
 		<nav className="navbar navbar-light bg-light">
 			<div className="container">
@@ -28,7 +28,7 @@ export const Navbar = () => {
 							<Link to="/">
 								<button className="btn btn-outline-primary mx-2" onClick={actions.logOut}>Cerrar Sesion</button>
 							</Link>
-
+							
 						</div>
 					}
 				</div>
