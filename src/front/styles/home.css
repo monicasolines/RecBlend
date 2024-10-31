@@ -5,3 +5,170 @@
     one more css for each page that will contain the selected used 
     on that page only (the ones not reused in other pages).
 */
+/* src/App.css */
+html {
+  scroll-behavior: smooth;
+}
+
+h1 {
+  text-decoration: underline;
+}
+
+.navbar-custom {
+  width: 100%;
+  background-color: #060606;
+  font-weight: bold;
+  justify-content: space-between;
+}
+
+.dashboard-icon {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.dashboard {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100vh;
+  background-color: #060707;
+  z-index: 999;
+}
+
+.footer {
+  background-color: #060707;
+  color: white;
+  font-weight: bold;
+}
+
+a {
+  color: aliceblue;
+  text-decoration: none;
+}
+
+body {
+  background: linear-gradient(180deg, #2396e8, #6d8090);
+  color: white;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  height: 100%;
+}
+
+.section {
+  padding: 60px 0;
+}
+
+.section h2 {
+  color: #f2f4f5;
+  text-decoration: underline;
+  margin-bottom: 20px;
+}
+
+
+.section h1,
+.section h2 {
+  margin-bottom: 15px;
+}
+
+.section p {
+  margin-bottom: 15px;
+}
+
+.allSection {
+  background: linear-gradient(180deg, #0a3d62, #3c6382);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+	margin: 0 auto;
+	padding: 40px;
+}
+
+.section {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 40px 0;
+}
+
+.container {
+	display: flex;
+	gap: 20px;
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+.text-content {
+	flex: 1;
+}
+
+form {
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  padding: 20px;
+  background-color: whitesmoke;
+  color: #060606;
+  font-weight: 500;
+  align-self:center;
+  width: 100%;
+}
+
+
+form .form-control,
+form .form-select {
+  box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  transition: all 0.2s ease;
+}
+
+form .form-control:focus,
+form .form-select:focus {
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2), inset 0px 2px 4px rgba(0, 0, 0, 0.1);
+  border-color: #0a3d62;
+  transform: scale(1.03);
+  z-index: 1;
+}
+
+form .btn-primary {
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
+  background-color: #0a3d62;
+  border-color: #0a3d62;
+}
+
+form .btn-primary:hover {
+  background-color: #06314e;
+  border-color: #06314e;
+  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+.image-content {
+	flex: 1;
+	display: flex;
+	justify-content: center;
+}
+
+.section-image {
+	max-width: 100%;
+	height: auto;
+	border-radius: 8px;
+}
+
+.section.alternate .text-content {
+	order: 1;
+}
+
+.section.alternate .image-content {
+	order: 2;
+}
+
+@media (max-width: 768px) {
+	.section {
+		flex-direction: column;
+		text-align: center;
+	}
+}
