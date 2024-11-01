@@ -25,14 +25,14 @@ const RegistrationForm = () => {
 
     return (
         <Container className="mt-5" id='ContainerForm'>
-            <h2 className="text-center mb-4">Formulario de Inscripción</h2>
+            <h2 className="text-center mb-4"><strong>Formulario de Inscripción</strong></h2>
             <Form onSubmit={handleSubmit}>
 
                 <Form.Group controlId="nombre">
-                    <Form.Label>Nombre</Form.Label>
+                    <Form.Label><strong>Nombre</strong></Form.Label>
                     <Form.Control
                         type="text"
-                        placeholder="Nombre"
+                        placeholder="Juan"
                         name="nombre"
                         value={formData.nombre}
                         onChange={handleChange}
@@ -41,10 +41,10 @@ const RegistrationForm = () => {
                 </Form.Group>
 
                 <Form.Group controlId="apellido">
-                    <Form.Label>Apellido</Form.Label>
+                    <Form.Label><strong>Apellido</strong></Form.Label>
                     <Form.Control
                         type="text"
-                        placeholder="Apellido"
+                        placeholder="Perez"
                         name="apellido"
                         value={formData.apellido}
                         onChange={handleChange}
@@ -53,10 +53,10 @@ const RegistrationForm = () => {
                 </Form.Group>
 
                 <Form.Group controlId="email">
-                    <Form.Label>Email</Form.Label>
+                    <Form.Label><strong>Email</strong></Form.Label>
                     <Form.Control
                         type="email"
-                        placeholder="Email"
+                        placeholder="usuario@mail.com"
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
@@ -65,10 +65,10 @@ const RegistrationForm = () => {
                 </Form.Group>
 
                 <Form.Group controlId="direccion">
-                    <Form.Label>Dirección</Form.Label>
+                    <Form.Label><strong>Dirección</strong></Form.Label>
                     <Form.Control
                         type="text"
-                        placeholder="Dirección"
+                        placeholder="FakeStreet 123"
                         name="direccion"
                         value={formData.direccion}
                         onChange={handleChange}
@@ -77,10 +77,10 @@ const RegistrationForm = () => {
                 </Form.Group>
 
                 <Form.Group controlId="celular">
-                    <Form.Label>Celular</Form.Label>
+                    <Form.Label><strong>Celular</strong></Form.Label>
                     <Form.Control
                         type="tel"
-                        placeholder="Celular"
+                        placeholder="XXXX-XX-XXXX"
                         name="celular"
                         value={formData.celular}
                         onChange={handleChange}
@@ -89,7 +89,7 @@ const RegistrationForm = () => {
                 </Form.Group>
 
                 <Form.Group controlId="relacion">
-                    <Form.Label>Relación con el alumno</Form.Label>
+                    <Form.Label><strong>Relación con el alumno</strong></Form.Label>
                     <Form.Control
                         as="select"
                         name="relacion"
@@ -104,7 +104,7 @@ const RegistrationForm = () => {
                 </Form.Group>
 
                 <Form.Group controlId="motivo">
-                    <Form.Label>¿Por qué inscribe a su hijo en la institución?</Form.Label>
+                    <Form.Label><strong>¿Por qué inscribe a su hijo en la institución?</strong></Form.Label>
                     <Form.Control
                         as="textarea"
                         rows={3}
@@ -116,7 +116,7 @@ const RegistrationForm = () => {
                     />
                 </Form.Group>
 
-                <Button variant="primary" type="submit" className="mt-3">
+                <Button variant="primary" type="submit" className="NavButton nav-link mt-3">
                     Enviar Inscripción
                 </Button>
             </Form>
