@@ -19,12 +19,12 @@ const RegistrationForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // manjar datos
+        // manejar datos
         console.log(formData);
     };
 
     return (
-        <Container className="mt-5">
+        <Container className="mt-5" id='ContainerForm'>
             <h2 className="text-center mb-4">Formulario de Inscripción</h2>
             <Form onSubmit={handleSubmit}>
 
@@ -88,7 +88,6 @@ const RegistrationForm = () => {
                     />
                 </Form.Group>
 
-                {/* Relación (Padre/Madre/Tutor) */}
                 <Form.Group controlId="relacion">
                     <Form.Label>Relación con el alumno</Form.Label>
                     <Form.Control
@@ -99,8 +98,7 @@ const RegistrationForm = () => {
                         required
                     >
                         <option value="">Selecciona una opción</option>
-                        <option value="Padre">Padre</option>
-                        <option value="Madre">Madre</option>
+                        <option value="Padre">Padre/Madre</option>
                         <option value="Tutor">Tutor</option>
                     </Form.Control>
                 </Form.Group>
