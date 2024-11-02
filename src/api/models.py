@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from enum import Enum
+
 db = SQLAlchemy()
 
 
@@ -8,13 +9,14 @@ class Roles(Enum):
     REPRESENTANTE = "Representante"
     ADMINISTRADOR = "Administrador"
 
+
 class EmailAuthorized(db.Model):
     __tablename__="Email_Autorizado"
 
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.Integer, unique=True, nullable=False)
+    email = db.Column(db.String(50), unique=True, nullable=False)
     isRegistered = db.Column(db.Boolean(), nullable=False)
-    Role = db.Column(db.Enum(Roles), nullable=False)
+    role = db.Column(db.Enum(Roles), nullable=False) # id_Rol
 
 
 class User(db.Model):
@@ -25,14 +27,14 @@ class User(db.Model):
     apellido = db.Column(db.String(50), nullable=False)
     direccion = db.Column(db.String(100), nullable=False)
     telefono = db.Column(db.String(20))
-    password = db.Column(db.String(80), unique=False, nullable=False)
+    password = db.Column(db.String(200), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
-    Role = db.Column(db.Enum(Roles), nullable=False)
+    role = db.Column(db.Enum(Roles), nullable=False) # id_rol
 
     estudiantes = db.relationship("Estudiante", back_populates="representante")
 
     def __repr__(self):
-        return f'<User {self.email}>'
+        return f'<User {self.nombre}, Role: {self.role.name}>'
 
     def serialize(self):
         return {
@@ -91,3 +93,7 @@ class Calificacion(db.Model):
 
     evaluaciones = db.relationship('Evaluacion', back_populates="calificaciones")
     estudiantes = db.relationship('Estudiante', back_populates="calificaciones")
+
+class BlockedTokenList (db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    jti = db.Column(db.String(500))
