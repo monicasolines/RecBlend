@@ -6,6 +6,7 @@ const RegistrationForm = () => {
         nombre: '',
         apellido: '',
         email: '',
+        username: '',
         direccion: '',
         celular: '',
         relacion: '',
@@ -36,7 +37,6 @@ const RegistrationForm = () => {
                         name="nombre"
                         value={formData.nombre}
                         onChange={handleChange}
-                        required
                     />
                 </Form.Group>
 
@@ -63,6 +63,17 @@ const RegistrationForm = () => {
                         required
                     />
                 </Form.Group>
+                <Form.Group controlId="username">
+                    <Form.Label><strong>Username</strong></Form.Label>
+                    <Form.Control
+                        type="username"
+                        placeholder="username"
+                        name="username"
+                        value={formData.username}
+                        onChange={handleChange}
+                        required
+                    />
+                </Form.Group>
 
                 <Form.Group controlId="direccion">
                     <Form.Label><strong>Dirección</strong></Form.Label>
@@ -72,7 +83,6 @@ const RegistrationForm = () => {
                         name="direccion"
                         value={formData.direccion}
                         onChange={handleChange}
-                        required
                     />
                 </Form.Group>
 
@@ -84,7 +94,6 @@ const RegistrationForm = () => {
                         name="celular"
                         value={formData.celular}
                         onChange={handleChange}
-                        required
                     />
                 </Form.Group>
 
@@ -95,7 +104,6 @@ const RegistrationForm = () => {
                         name="relacion"
                         value={formData.relacion}
                         onChange={handleChange}
-                        required
                     >
                         <option value="">Selecciona una opción</option>
                         <option value="Padre">Padre/Madre</option>
@@ -112,13 +120,12 @@ const RegistrationForm = () => {
                         name="motivo"
                         value={formData.motivo}
                         onChange={handleChange}
-                        required
                     />
                 </Form.Group>
 
-                <Button variant="primary" type="submit" className="NavButton nav-link mt-3">
+                <button variant="primary" type="submit" className="button nav-link mt-3">
                     Enviar Inscripción
-                </Button>
+                </button>
             </Form>
         </Container>
     );

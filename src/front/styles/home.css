@@ -90,9 +90,7 @@ h1 {
   color: #0d0d0e;
   background-color: #f8f8fd;
   padding: 0.8em 2.2em;
-  border-radius: 50em;
-  border: 6px solid #8b93f8;
-  box-shadow: 0px 8px #1f35ff;
+  border-radius: 8px;
   margin: 15px 3px;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -105,7 +103,6 @@ h1 {
 .NavButton.nav-link:active {
   position: relative;
   top: 8px;
-  border: 6px solid #646fff;
   box-shadow: 0px 0px;
 }
 
@@ -228,17 +225,7 @@ form .form-select:focus {
   z-index: 1;
 }
 
-form .btn-primary {
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
-  background-color: #0a3d62;
-  border-color: #0a3d62;
-}
 
-form .btn-primary:hover {
-  background-color: #06314e;
-  border-color: #06314e;
-  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
-}
 
 .image-content {
   flex: 1;
@@ -269,7 +256,9 @@ form .btn-primary:hover {
   padding: 20px;
   text-align: center;
 }
-
+#LoginForm {
+  margin-bottom: 90px;
+}
 /* From Uiverse.io by KhelVers */
 .button {
   cursor: pointer;
