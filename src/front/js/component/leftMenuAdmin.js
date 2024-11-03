@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../../styles/components.css";
+import Swal from 'sweetalert2';
 
 const FormCommon = ({ type }) => {
     const [startDate, setStartDate] = useState(new Date());
@@ -21,36 +22,36 @@ const FormCommon = ({ type }) => {
         setFormData(prevState => ({ ...prevState, [name]: value }));
     };
 
-    const handleFileChange = (e) => {
+    const handleUploadPhoto = (e) => {
         const file = e.target.files[0];
         if (file) {
             setFormData(prevState => ({ ...prevState, photo: file }));
             const reader = new FileReader();
             reader.onloadend = () => {
-                setPhotoPreview(reader.result); // Set the preview URL  
+                setPhotoPreview(reader.result);
             };
-            reader.readAsDataURL(file); // Read the file as a data URL  
+            reader.readAsDataURL(file);
         }
     };
 
-    const handleSubmit = (event) => {
+    const submitStudentTeacherCreation = (event) => {
         event.preventDefault();
-
-        // Create a FormData instance to handle file upload if a photo is included  
         const formDataToSend = new FormData();
         for (const key in formData) {
             formDataToSend.append(key, formData[key]);
         }
-
-        // Handle data submission (you can replace this alert with your fetching logic)  
         console.log('Form submitted', formDataToSend);
-        alert('Form submitted!');
+        Swal.fire({
+            title: "Datos registrados correctamente",
+            icon: "success"
+        });
+
     };
 
     return (
         <div className="container ms-2">
             <h4 className="text-welcome">{`Registrar ${type === 'student' ? 'estudiante' : 'profesor'} nuevo`}</h4>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={submitStudentTeacherCreation}>
                 <div className="mb-3">
                     <label className="form-label text-welcome">Nombre:</label>
                     <input type="text" name="name" className="form-control" required value={formData.name} onChange={handleChange} />
@@ -82,7 +83,7 @@ const FormCommon = ({ type }) => {
                 {type === 'teacher' && ( // Only show this input for teachers  
                     <div className="mb-3">
                         <label className="form-label text-welcome">Subir foto:</label>
-                        <input type="file" accept="image/*" className="form-control select-image" onChange={handleFileChange} required />
+                        <input type="file" accept="image/*" className="form-control select-image" onChange={handleUploadPhoto} required />
                         {photoPreview && (
                             <img src={photoPreview} alt="Preview" className="mt-2 teacher-photo" style={{ maxWidth: "30%", height: "auto" }} />
                         )}
