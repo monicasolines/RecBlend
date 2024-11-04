@@ -8,6 +8,7 @@ import injectContext from "./store/appContext";
 import NavBar from "./component/Navbar";
 import { Footer } from "./component/footer";
 import { DashboardAdmin } from "./pages/dashboardAdmin";
+import { DashboardTeacher } from "./pages/dashboardTeacher";
 import RegistrationForm from './component/RegistrationForm';
 import LoginForm from './component/LoginForm'; // Importa el LoginForm
 
@@ -26,6 +27,7 @@ const Layout = () => {
                         <Route element={<Home />} path="/home" />
                         <Route element={<Home />} path="/" />
                         <Route element={<DashboardAdmin />} path="/dashboardAdmin" />
+                        <Route element={<DashboardTeacher />} path="/dashboardTeacher" />
                         <Route element={<RegistrationForm />} path="/register" />
                         <Route element={<LoginForm />} path="/login" />
                         <Route element={<h1>Not found!</h1>} />

@@ -95,7 +95,7 @@ const FormCommon = ({ type }) => {
     );
 };
 
-export const LeftMenuAdmin = () => {
+export const LeftMenuTeacher = () => {
     const [activeContent, setActiveContent] = useState(null);
 
     const handleStudentRegisterForm = () => {
@@ -114,10 +114,10 @@ export const LeftMenuAdmin = () => {
                 return <FormCommon type="teacher" />;
             default:
                 return (
-                    <div className="jumbotron jumbotron-fluid ">
-                        <div className="container d-flex flex-column">
-                            <h1 className="text-welcome display-4">¡Qué bueno verte de regreso!</h1>
-                            <p className="lead text-welcome-content">Recuerda usar el menú de la izquierda para editar la información de los estudiantes y el profesorado.</p>
+                    <div className="container-fluid ">
+                        <div className="container py-5">
+                            <h1 className="text-body-emphasis text-welcome display-4">¡Siempre es un gusto tenerte de vuelta!</h1>
+                            <p className="col-lg-8 mx-auto lead text-welcome-content">Recuerda usar el menú de la izquierda para ingresar o editar la información de los estudiantes.</p>
                         </div>
                     </div>
                 );
@@ -135,62 +135,39 @@ export const LeftMenuAdmin = () => {
                         <ul className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                             <li>
                                 <Link to="#submenu1" data-bs-toggle="collapse" className="nav-link px-0 align-middle text-white">
-                                    <i className="fs-4 bi-save2"></i>
-                                    <span className="ms-1 d-none d-sm-inline">Registrar</span>
+                                    <i className="fs-4 bi-card-checklist"></i>
+                                    <span className="ms-1 d-none d-sm-inline">Calificaciones</span>
                                 </Link>
-                                <ul className="collapse nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
-                                    <li className="w-100">
-                                        <Link to="#" className="nav-link px-0 text-white" onClick={handleStudentRegisterForm}>
-                                            <span className="d-none d-sm-inline">Estudiantes</span>
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link to="#" className="nav-link px-0 text-white" onClick={handleTeacherRegisterForm}>
-                                            <span className="d-none d-sm-inline">Profesores</span>
-                                        </Link>
-                                    </li>
-                                </ul>
+
                             </li>
                             <li>
                                 <Link to="#submenuEditar" data-bs-toggle="collapse" className="nav-link px-0 align-middle text-white">
                                     <i className="fs-4 bi-pen"></i>
                                     <span className="ms-1 d-none d-sm-inline">Editar</span>
                                 </Link>
-                                <ul className="collapse nav flex-column ms-1" id="submenuEditar" data-bs-parent="#menu">
-                                    <li className="w-100">
-                                        <Link to="#" className="nav-link px-0 text-white">
-                                            <span className="d-none d-sm-inline">Estudiantes</span>
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link to="#" className="nav-link px-0 text-white">
-                                            <span className="d-none d-sm-inline">Profesores</span>
-                                        </Link>
-                                    </li>
-                                </ul>
                             </li>
                             <li>
                                 <Link to="#submenu2" data-bs-toggle="collapse" className="nav-link px-0 align-middle text-white">
-                                    <i className="fs-4 bi-book"></i>
-                                    <span className="ms-1 d-none d-sm-inline">Materias</span>
+                                    <i className="fs-4 bi-calendar2-date"></i>
+                                    <span className="ms-1 d-none d-sm-inline">Eventos</span>
                                 </Link>
                                 <ul className="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
                                     <li className="w-100">
                                         <Link to="#" className="nav-link px-0 text-white">
-                                            <span className="d-none d-sm-inline">Item</span> 1
+                                            <span className="d-none d-sm-inline">Reuniones</span>
                                         </Link>
                                     </li>
                                     <li>
                                         <Link to="#" className="nav-link px-0 text-white">
-                                            <span className="d-none d-sm-inline">Item</span> 2
+                                            <span className="d-none d-sm-inline">Salidas</span>
                                         </Link>
                                     </li>
                                 </ul>
                             </li>
                             <li>
                                 <Link to="#submenu3" data-bs-toggle="collapse" className="nav-link px-0 align-middle text-white">
-                                    <i className="fs-4 bi-door-open"></i>
-                                    <span className="ms-1 d-none d-sm-inline">Permisos</span>
+                                    <i className="fs-4 bi-chat-left-text"></i>
+                                    <span className="ms-1 d-none d-sm-inline">Comunicados</span>
                                 </Link>
                             </li>
                         </ul>
