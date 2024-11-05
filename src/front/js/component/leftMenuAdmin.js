@@ -115,7 +115,7 @@ export const LeftMenuAdmin = () => {
             default:
                 return (
                     <div className="jumbotron jumbotron-fluid ">
-                        <div className="container d-flex flex-column">
+                        <div className="container">
                             <h1 className="text-welcome display-4">¡Qué bueno verte de regreso!</h1>
                             <p className="lead text-welcome-content">Recuerda usar el menú de la izquierda para editar la información de los estudiantes y el profesorado.</p>
                         </div>

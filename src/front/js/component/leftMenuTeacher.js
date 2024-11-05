@@ -116,8 +116,8 @@ export const LeftMenuTeacher = () => {
                 return (
                     <div className="container-fluid ">
                         <div className="container py-5">
-                            <h1 className="text-body-emphasis text-welcome display-4">¡Siempre es un gusto tenerte de vuelta!</h1>
-                            <p className="col-lg-8 mx-auto lead text-welcome-content">Recuerda usar el menú de la izquierda para ingresar o editar la información de los estudiantes.</p>
+                            <h1 className="text-welcome display-4">¡Siempre es un gusto tenerte de vuelta!</h1>
+                            <p className="lead text-welcome-content">Recuerda usar el menú de la izquierda para ingresar o editar la información de los estudiantes.</p>
                         </div>
                     </div>
                 );
