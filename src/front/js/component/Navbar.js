@@ -22,7 +22,7 @@ const NavBar = () => {
           <Nav.Link as={Link} to="/home" className='NavButton nav-link'>Inicio</Nav.Link>
           <Nav.Link href="#profesorado" className='NavButton nav-link'>Profesorado</Nav.Link>
           <Nav.Link href="#caracteristicas" className='NavButton nav-link'>Características</Nav.Link>
-          <Nav.Link as={Link} to="/login" className='NavButton nav-link'>Iniciar Sesión</Nav.Link> 
+          <Nav.Link as={Link} to="/login" className='NavButton nav-link'>Iniciar Sesión</Nav.Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
