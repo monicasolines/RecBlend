@@ -7,7 +7,7 @@ from api.models import db, User, EmailAuthorized, Estudiante, Role, Docente
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import jwt_required, get_jwt, get_jwt_identity, verify_jwt_in_request
-from .schemas import TeacherSchema, UserSchema, AuthorizedEmailSchema
+from .schemas import TeacherSchema, UserSchema, AuthorizedEmailSchema, StudentSchema
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
@@ -36,6 +36,11 @@ users_schema = UserSchema(many=True)
 
 authorized_email_schema = AuthorizedEmailSchema()
 authorized_emails_schema = AuthorizedEmailSchema(many=True)
+
+
+student_schema = StudentSchema()
+students_schema = StudentSchema(many=True)
+
 
 
 @admin_routes.route('/user/auth', methods=['POST'])
@@ -109,3 +114,20 @@ def retrieve_teachers():
         return jsonify({"msg": "Empty"}),200
 
     return jsonify(teachers_schema.dump(teachers)),200
+
+@admin_routes.route('/add/student', methods=['POST'])
+def add_student():
+    body = request.get_json()
+
+    try:
+        student = student_schema.load(body) 
+    except ValidationError as err:
+        return jsonify(err.messages)
+
+
+@admin_routes.route('/get/student', methods=['GET'])
+def get_student():
+    body = Estudiante.query.all()
+
+    return jsonify(students_schema.dump(body))
+    

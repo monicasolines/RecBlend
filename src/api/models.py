@@ -11,7 +11,7 @@ class Role(db.Model):
     nombre = db.Column(db.String(20))
 
 
-    users = db.relationship("User", backref="role")
+    users = db.relationship("User", back_populates="rol")
     authorized_email = db.relationship("EmailAuthorized", back_populates="role")
     
 
@@ -45,8 +45,10 @@ class User(db.Model):
 
     estudiantes = db.relationship("Estudiante", back_populates="representante")
 
+    rol = db.relationship(Role, back_populates='users')
+
     def __repr__(self):
-        return f'<User {self.nombre}>'
+        return f'{self.nombre} - {self.rol.nombre}'
 
 
 class Docente(User):
@@ -55,11 +57,19 @@ class Docente(User):
     descripcion = db.Column(db.String(300), nullable=False)
     foto = db.Column(db.String(250))
 
-    aulas = db.relationship("Aula", backref='docente')
-
     def __repr__(self):
         return f'<Docente {self.nombre}>'
 
+class Grados(db.Model):
+    __tablename__ = "grado"
+
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(40), nullable=False, unique=True)
+
+    materias = db.relationship('Materias', back_populates='grados')
+
+    def __repr__(self):
+        return f"{self.nombre}"
 
 class Materias(db.Model):
     __tablename__ = "materia"
@@ -67,14 +77,34 @@ class Materias(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(50), nullable=False)
     descripcion = db.Column(db.String(70))
+    grado = db.Column(db.Integer, db.ForeignKey('grado.id'))
 
+    grados = db.relationship(Grados, back_populates="materias")
+
+    def __repr__(self):
+        return f"{self.nombre} - {self.grados.nombre}"
 
 class DocenteMaterias(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     id_docente = db.Column(db.Integer, db.ForeignKey("docente.id"))
     id_materia = db.Column(db.Integer, db.ForeignKey("materia.id"))
 
+    docentes = db.relationship(Docente)
+    materias = db.relationship(Materias)
+
     __table_args__ = (db.UniqueConstraint(id_docente, id_materia, name="docente_materia_unique"),)
+
+class EstudianteMaterias(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    id_estudiante = db.Column(db.Integer, db.ForeignKey("estudiante.id"))
+    id_materia = db.Column(db.Integer, db.ForeignKey("materia.id"))
+
+
+    estudiante = db.relationship('Estudiante')
+    materia = db.relationship(Materias)
+
+    __table_args__ = (db.UniqueConstraint(id_estudiante, id_materia, name="estudiante_materia_unique"),)
+
 
 
 class Estudiante(db.Model):
@@ -90,7 +120,10 @@ class Estudiante(db.Model):
 
     representante = db.relationship('User', back_populates="estudiantes")
     calificaciones = db.relationship('Calificacion', back_populates="estudiantes")
+    
 
+    def __repr__(self):
+        return f"{self.nombre}"
 
 class Evaluacion(db.Model):
     __tablename__ = "evaluacion"
@@ -101,15 +134,22 @@ class Evaluacion(db.Model):
     nombre = db.Column(db.String(50), nullable=False)
     descripcion = db.Column(db.String(100))
     fecha = db.Column(db.Date)
-
+    finalizada = db.Column(db.Boolean(), default=False, nullable=False)
     calificaciones = db.relationship('Calificacion', back_populates="evaluaciones")
 
+    profesor = db.relationship(Docente)
+    materia = db.relationship(Materias)
+
+    def __repr__(self):
+        return f"{self.nombre} - {self.materia.nombre} - {self.profesor.nombre}"
+    
 class Calificacion(db.Model):
     __tablename__ = "calificacion"
 
     id = db.Column(db.Integer, primary_key=True)
     evaluacion_id = db.Column(db.Integer, db.ForeignKey('evaluacion.id'))
     estudiante_id = db.Column(db.Integer, db.ForeignKey('estudiante.id'))
+    nota = db.Column(db.Float, nullable=False)
 
     evaluaciones = db.relationship('Evaluacion', back_populates="calificaciones")
     estudiantes = db.relationship('Estudiante', back_populates="calificaciones")
@@ -119,18 +159,4 @@ class BlockedTokenList (db.Model):
     jti = db.Column(db.String(500))
 
 
-class Aula(db.Model):
-    __tablename__ = "aula"
-
-    id = db.Column(db.Integer, primary_key=True)
-    docente_id = db.Column(db.Integer, db.ForeignKey('docente.id'))
-
     
-
-class AulaAlumnos(db.Model):
-    
-    id = db.Column(db.Integer, primary_key=True)
-    aula_id = db.Column(db.Integer, db.ForeignKey('aula.id'))
-    estudiante_id = db.Column(db.Integer, db.ForeignKey('estudiante.id'))
-
-    __table_args__ =(db.UniqueConstraint(aula_id, estudiante_id, name="aula_id_estudiante_id_unique"),)

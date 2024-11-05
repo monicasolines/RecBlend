@@ -39,6 +39,7 @@ class StudentSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Estudiante
         sqla_session = db.session
+        load_instance = True
 
     id = auto_field(dump_only=True)
     representante_id = auto_field(load_only=True)
