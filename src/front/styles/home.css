@@ -16,10 +16,19 @@ h1 {
 
 /* Navbar personalizado */
 .navbar-custom {
-  background-color: #060606;
+  background-color: #2b2d42;
   font-weight: bold;
-  justify-content: space-between;
+  justify-content: flex-end;
   color: white;
+}
+/* agregando detalles para el despliegue del menú */
+.collapse-custom {
+  background-color: #2b2d42; 
+  padding: 1em; 
+  border-radius: 8px; 
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); 
+  display: flex;
+  justify-content: flex-end;
 }
 
 /* Botón de hamburguesa */
@@ -81,27 +90,73 @@ h1 {
 .collapse-custom.show {
   max-height: 500px; 
 }
-
+/* modificación desde acá en los botones del navbar utilizando pseudoelementos*/
 .NavButton.nav-link {
   cursor: pointer;
+  margin: 0 10px;
   font-size: large;
   font-family: inherit;
   color: white !important;
-  /*background-color: #f8f8fd;
-  padding: 0.8em 2.2em;
-  border-radius: 8px;
-  margin: 15px 3px;*/
-  transition: background-color 0.3s ease, color 0.3s ease;
+  position: relative;
+  transition: color 0.3s ease, box-shadow 0.3s ease, transform 0.1s ease;
+}
+
+/* Efecto de línea animada debajo */
+.NavButton.nav-link::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  background-color: #ffffff;
+  bottom: -4px;
+  left: 0;
+  transition: width 0.4s ease;
+}
+
+.NavButton.nav-link:hover::after {
+  width: 100%;
+}
+
+/* Efecto con punto decorativo */
+.NavButton.nav-link::before {
+  content: "";
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background-color: cyan;
+  border-radius: 50%;
+  left: -5px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.NavButton.nav-link:hover::before {
+  opacity: 0.75;
+  transform: translateY(-50%) scale(1.2);
 }
 
 .NavButton.nav-link:hover {
-  text-decoration: double;
-  box-shadow: 5px 33px 49px 0px #F2F0EF;
+  box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.3);
 }
 
+/* Estado activo con escala y cambio de color */
 .NavButton.nav-link:active {
-  position: relative;
-  top: 8px;
+  color: #bbb;
+  transform: scale(0.95); 
+}
+
+.NavButton.nav-link:active::before {
+  background-color: yellow; 
+}
+
+.collapse-custom.show .NavButton.nav-link {
+  opacity: 1; 
+  background-color: rgba(255, 255, 255, 0.7); 
+  color: black !important;
+  transform: translateY(5em); 
+  transition: opacity 0.4s ease, transform 0.4s ease, background-color 0.4s ease; 
 }
 
 .dashboard-icon {
@@ -127,7 +182,7 @@ h1 {
   padding-bottom: 120px;
 }
 .footer {
-  background-color: #060707;
+  background-color: #2b2d42;
   color: white;
   font-weight: bold;
 }
@@ -196,32 +251,6 @@ p {
   flex: 1;
 }
 
-form {
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
-  border-radius: 10px;
-  padding: 20px;
-  background-color: whitesmoke;
-  color: #060606;
-  font-weight: 500;
-  align-self: center;
-  width: 100%;
-}
-
-
-form .form-control,
-form .form-select {
-  box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
-  transition: all 0.2s ease;
-}
-
-form .form-control:focus,
-form .form-select:focus {
-  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2), inset 0px 2px 4px rgba(0, 0, 0, 0.1);
-  border-color: #0a3d62;
-  transform: scale(1.03);
-  z-index: 1;
-}
 
 
 
@@ -285,14 +314,20 @@ form .form-select:focus {
 
 
 
-@media (max-width: 768px) {
+@media (max-width: 768px) { 
   .section {
-    flex-direction: column;
-    text-align: center;
+    flex-direction: column; /* Cambia a columna para apilar los elementos */
+    text-align: center; /* Centra el texto */
+    padding: 30px 10px; /* Reduce el padding para mejorar el espaciado */
+  }
+
+  .image-content {
+    width: auto;
+    height:auto;
+    margin-bottom: 20px; /* Añade un margen inferior para el espaciado */
   }
 
   .register-button {
-    width: auto;
-    /* Deja de ocupar el 100% en pantallas grandes */
+    width: auto; /* Deja de ocupar el 100% en pantallas grandes */
   }
 }

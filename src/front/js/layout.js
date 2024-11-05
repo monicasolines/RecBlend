@@ -9,13 +9,16 @@ import NavBar from "./component/Navbar";
 import { Footer } from "./component/footer";
 import { DashboardAdmin } from "./pages/dashboardAdmin";
 import RegistrationForm from './component/RegistrationForm';
-import LoginForm from './component/LoginForm'; // Importa el LoginForm
+import LoginForm from './component/LoginForm';
 
 
 const Layout = () => {
     const basename = process.env.BASENAME || "";
 
-    if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL />;
+    if (!process.env.REACT_APP_Backend_URL || process.env.REACT_APP_Backend_URL === "") {
+        return <BackendURL />;
+    }
+
 
     return (
         <div>
