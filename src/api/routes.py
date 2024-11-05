@@ -3,12 +3,12 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
 from marshmallow import ValidationError
-from api.models import db, User, EmailAuthorized, BlockedTokenList, Estudiante
+from api.models import db, User, EmailAuthorized, BlockedTokenList, Estudiante, Role
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt, get_jwt_identity
-from .schemas import UserSchema, StudentSchema, get_role
+from .schemas import UserSchema
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
@@ -20,7 +20,6 @@ CORS(api)
 # Definicion de esquemas para su uso
 
 user_schema = UserSchema()
-student_schema = StudentSchema()
 
 
 @api.route('/hello', methods=['POST', 'GET'])
@@ -43,18 +42,25 @@ def handle_register():
     try: 
         user = user_schema.load(body)
 
-        authorized = EmailAuthorized.query.filter_by(email=body['email']).first()
+        email = body['email']
 
-        if not authorized or authorized.isRegistered == True:
+        authorized = EmailAuthorized.query.filter_by(email=email).first()
+        user_exists = User.query.filter_by(email=email).first()
+
+        if not authorized or authorized.isRegistered == True or user_exists:
             return jsonify({"msg": "Email no autorizado o ya registrado"}),400
         
+        rol = Role.query.get(authorized.role_id)
 
-        user["role"] = authorized.role
+        if not rol:
+            return jsonify({"msg": "Rol no válido"})
+        
+        
+        user["role_id"] = rol.id
         user["is_active"] = True
         hashed_password = bcrypt.generate_password_hash(user["password"]).decode('utf-8')
         user["password"] = hashed_password
         new_user = User(**user)
-        
 
         authorized.isRegistered = True
         db.session.add(new_user)
@@ -78,17 +84,17 @@ def handle_login():
     if not user:
         return jsonify({"msg": "User not found"}),404
     
-   # role = roles.query.get(user.role_id)
+    role = Role.query.get(user.role_id)
     
     valid_password = bcrypt.check_password_hash(user.password, body["password"])
 
     if not valid_password:
         return jsonify({"msg": "Invalid Credentials"}),400
     
-    access_token = create_access_token(identity=user.id)
+    access_token = create_access_token(identity=user.id, additional_claims={"role":role.id})
 
     return jsonify({"token": access_token,
-                    "role": user.role.name})
+                    "role": role.nombre})
 
 
 @api.route('/logout', methods=['POST'])
@@ -101,29 +107,3 @@ def handle_logout():
 
     return jsonify({"msg": "Logged Out"}),200
 
-@api.route('/add/student', methods=['POST'])
-@jwt_required()
-def add_student():
-    body = request.get_json()
-    if not body:
-        return jsonify({"msg": "Missing info"}),400
-
-    student = student_schema.load(body)
-    return jsonify({"estudiante": student})
-
-
-@api.route('/student/<int:student_id>', methods=['GET'])
-@jwt_required()
-def get_student(student_id):
-    user_id = get_jwt_identity()
-    
-    if  get_role(user_id) != "administrador":
-        return jsonify({"msg": "No tienes permisos para acceder a esta informacion"}),403
-
-
-    student = Estudiante.query.get(student_id)
-
-    if not student:
-        return jsonify({"msg": "Not found"}),404
-    
-    return jsonify({"student": student_schema.dump(student)})
