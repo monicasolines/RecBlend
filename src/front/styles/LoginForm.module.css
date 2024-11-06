@@ -1,0 +1,66 @@
+form {
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    padding: 20px;
+    background-color: whitesmoke;
+    color: #060606;
+    font-weight: 500;
+    align-self: center;
+    width: 100%;
+    margin-bottom: 80px;
+    margin-top: 80px;
+  }
+  h2 {
+    margin-top: 50px;
+  }
+  h2:hover{
+    text-decoration: underline;
+  }
+  form .form-control,
+  form .form-select {
+    box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    transition: all 0.2s ease;
+  }
+  
+  form .form-control:focus,
+  form .form-select:focus {
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2), inset 0px 2px 4px rgba(0, 0, 0, 0.1);
+    border-color: #0a3d62;
+    transform: scale(1.03);
+    z-index: 1;
+  }
+  
+  #ContainerForm {
+    padding-top: 100px;
+    padding-bottom: 120px;
+  }
+
+  #LoginForm {
+    margin-bottom: 90px;
+  }
+  /* From Uiverse.io by KhelVers */
+  .button {
+    cursor: pointer;
+    font-size: large;
+    font-family: inherit;
+    font-weight: bold;
+    color: #0011ff;
+    background-color: #f8f8fd;
+    padding: 0.8em 2.2em;
+    border-radius: 50em;
+    border: 6px solid #8b93f8;
+    box-shadow: 0px 8px #1f35ff;
+  }
+  
+  .button:hover {
+    background-color: #0056b3;
+    color: white;
+  }
+  
+  .button:active {
+    position: relative;
+    top: 8px;
+    border: 6px solid #646fff;
+    box-shadow: 0px 0px;
+  }

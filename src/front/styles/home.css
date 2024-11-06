@@ -14,173 +14,7 @@ h1 {
   text-decoration: underline;
 }
 
-/* Navbar personalizado */
-.navbar-custom {
-  background-color: #2b2d42;
-  font-weight: bold;
-  justify-content: flex-end;
-  color: white;
-}
-/* agregando detalles para el despliegue del menú */
-.collapse-custom {
-  background-color: #2b2d42; 
-  padding: 1em; 
-  border-radius: 8px; 
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); 
-  display: flex;
-  justify-content: flex-end;
-}
 
-/* Botón de hamburguesa */
-.navbar-toggler {
-  background-color: transparent;
-  border: none;
-  padding: 0.4em;
-}
-
-.navbar-toggler-icon {
-  background-color: #f8f8fd;
-  width: 25px;
-  height: 3px;
-  border-radius: 2px;
-  position: relative;
-  transition: all 0.3s ease;
-  text-align: -webkit-auto;
-}
-
-.navbar-toggler-icon::before,
-.navbar-toggler-icon::after {
-  content: '';
-  position: absolute;
-  width: 25px;
-  height: 3px;
-  background-color: #f8f8fd;
-  border-radius: 2px;
-  transition: all 0.65s ease;
-}
-
-.navbar-toggler-icon::before {
-  top: -8px;
-}
-
-.navbar-toggler-icon::after {
-  top: 8px;
-}
-
-/* Transformación del botón hamburguesa al estar activo */
-.navbar-toggler:not(.collapsed) .navbar-toggler-icon {
-  background-color: transparent;
-}
-
-.navbar-toggler:not(.collapsed) .navbar-toggler-icon::before {
-  transform: rotate(45deg);
-  top: 0;
-}
-
-.navbar-toggler:not(.collapsed) .navbar-toggler-icon::after {
-  transform: rotate(-45deg);
-  top: 0;
-}
-
-#basic-navbar-nav {
-  transition: max-height 1.5s ease;
-  max-height: 0;
-}
-
-.collapse-custom.show {
-  max-height: 500px; 
-}
-/* modificación desde acá en los botones del navbar utilizando pseudoelementos*/
-.NavButton.nav-link {
-  cursor: pointer;
-  margin: 0 10px;
-  font-size: large;
-  font-family: inherit;
-  color: white !important;
-  position: relative;
-  transition: color 0.3s ease, box-shadow 0.3s ease, transform 0.1s ease;
-}
-
-/* Efecto de línea animada debajo */
-.NavButton.nav-link::after {
-  content: "";
-  position: absolute;
-  width: 0;
-  height: 2px;
-  background-color: #ffffff;
-  bottom: -4px;
-  left: 0;
-  transition: width 0.4s ease;
-}
-
-.NavButton.nav-link:hover::after {
-  width: 100%;
-}
-
-/* Efecto con punto decorativo */
-.NavButton.nav-link::before {
-  content: "";
-  position: absolute;
-  width: 5px;
-  height: 5px;
-  background-color: cyan;
-  border-radius: 50%;
-  left: -5px;
-  top: 50%;
-  transform: translateY(-50%);
-  opacity: 0;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.NavButton.nav-link:hover::before {
-  opacity: 0.75;
-  transform: translateY(-50%) scale(1.2);
-}
-
-.NavButton.nav-link:hover {
-  box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.3);
-}
-
-/* Estado activo con escala y cambio de color */
-.NavButton.nav-link:active {
-  color: #bbb;
-  transform: scale(0.95); 
-}
-
-.NavButton.nav-link:active::before {
-  background-color: yellow; 
-}
-
-.collapse-custom.show .NavButton.nav-link {
-  opacity: 1; 
-  background-color: rgba(255, 255, 255, 0.7); 
-  color: black !important;
-  transform: translateY(5em); 
-  transition: opacity 0.4s ease, transform 0.4s ease, background-color 0.4s ease; 
-}
-
-.dashboard-icon {
-  position: fixed;
-  top: 10px;
-  left: 10px;
-  cursor: pointer;
-  z-index: 1000;
-}
-
-.dashboard {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 250px;
-  height: 100vh;
-  background-color: #060707;
-  z-index: 999;
-}
-
-#ContainerForm {
-  padding-top: 100px;
-  padding-bottom: 120px;
-}
 .footer {
   background-color: #2b2d42;
   color: white;
@@ -251,9 +85,6 @@ p {
   flex: 1;
 }
 
-
-
-
 .image-content {
   flex: 1;
   display: flex;
@@ -279,40 +110,39 @@ p {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  min-height: 200px;
   padding: 20px;
   text-align: center;
 }
-#LoginForm {
-  margin-bottom: 90px;
-}
-/* From Uiverse.io by KhelVers */
-.button {
-  cursor: pointer;
-  font-size: large;
-  font-family: inherit;
-  font-weight: bold;
-  color: #0011ff;
-  background-color: #f8f8fd;
-  padding: 0.8em 2.2em;
-  border-radius: 50em;
-  border: 6px solid #8b93f8;
-  box-shadow: 0px 8px #1f35ff;
+
+#btn-reg{
+  background-color: black;   
+  border: 2px solid #2b2d42;   
+  color: whitesmoke;   
+  padding: 0.375rem 0.75rem;   
+  font-size: 1rem;   
+  border-radius: 0.3rem;   
+  transition: background-color 0.2s, color 0.2s;
 }
 
-.button:hover {
-  background-color: #0056b3;
-  color: white;
+#btn-reg:hover{
+  background-color: grey;   
+  color: white; 
+  align-self: center;
+  align-content: center;
+  align-items: center;
 }
 
-.button:active {
-  position: relative;
-  top: 8px;
-  border: 6px solid #646fff;
-  box-shadow: 0px 0px;
+#btn-reg:focus {  
+  outline-style: solid;   
+  outline-color: #2b2d42;   
+  outline-width: 2px;   
+  outline-offset: 2px;   
 }
-
-
+#btn-reg:active{
+  background-color: #2b2d42;  
+  color: white; 
+} 
 
 @media (max-width: 768px) { 
   .section {

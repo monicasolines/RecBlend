@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Form, Button, Container } from 'react-bootstrap';
+import { Form, Container } from 'react-bootstrap';
+import styles from "../../styles/RegistrationForm.module.css";
 
 const RegistrationForm = () => {
     const [formData, setFormData] = useState({
@@ -123,9 +124,15 @@ const RegistrationForm = () => {
                     />
                 </Form.Group>
 
-                <button variant="primary" type="submit" className="button nav-link mt-3">
-                    Enviar Inscripción
-                </button>
+                <div className="d-flex justify-content-center mt-3">
+                    <button
+                        type="submit"
+                        className={`${styles.buttonRegForm} button nav-link`}
+                    >
+                        Enviar Inscripción
+                    </button>
+                </div>
+
             </Form>
         </Container>
     );

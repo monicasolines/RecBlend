@@ -11,7 +11,6 @@ import { DashboardAdmin } from "./pages/dashboardAdmin";
 import RegistrationForm from './component/RegistrationForm';
 import LoginForm from './component/LoginForm';
 
-
 const Layout = () => {
     const basename = process.env.BASENAME || "";
 
