@@ -13,7 +13,7 @@ import os
 api = Blueprint('api', __name__)
 
 # Allow CORS requests to this API
-CORS(api)
+CORS(api, resources={r"/*": {"origins": "*"}}) 
 
 database_url = os.getenv('DATABASE_URL')
 consumer_key = os.getenv('WC_CONSUMER_KEY')
@@ -23,6 +23,7 @@ wcapi = API(
     url="https://piedrapapelytijeras.es",  
     consumer_key=consumer_key,  
     consumer_secret=consumer_secret, 
+    wp_api=True,
     version="wc/v3",
     timeout=100
     
@@ -226,3 +227,40 @@ def import_orders():
 
     except Exception as e:
         return jsonify({"msg": f"Error al importar órdenes: {str(e)}"}), 500
+    
+@api.route('/api/customers', methods=['GET'])
+def get_customers():
+    try:
+        response = wcapi.get("customers")
+        if response.status_code != 200:
+            return jsonify({"error": "Error fetching customers from WooCommerce"}), response.status_code
+
+        wc_customers = response.json()
+        customers = []
+
+        for wc_customer in wc_customers:
+            customer = {
+                "id": wc_customer["id"],
+                "email": wc_customer["email"],
+                "first_name": wc_customer["first_name"],
+                "last_name": wc_customer["last_name"],
+                "company": wc_customer["billing"]["company"],
+                "city": wc_customer["billing"]["city"],
+                "state": wc_customer["billing"]["state"],
+                "email": wc_customer["email"]
+            }
+            customers.append(customer)
+
+        return jsonify({"customers": customers}), 200
+    except Exception as e:
+        print(f"Error: {str(e)}")  # Imprimir el error
+        return jsonify({"error": str(e)}), 500
+    
+@api.route('/api/orders', methods=['GET'])
+def get_orders():
+    try:
+        orders = Order.query.all()
+        return jsonify([order.serialize() for order in orders]), 200
+    except Exception as e:
+        print(f"Error: {str(e)}")  # Imprimir el error
+        return jsonify({"error": str(e)}), 500
