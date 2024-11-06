@@ -31,7 +31,7 @@ const LoginForm = () => {
         <div className={`${styles.LoginForm} d-flex justify-content-center align-items-center`}>
             <Row className="w-100">
                 <Col xs={12} md={6} lg={4} className="mx-auto">
-                    <h2 className="text-center mb-4">Iniciar Sesión</h2>
+                    <h2 className="text-center mb-4"><strong>Iniciar Sesión</strong></h2>
                     {error && <Alert variant="danger">{error}</Alert>}
                     <Form onSubmit={handleSubmit} className="p-4 border rounded shadow">
                         <Form.Group controlId="username">
