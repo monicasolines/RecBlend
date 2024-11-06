@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from "react";
-import { Context } from "../store/appContext";
 import { useLocation } from "react-router-dom";
 import "../../styles/home.css";
 import { Link } from "react-router-dom";
@@ -8,7 +7,6 @@ import img2 from "../../img/padres-comprometidos-alumnos-destacados.jpg"
 import img3 from "../../img/un-aula-de-un-colegio.jpeg"
 
 export const Home = () => {
-	///const { store, actions } = useContext(Context);
 	const location = useLocation();
 
 	useEffect(() => {

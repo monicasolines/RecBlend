@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Form, Button, Container, Row, Col, Alert } from 'react-bootstrap';
+import { Form, Button, Row, Col, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import "../../styles/LoginForm.module.css";
+import styles from "../../styles/LoginForm.module.css"; // Importa los estilos
 
 const LoginForm = () => {
     const [username, setUsername] = useState('');
@@ -11,34 +11,28 @@ const LoginForm = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-
-        // Valores de usuario y contraseña de prueba
         const validUsername = "usuarioPrueba";
         const validPassword = "contraseña123";
 
-        // Validar que no estén vacíos
         if (username === '' || password === '') {
             setError('Por favor, complete todos los campos');
             return;
         }
 
-        // Verificar credenciales
         if (username === validUsername && password === validPassword) {
-            setError(''); // Limpiar errores previos
-            navigate('/home'); // Redirige al home después del login exitoso
+            setError('');
+            navigate('/home');
         } else {
             setError('Nombre de usuario o contraseña incorrectos');
         }
     };
 
     return (
-        <Container className="d-flex justify-content-center align-items-center" style={{ minHeight: '80vh'}} id='LoginForm'>
+        <div className={`${styles.LoginForm} d-flex justify-content-center align-items-center`}>
             <Row className="w-100">
                 <Col xs={12} md={6} lg={4} className="mx-auto">
                     <h2 className="text-center mb-4">Iniciar Sesión</h2>
-
                     {error && <Alert variant="danger">{error}</Alert>}
-
                     <Form onSubmit={handleSubmit} className="p-4 border rounded shadow">
                         <Form.Group controlId="username">
                             <Form.Label>Nombre de Usuario</Form.Label>
@@ -50,7 +44,6 @@ const LoginForm = () => {
                                 required
                             />
                         </Form.Group>
-
                         <Form.Group controlId="password" className="mt-3">
                             <Form.Label>Contraseña</Form.Label>
                             <Form.Control
@@ -61,22 +54,20 @@ const LoginForm = () => {
                                 required
                             />
                         </Form.Group>
-
                         <Button variant="primary" type="submit" className="w-100 mt-4">
                             Iniciar Sesión
                         </Button>
-
                         <Button
                             variant="link"
                             onClick={() => navigate('/register')}
                             className="w-100 mt-3 text-center"
                         >
-                           <strong>¿No tienes cuenta? Regístrate</strong> 
+                            <strong>¿No tienes cuenta? Regístrate</strong>
                         </Button>
                     </Form>
                 </Col>
             </Row>
-        </Container>
+        </div>
     );
 };
 
