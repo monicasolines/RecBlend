@@ -82,7 +82,7 @@ def email_authorization():
     return jsonify({"msg": "Email Authorized"}),201
 
 @admin_routes.route('/user/auth', methods=['GET'])
-def email_authorization():
+def get_email_authorizations():
     emails = EmailAuthorized.query.all()
 
     return jsonify(authorized_emails_schema.dump(emails)),201
