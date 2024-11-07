@@ -69,19 +69,34 @@ const FormCommon = ({ type }) => {
                         </div>
                     </div>
                 )}
-                {type === 'calificar' && (
-                    <div className="mb-3">
-                        <label className="form-label text-welcome">Selecciona una evaluación:</label> <br></br>
-                        <div className="input-group" onChange={handleChange}>
-                            <select className="custom-select" id="inputGroupSelect04">
-                                <option selected>Pendientes...</option>
-                                <option value="1">Evaluación preparatoria</option>
-                                <option value="2">Evaluación Lenguaje</option>
-                                <option value="3">Evaluación Matemáticas</option>
-                            </select>
+                <div className="d-flex">
+                    {type === 'calificar' && (
+                        <div className="mb-3 me-5">
+                            <label className="form-label text-welcome">Elige un grado:</label> <br></br>
+                            <div className="input-group" onChange={handleChange}>
+                                <select className="custom-select" id="inputGroupSelect04">
+                                    <option selected>Grado...</option>
+                                    <option value="1">1er Grado</option>
+                                    <option value="2">2do Grado</option>
+                                    <option value="3">3er Grado</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                )}
+                    )}
+                    {type === 'calificar' && (
+                        <div className="mb-3">
+                            <label className="form-label text-welcome">Selecciona una evaluación:</label> <br></br>
+                            <div className="input-group" onChange={handleChange}>
+                                <select className="custom-select" id="inputGroupSelect04">
+                                    <option selected>Pendientes...</option>
+                                    <option value="1">Evaluación preparatoria</option>
+                                    <option value="2">Evaluación Lenguaje</option>
+                                    <option value="3">Evaluación Matemáticas</option>
+                                </select>
+                            </div>
+                        </div>
+                    )}
+                </div>
                 {type === 'calificar' && (
                     <table class="table table-hover">
                         <thead>
@@ -97,20 +112,6 @@ const FormCommon = ({ type }) => {
                                 <td>Doe</td>
                                 <td>
                                     <input type="number" name="grade" className="form-control" required value={formData.grade} onChange={(e) => handleChange(e)} />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Mary</td>
-                                <td>Moe</td>
-                                <td>
-                                    <input type="text" name="grade" className="form-control" required value={formData.grade} onChange={handleChange} />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>July</td>
-                                <td>Dooley</td>
-                                <td>
-                                    <input type="text" name="grade" className="form-control" required value={formData.grade} onChange={handleChange} />
                                 </td>
                             </tr>
                         </tbody>
