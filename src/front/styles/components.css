@@ -66,3 +66,46 @@
   background-color: #2b2d42;
   color: white;
 }
+
+
+
+.list-menu-item {
+  color: #ffffff;
+  font-size: 20px;
+  text-decoration: none;
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+  margin: 0 5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.list-menu-item::before,
+.list-menu-item::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  background: #ffffff;
+  transition: all 0.5s;
+}
+
+.list-menu-item::before {
+  top: 0;
+  left: 0;
+}
+
+.list-menu-item::after {
+  bottom: 0;
+  right: 0;
+}
+
+.list-menu-item:hover::before {
+  width: 100%;
+  transition: width 0.25s ease-in-out;
+}
+
+.list-menu-item:hover::after {
+  width: 100%;
+  transition: width 0.25s ease-in-out 0.25s;
+}
