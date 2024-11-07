@@ -1,6 +1,6 @@
 from marshmallow_sqlalchemy import SQLAlchemySchema, SQLAlchemyAutoSchema, auto_field
 from marshmallow_sqlalchemy.fields import Nested
-from .models import db, User, Estudiante, Docente, EmailAuthorized
+from .models import db, User, Estudiante, Docente, EmailAuthorized, Materias, Evaluacion, Grados, DocenteMaterias, EstudianteMaterias
 from marshmallow import post_load
 
 class UserSchema(SQLAlchemyAutoSchema):
@@ -19,7 +19,6 @@ class UserSchema(SQLAlchemyAutoSchema):
         data.pop("foto", None)
         data.pop("descripcion", None)
         return data
-
 
 class TeacherSchema(SQLAlchemyAutoSchema):
     
@@ -44,8 +43,8 @@ class StudentSchema(SQLAlchemyAutoSchema):
     id = auto_field(dump_only=True)
     representante_id = auto_field(load_only=True)
     fecha_ingreso = auto_field(dump_only=True)
-    representante = Nested(UserSchema, dump_only=True)
-
+    is_active= auto_field(missing=True)
+    representante = Nested(UserSchema, dump_only=True, exclude=['role_id','id', 'is_active'])
 
 class AuthorizedEmailSchema(SQLAlchemyAutoSchema):
 
@@ -56,3 +55,42 @@ class AuthorizedEmailSchema(SQLAlchemyAutoSchema):
         load_instance = True
         include_fk = True
         
+class GradoSchema(SQLAlchemyAutoSchema):
+    
+    class Meta:
+        model = Grados
+        sqla_session = db.session
+        dump_only = ('id',)
+
+class MateriasSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = Materias
+        sqla_session = db.session
+        load_instance= True
+        dump_only = ('id',)
+        ordered = True
+
+    grado = Nested(GradoSchema, dump_only=True)
+        
+class EvaluacionSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = Evaluacion
+        sqla_session = db.session
+        dump_only = ('id',)
+
+
+class DocenteMateriaSchema(SQLAlchemyAutoSchema):
+
+    class Meta:
+        model = DocenteMaterias
+        sqla_session = db.session
+        dump_only = ('id',)
+        load_instance = True
+
+class EstudianteMateriaSchema(SQLAlchemyAutoSchema):
+
+    class Meta:
+        model = EstudianteMaterias
+        sqla_session = db.session
+        dump_only = ('id',)
+        load_instance = True
