@@ -82,7 +82,7 @@ class Materias(db.Model):
     grados = db.relationship(Grados, back_populates="materias")
 
     def __repr__(self):
-        return f"{self.nombre} - {self.grados.nombre}"
+        return f"{self.nombre} - {self.grados}"
 
 class DocenteMaterias(db.Model):
     id = db.Column(db.Integer, primary_key=True)
