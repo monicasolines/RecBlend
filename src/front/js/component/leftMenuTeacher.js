@@ -170,11 +170,13 @@ export const LeftMenuTeacher = () => {
                                 <ul className="collapse nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
                                     <li className="w-100">
                                         <Link to="#" className="nav-link px-0 text-white">
+                                            <i className="fs-4 bi-file-earmark-plus"></i>
                                             <span className="ms-2 d-none d-sm-inline list-menu-item" onClick={handleCreateEvaluation}>Crear</span>
                                         </Link>
                                     </li>
                                     <li>
                                         <Link to="#" className="nav-link px-0 text-white">
+                                            <i className="fs-4 bi-file-earmark-check"></i>
                                             <span className="ms-2 d-none d-sm-inline list-menu-item" onClick={handleGradeEvaluation}>Calificar</span>
                                         </Link>
                                     </li>
@@ -187,7 +189,7 @@ export const LeftMenuTeacher = () => {
                                     <span className="ms-1 d-none d-sm-inline list-menu-item">Editar</span>
                                 </Link>
                             </li>
-                            <li>
+                            {/*<li>
                                 <Link to="#submenu2" data-bs-toggle="collapse" className="nav-link px-0 align-middle text-white">
                                     <i className="fs-4 bi-calendar2-date"></i>
                                     <span className="ms-1 d-none d-sm-inline list-menu-item">Eventos</span>
@@ -210,7 +212,7 @@ export const LeftMenuTeacher = () => {
                                     <i className="fs-4 bi-chat-left-text"></i>
                                     <span className="ms-1 d-none d-sm-inline list-menu-item">Comunicados</span>
                                 </Link>
-                            </li>
+                            </li>*/}
                         </ul>
                         <hr />
                     </div>
