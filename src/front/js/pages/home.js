@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
-import { Context } from "../store/appContext";
-import RegistrationForm from '../component/RegistrationForm';
+import React, { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import "../../styles/home.css";
 import { Link } from "react-router-dom";
 import img1 from "../../img/niñosylibros.jpg"
@@ -8,7 +7,17 @@ import img2 from "../../img/padres-comprometidos-alumnos-destacados.jpg"
 import img3 from "../../img/un-aula-de-un-colegio.jpeg"
 
 export const Home = () => {
-	const { store, actions } = useContext(Context);
+	const location = useLocation();
+
+	useEffect(() => {
+		if (location.state?.scrollTo) {
+			const section = document.getElementById(location.state.scrollTo);
+			if (section) {
+				section.scrollIntoView({ behavior: "smooth" });
+			}
+		}
+	}, [location.state]);
+
 	return (
 		<div className="allSection">
 			<section id="bienvenida" className="section alternate">
@@ -19,7 +28,7 @@ export const Home = () => {
 							Una plataforma de uso múltiple donde cada usuario podrá aprovecharla de diferente manera.
 							Como Directivo podrás distribuir carga horaria, validar usuarios y supervisar todo a detalle.
 							Como Docente, serás capaz de ver tus horarios, asignar notas al alumnado e interactuar con los "responsables" de los niños.
-							El Responsable del alumno podrá divisar las notas, anotarlo a actividades extracurriculares y más. 
+							El Responsable del alumno podrá divisar las notas, anotarlo a actividades extracurriculares y más.
 						</p>
 					</div>
 					<div className="image-content">
@@ -38,7 +47,7 @@ export const Home = () => {
 						<p>
 							Conoce a los expertos que forman parte de nuestro equipo.
 							Cada Docente es elegido con cautela y múltiple evaluaciones para demostrar
-							que es apto para el cargo. 
+							que es apto para el cargo.
 						</p>
 					</div>
 				</div>
@@ -66,7 +75,7 @@ export const Home = () => {
 					<h2>Regístrese!</h2>
 					<p>No dudes en registrarte y obtener los beneficios de un Sistema ideado para su comodidad, tranquilidad y supervisión de desempeño Escolar.</p>
 					<Link to="/register">
-						<button className="button">Regístrese aquí!</button>
+						<button className="button" id="btn-reg">Regístrese aquí!</button>
 					</Link>
 				</div>
 			</section>
