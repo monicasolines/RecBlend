@@ -159,4 +159,8 @@ p {
   .register-button {
     width: auto; /* Deja de ocupar el 100% en pantallas grandes */
   }
+  .section-image{
+    min-width: 40%;
+    height: auto;
+  }
 }

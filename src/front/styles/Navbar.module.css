@@ -16,91 +16,66 @@
   z-index: 999;
 }
 
-/* Navbar personalizado */
 .navbar-custom {
   background-color: #2b2d42;
   font-weight: bold;
-  justify-content: flex-end;
+  justify-content: flex-start;
   color: white;
 }
 
-/* agregando detalles para el despliegue del menú */
+#basic-navbar-nav {
+  transition: max-height 1.5s ease;
+  max-height: 0;
+  color: white;
+  background-color: white;
+}
+
 .collapse-custom {
   background-color: #2b2d42;
   padding: 1em;
   border-radius: 8px;
   display: flex;
   justify-content: flex-end;
+  position: relative;
+  overflow: hidden;
 }
 
-/* Botón de hamburguesa */
+/* Para que el menú colapsado muestre su contenido de forma gradual */
+.collapse-custom.show {
+  max-height: 500px;
+  right: 10px;
+  max-width: 25%;
+  background: transparent;
+}
+
 .navbar-toggler {
   border: none;
-  padding: 0.4em;
   background-color: transparent;
-  margin-right: 10%;
+  padding: 0.4em;
+  position: relative;
+  margin-left: auto;
 }
 
 .navbar-toggler-icon {
-  width: 25px;
-  height: 3px;
-  background-color: #f8f8fd;
   position: relative;
-  transition: all 0.3s ease;
-}
-
-.navbar-toggler-icon::before,
-.navbar-toggler-icon::after {
-  content: '';
-  position: absolute;
   width: 25px;
   height: 3px;
-  background-color: #f8f8fd;
-  transition: all 0.3s ease;
+  transition: all 1.3s ease;
 }
 
-.navbar-toggler-icon::before {
-  top: -8px;
+ .navbar-toggler:hover{
+  background-color: #bbbaaa !important; 
 }
 
-.navbar-toggler-icon::after {
-  top: 8px;
-}
-
-/* Cambios en el botón al estar activo (cruz) */
-.navbar-toggler.collapsed .navbar-toggler-icon {
-  background-color: #f8f8fd;
-}
-
-.navbar-toggler:not(.collapsed) .navbar-toggler-icon {
-  background-color: transparent;
-}
-
-.navbar-toggler:not(.collapsed) .navbar-toggler-icon::before {
-  transform: rotate(45deg);
-  top: 0;
-}
-
-.navbar-toggler:not(.collapsed) .navbar-toggler-icon::after {
-  transform: rotate(-45deg);
-  top: 0;
-}
-
-#basic-navbar-nav {
-  transition: max-height 1.5s ease;
-  max-height: 0;
-}
-
-.collapse-custom.show {
-  max-height: 500px;
-  max-width: 30%;
+.navbar-toggler:focus{
+  color: transparent !important;
 }
 
 /* modificación desde acá en los botones del navbar utilizando pseudoelementos*/
 .NavButton {
   cursor: pointer;
-  /* background-color: #2b2d42; */
-  margin: 0 10px;
+  background-color: #2b2d42;
+  margin: 5px 10px;
   font-size: large;
   font-family: inherit;
   color: white !important;
@@ -132,7 +107,7 @@
   height: 5px;
   background-color: cyan;
   border-radius: 50%;
-  left: -5px;
+  left: -7px;
   top: 50%;
   transform: translateY(-50%);
   opacity: 0;
@@ -144,10 +119,6 @@
   transform: translateY(-50%) scale(1.2);
 }
 
-.NavButton:hover {
-  color: silver !important;
-}
-
 /* Estado activo con escala y cambio de color */
 .NavButton:active {
   color: #bbb;
@@ -156,12 +127,4 @@
 
 .NavButton:active::before {
   background-color: yellow;
-}
-
-.collapse-custom.show .NavButton.nav-link {
-  opacity: 1;
-  background-color: rgba(255, 255, 255, 0.7);
-  color: black !important;
-  transform: translateY(5em);
-  transition: opacity 0.4s ease, transform 0.4s ease-in-out, background-color 0.4s ease-out;
 }
