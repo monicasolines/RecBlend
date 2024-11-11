@@ -65,7 +65,7 @@ const RegistrationForm = () => {
                             required
                         />
                     </Form.Group>
-                    <Form.Group controlId="username">
+                    {/* <Form.Group controlId="username">
                         <Form.Label><strong>Username</strong></Form.Label>
                         <Form.Control
                             type="username"
@@ -75,7 +75,7 @@ const RegistrationForm = () => {
                             onChange={handleChange}
                             required
                         />
-                    </Form.Group>
+                    </Form.Group> */}
 
                     <Form.Group controlId="direccion">
                         <Form.Label><strong>Dirección</strong></Form.Label>
@@ -109,7 +109,7 @@ const RegistrationForm = () => {
                         >
                             <option value="">Selecciona una opción</option>
                             <option value="Padre">Padre/Madre</option>
-                            <option value="Tutor">Tutor</option>
+                            <option value="Tutor">Representante</option>
                         </Form.Control>
                     </Form.Group>
 

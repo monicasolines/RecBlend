@@ -3,8 +3,10 @@ import { useLocation } from "react-router-dom";
 import "../../styles/home.css";
 import { Link } from "react-router-dom";
 import img1 from "../../img/niñosylibros.jpg"
-import img2 from "../../img/padres-comprometidos-alumnos-destacados.jpg"
+// import img2 from "../../img/padres-comprometidos-alumnos-destacados.jpg"
 import img3 from "../../img/un-aula-de-un-colegio.jpeg"
+import CardDocente from '../component/CardDocente';
+import CarruselValoraciones from '../component/CarruselValoraciones';
 
 export const Home = () => {
 	const location = useLocation();
@@ -39,17 +41,14 @@ export const Home = () => {
 
 			<section id="profesorado" className="section">
 				<div className="container">
-					<div className="image-content">
-						<img src={img2} alt="Padres e hijos" className="section-image" />
-					</div>
 					<div className="text-content">
 						<h2>Nuestro Profesorado</h2>
 						<p>
-							Conoce a los expertos que forman parte de nuestro equipo.
-							Cada Docente es elegido con cautela y múltiple evaluaciones para demostrar
-							que es apto para el cargo.
+							Conoce a los expertos que forman parte de nuestro equipo. Cada Docente es elegido con cautela y múltiple evaluaciones para demostrar que es apto para el cargo.
 						</p>
 					</div>
+					<CardDocente />
+					<CarruselValoraciones />
 				</div>
 			</section>
 
