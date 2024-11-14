@@ -14,139 +14,15 @@ h1 {
   text-decoration: underline;
 }
 
-/* Navbar personalizado */
-.navbar-custom {
-  background-color: #060606;
-  font-weight: bold;
-  justify-content: space-between;
-  color: white;
-}
 
-/* Botón de hamburguesa */
-.navbar-toggler {
-  background-color: transparent;
-  border: none;
-  padding: 0.4em;
-}
-
-.navbar-toggler-icon {
-  background-color: #f8f8fd;
-  width: 25px;
-  height: 3px;
-  border-radius: 2px;
-  position: relative;
-  transition: all 0.3s ease;
-  text-align: -webkit-auto;
-}
-
-.navbar-toggler-icon::before,
-.navbar-toggler-icon::after {
-  content: '';
-  position: absolute;
-  width: 25px;
-  height: 3px;
-  background-color: #f8f8fd;
-  border-radius: 2px;
-  transition: all 0.3s ease;
-}
-
-.navbar-toggler-icon::before {
-  top: -8px;
-}
-
-.navbar-toggler-icon::after {
-  top: 8px;
-}
-
-/* Transformación del botón hamburguesa al estar activo */
-.navbar-toggler:not(.collapsed) .navbar-toggler-icon {
-  background-color: transparent;
-}
-
-.navbar-toggler:not(.collapsed) .navbar-toggler-icon::before {
-  transform: rotate(45deg);
-  top: 0;
-}
-
-.navbar-toggler:not(.collapsed) .navbar-toggler-icon::after {
-  transform: rotate(-45deg);
-  top: 0;
-}
-
-#basic-navbar-nav {
-  transition: max-height 1.5s ease;
-  max-height: 0;
-}
-
-.collapse-custom.show {
-  max-height: 500px; 
-}
-
-.NavButton.nav-link {
-  cursor: pointer;
-  font-size: large;
-  font-family: inherit;
-  font-weight: bold;
-  color: #0d0d0e;
-  background-color: #f8f8fd;
-  padding: 0.8em 2.2em;
-  border-radius: 8px;
-  margin: 15px 3px;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.NavButton.nav-link:hover {
-  background-color: #0056b3;
-  color: white !important;
-}
-
-.NavButton.nav-link:active {
-  position: relative;
-  top: 8px;
-  box-shadow: 0px 0px;
-}
-
-.dashboard-icon {
-  position: fixed;
-  top: 10px;
-  left: 10px;
-  cursor: pointer;
-  z-index: 1000;
-}
-
-.dashboard {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 250px;
-  height: 100vh;
-  background-color: #060707;
-  z-index: 999;
-}
-
-#ContainerForm {
-  padding-top: 100px;
-  padding-bottom: 120px;
-}
 .footer {
-  background-color: #060707;
+  background-color: #2b2d42;
   color: white;
   font-weight: bold;
 }
-
-a {
-  color: aliceblue;
+.footer a {
+  color:cyan;
   text-decoration: none;
-}
-
-body {
-  background: linear-gradient(180deg, #2396e8, #6d8090);
-  color: white;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
-  height: 100%;
 }
 
 p {
@@ -178,6 +54,7 @@ p {
   flex-direction: column;
   margin: 0 auto;
   padding: 40px;
+  color: white;
 }
 
 .section {
@@ -193,39 +70,18 @@ p {
   max-width: 1200px;
   margin: 0 auto;
 }
-
+.ContainerF {
+  background: linear-gradient(180deg, #0a3d62, #3c6382);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  padding: 40px;
+  color: white;
+}
 .text-content {
   flex: 1;
 }
-
-form {
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
-  border-radius: 10px;
-  padding: 20px;
-  background-color: whitesmoke;
-  color: #060606;
-  font-weight: 500;
-  align-self: center;
-  width: 100%;
-}
-
-
-form .form-control,
-form .form-select {
-  box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
-  transition: all 0.2s ease;
-}
-
-form .form-control:focus,
-form .form-select:focus {
-  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2), inset 0px 2px 4px rgba(0, 0, 0, 0.1);
-  border-color: #0a3d62;
-  transform: scale(1.03);
-  z-index: 1;
-}
-
-
 
 .image-content {
   flex: 1;
@@ -252,49 +108,59 @@ form .form-select:focus {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  min-height: 200px;
   padding: 20px;
   text-align: center;
 }
-#LoginForm {
-  margin-bottom: 90px;
-}
-/* From Uiverse.io by KhelVers */
-.button {
-  cursor: pointer;
-  font-size: large;
-  font-family: inherit;
-  font-weight: bold;
-  color: #0011ff;
-  background-color: #f8f8fd;
-  padding: 0.8em 2.2em;
-  border-radius: 50em;
-  border: 6px solid #8b93f8;
-  box-shadow: 0px 8px #1f35ff;
+
+#btn-reg{
+  background-color: black;   
+  border: 2px solid #2b2d42;   
+  color: whitesmoke;   
+  padding: 0.375rem 0.75rem;   
+  font-size: 1rem;
+  font-weight: 650;   
+  border-radius: 0.3rem;   
+  transition: background-color 0.2s, color 0.2s;
 }
 
-.button:hover {
-  background-color: #0056b3;
-  color: white;
+#btn-reg:hover{
+  background-color: grey;   
+  color: white; 
+  align-self: center;
+  align-content: center;
+  align-items: center;
 }
 
-.button:active {
-  position: relative;
-  top: 8px;
-  border: 6px solid #646fff;
-  box-shadow: 0px 0px;
+#btn-reg:focus {  
+  outline-style: solid;   
+  outline-color: #2b2d42;   
+  outline-width: 2px;   
+  outline-offset: 2px;   
 }
+#btn-reg:active{
+  background-color: #2b2d42;  
+  color: white; 
+} 
 
-
-
-@media (max-width: 768px) {
+@media (max-width: 768px) { 
   .section {
-    flex-direction: column;
-    text-align: center;
+    flex-direction: column; /* Cambia a columna para apilar los elementos */
+    text-align: center; /* Centra el texto */
+    padding: 30px 10px; /* Reduce el padding para mejorar el espaciado */
+  }
+
+  .image-content {
+    width: auto;
+    height:auto;
+    margin-bottom: 20px; /* Añade un margen inferior para el espaciado */
   }
 
   .register-button {
-    width: auto;
-    /* Deja de ocupar el 100% en pantallas grandes */
+    width: auto; /* Deja de ocupar el 100% en pantallas grandes */
+  }
+  .section-image{
+    min-width: 40%;
+    height: auto;
   }
 }

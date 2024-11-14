@@ -114,7 +114,7 @@ export const LeftMenuAdmin = () => {
                 return <FormCommon type="teacher" />;
             default:
                 return (
-                    <div className="jumbotron jumbotron-fluid">
+                    <div className="jumbotron jumbotron-fluid ">
                         <div className="container">
                             <h1 className="text-welcome display-4">¡Qué bueno verte de regreso!</h1>
                             <p className="lead text-welcome-content">Recuerda usar el menú de la izquierda para editar la información de los estudiantes y el profesorado.</p>
@@ -136,17 +136,17 @@ export const LeftMenuAdmin = () => {
                             <li>
                                 <Link to="#submenu1" data-bs-toggle="collapse" className="nav-link px-0 align-middle text-white">
                                     <i className="fs-4 bi-save2"></i>
-                                    <span className="ms-1 d-none d-sm-inline">Registrar</span>
+                                    <span className="ms-1 d-none d-sm-inline list-menu-item">Crear</span>
                                 </Link>
                                 <ul className="collapse nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
                                     <li className="w-100">
                                         <Link to="#" className="nav-link px-0 text-white" onClick={handleStudentRegisterForm}>
-                                            <span className="d-none d-sm-inline">Estudiantes</span>
+                                            <span className="d-none d-sm-inline list-menu-item ms-2">Estudiantes</span>
                                         </Link>
                                     </li>
                                     <li>
                                         <Link to="#" className="nav-link px-0 text-white" onClick={handleTeacherRegisterForm}>
-                                            <span className="d-none d-sm-inline">Profesores</span>
+                                            <span className="d-none d-sm-inline list-menu-item ms-2">Profesores</span>
                                         </Link>
                                     </li>
                                 </ul>
@@ -154,17 +154,17 @@ export const LeftMenuAdmin = () => {
                             <li>
                                 <Link to="#submenuEditar" data-bs-toggle="collapse" className="nav-link px-0 align-middle text-white">
                                     <i className="fs-4 bi-pen"></i>
-                                    <span className="ms-1 d-none d-sm-inline">Editar</span>
+                                    <span className="ms-1 d-none d-sm-inline list-menu-item">Editar</span>
                                 </Link>
                                 <ul className="collapse nav flex-column ms-1" id="submenuEditar" data-bs-parent="#menu">
                                     <li className="w-100">
                                         <Link to="#" className="nav-link px-0 text-white">
-                                            <span className="d-none d-sm-inline">Estudiantes</span>
+                                            <span className="d-none d-sm-inline list-menu-item ms-2">Estudiantes</span>
                                         </Link>
                                     </li>
                                     <li>
                                         <Link to="#" className="nav-link px-0 text-white">
-                                            <span className="d-none d-sm-inline">Profesores</span>
+                                            <span className="d-none d-sm-inline list-menu-item ms-2">Profesores</span>
                                         </Link>
                                     </li>
                                 </ul>
@@ -172,17 +172,17 @@ export const LeftMenuAdmin = () => {
                             <li>
                                 <Link to="#submenu2" data-bs-toggle="collapse" className="nav-link px-0 align-middle text-white">
                                     <i className="fs-4 bi-book"></i>
-                                    <span className="ms-1 d-none d-sm-inline">Materias</span>
+                                    <span className="ms-1 d-none d-sm-inline list-menu-item">Grados</span>
                                 </Link>
                                 <ul className="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
                                     <li className="w-100">
                                         <Link to="#" className="nav-link px-0 text-white">
-                                            <span className="d-none d-sm-inline">Item</span> 1
+                                            <span className="d-none d-sm-inline list-menu-item">Item</span> 1
                                         </Link>
                                     </li>
                                     <li>
                                         <Link to="#" className="nav-link px-0 text-white">
-                                            <span className="d-none d-sm-inline">Item</span> 2
+                                            <span className="d-none d-sm-inline list-menu-item">Item</span> 2
                                         </Link>
                                     </li>
                                 </ul>
@@ -190,7 +190,7 @@ export const LeftMenuAdmin = () => {
                             <li>
                                 <Link to="#submenu3" data-bs-toggle="collapse" className="nav-link px-0 align-middle text-white">
                                     <i className="fs-4 bi-door-open"></i>
-                                    <span className="ms-1 d-none d-sm-inline">Permisos</span>
+                                    <span className="ms-1 d-none d-sm-inline list-menu-item">Permisos</span>
                                 </Link>
                             </li>
                         </ul>
