@@ -8,7 +8,7 @@ from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt, get_jwt_identity
-from .schemas import UserSchema
+from api.schemas import UserSchema
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)

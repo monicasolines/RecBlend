@@ -9,11 +9,6 @@ class Role(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(20))
 
-
-    users = db.relationship("User", back_populates="rol")
-    authorized_email = db.relationship("EmailAuthorized", back_populates="role")
-    
-
     def __repr__(self):
         return f"{self.nombre}"
 
@@ -23,16 +18,11 @@ class EmailAuthorized(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(50), unique=True, nullable=False)
     isRegistered = db.Column(db.Boolean(), nullable=False, default=False)
-    role_id = db.Column(db.Integer, db.ForeignKey('role.id'), nullable=False)
+    role_id = db.Column(db.Integer, db.ForeignKey('role.id'), nullable=True)
 
-    role = db.relationship('Role', back_populates='authorized_email')
-
-    __table_args__ = (
-        db.UniqueConstraint('email', 'role_id', name="email_role_unique"),
-    )
 
     def __repr__(self):
-        return f"Email: {self.email} - Registered: {self.isRegistered}"
+        return f"Email: {self.email} - Registered: {self.isRegistered} - Role: {self.role_id}"
 
 class User(db.Model):
     __tablename__ = "user"
@@ -46,12 +36,10 @@ class User(db.Model):
     is_active = db.Column(db.Boolean(), default=True, nullable=False)
     role_id = db.Column(db.Integer, db.ForeignKey('role.id'), nullable=False)
 
-    estudiantes = db.relationship("Estudiante", back_populates="representante")
-
-    rol = db.relationship(Role, back_populates='users')
+    rol = db.relationship(Role)
 
     def __repr__(self):
-        return f'{self.nombre} - {self.rol.nombre}'
+        return f'{self.nombre} {self.apellido} - {self.role_id}'
 
 
 class Docente(User):
@@ -73,6 +61,7 @@ class Grados(db.Model):
     nombre = db.Column(db.String(40), nullable=False, unique=True)
 
     materias = db.relationship('Materias', back_populates='grado')
+    estudiantes = db.relationship('Estudiante', back_populates="grado")
 
     def __repr__(self):
         return f"{self.nombre}"
@@ -86,7 +75,6 @@ class Materias(db.Model):
     grado_id = db.Column(db.Integer, db.ForeignKey('grado.id'))
 
     grado = db.relationship(Grados, back_populates="materias")
-    estudiantes_inscritos = db.relationship('EstudianteMaterias', back_populates="materia")
     docentes_asignados = db.relationship('DocenteMaterias', back_populates='materia')
 
     def __repr__(self):
@@ -102,22 +90,6 @@ class DocenteMaterias(db.Model):
 
     __table_args__ = (db.UniqueConstraint(id_docente, id_materia, name="docente_materia_unique"),)
 
-class EstudianteMaterias(db.Model):
-    __tablename__ = "estudiante_materias"
-    id = db.Column(db.Integer, primary_key=True)
-    id_estudiante = db.Column(db.Integer, db.ForeignKey("estudiante.id"))
-    id_materia = db.Column(db.Integer, db.ForeignKey("materia.id"))
-
-
-    estudiante = db.relationship('Estudiante', back_populates="materias_inscritas")
-    materia = db.relationship(Materias, back_populates="estudiantes_inscritos")
-
-    __table_args__ = (db.UniqueConstraint(id_estudiante, id_materia, name="estudiante_materia_unique"),)
-
-    def __repr__(self):
-        return f"{self.materia.nombre}"
-
-
 class Estudiante(db.Model):
     __tablename__ = "estudiante"
 
@@ -128,9 +100,11 @@ class Estudiante(db.Model):
     fecha_ingreso = db.Column(db.Date, nullable=False)
     is_active = db.Column(db.Boolean(), default=True, nullable=False)
     representante_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    grado_id = db.Column(db.Integer, db.ForeignKey('grado.id'))
+    
+    grado = db.relationship(Grados, back_populates="estudiantes")
 
-    representante = db.relationship('User', back_populates="estudiantes")
-    materias_inscritas = db.relationship('EstudianteMaterias', back_populates="estudiante")
+    representante = db.relationship('User')
     calificaciones = db.relationship('Calificacion', back_populates='estudiante')
     
     __table_args__ = (db.UniqueConstraint(nombre, apellido, representante_id, name="estudiante_representante_unique"),)

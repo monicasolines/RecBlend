@@ -8,9 +8,9 @@ from flask_swagger import swagger
 from flask_jwt_extended import JWTManager
 from api.utils import APIException, generate_sitemap
 from api.models import db, BlockedTokenList
-from api.routes import api
-from api.admin_routes import admin_routes
-from api.teacher_routes import teacher_routes
+from api.routes.routes import api
+from api.routes.admin_routes import admin_routes
+from api.routes.teacher_routes import teacher_routes
 from api.admin import setup_admin
 from api.commands import setup_commands
 
