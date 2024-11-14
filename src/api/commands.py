@@ -1,6 +1,9 @@
 
 import click
-from api.models import db, User
+from api.models import db, User, Role, EmailAuthorized, Docente
+from api.routes.routes import bcrypt
+from sqlalchemy.exc import IntegrityError
+
 
 """
 In this file, you can add as many commands as you want using the @app.cli.command decorator
@@ -31,4 +34,104 @@ def setup_commands(app):
 
     @app.cli.command("insert-test-data")
     def insert_test_data():
-        pass
+        print("Creating test data")
+        
+        print("Roles:")
+        
+        roles = ["Admin","Docente", "Representante"]
+        for r in roles:
+            role = Role()
+            role.nombre = r
+            db.session.add(role)
+            db.session.commit()
+            print(f"Role: {r}, Created")
+            
+        print("Creating admin User")
+        try:
+            admin_data = {
+            "email": "administrador@test.com",
+            "nombre": "Juan",
+            "apellido": "Pérez",
+            "is_active": True,
+            "role_id": 1
+        }
+            auth = EmailAuthorized()
+            auth.email = "administrador@test.com"
+            auth.role_id = 1
+            auth.isRegistered = True
+            admin_user = User(**admin_data)
+            admin_user.password = bcrypt.generate_password_hash("adminpass").decode('utf-8')
+            admin_user.direccion = "Calle Falsa 123, Ciudad falsa tambien"
+            db.session.add(auth)
+            db.session.add(admin_user)
+            db.session.commit()
+            
+        except IntegrityError as e:
+            db.session.rollback()
+            print("Integrity Error")
+            print(e.orig)
+            return
+    
+        print("Creating Teachers:")
+        
+        teachers_data = [
+    {
+        "email": "teacher1@test.com",
+        "nombre": "Pablo",
+        "apellido": "Pérez",
+        "telefono": "123456789",
+        "is_active": True,
+        "role_id": 2
+    },
+    {
+        "email": "teacher2@test.com",
+        "nombre": "Carlos",
+        "apellido": "López",
+        "telefono": "555123456",
+        "is_active": True,
+        "role_id": 2
+    }
+]
+        for t in teachers_data:
+            teacher = Docente(**t)
+            teacher.password = bcrypt.generate_password_hash("12345").decode('utf-8')
+            teacher.direccion = "Calle Falsa 123, Ciudad falsa tambien"
+            teacher.descripcion = "Un profesor de prueba como datos de prueba"
+            teacher.foto = "https://placehold.co/250"
+            db.session.add(teacher)
+            db.session.commit()
+            print(f"Docente creado: {teacher} - {teacher.email}")
+            
+        print("Creating Parents")
+        parents_data =[
+                {
+            "email": "parent1@test.com",
+            "nombre": "miguel",
+            "apellido": "López",
+            "telefono": "123455678",
+            "is_active": True,
+            "role_id": 3
+        },{
+            "email": "parent2@test.com",
+            "nombre": "Angel",
+            "apellido": "Jimenez",
+            "telefono": "12345988",
+            "is_active": True,
+            "role_id": 3
+        }
+        ]
+        
+        for p in parents_data:
+            parent = User(**p)
+            parent.password = bcrypt.generate_password_hash("12345").decode('utf-8')
+            parent.direccion = "Calle Falsa 123, Ciudad falsa tambien"
+
+            db.session.add(parent)
+            db.session.commit()
+            print(f"Created parent {parent}")
+
+    
+
+        
+    
+        
