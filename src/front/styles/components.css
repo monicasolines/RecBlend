@@ -1,13 +1,36 @@
 .render-content {
-  background-color: #D6EDFF;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  z-index: -1;
 }
 
-.text-welcome {
-  color: #2b2d42;
+.welcome-message {
+  position: absolute;
+  z-index: 1;
+  overflow: visible;
 }
 
-.text-welcome-content {
-  color: #087ca7;
+.welcome-icon {
+  max-width: 60%;
+  width: 20%;
+  height: auto;
+  object-fit: contain;
+  margin-right: 1.3rem;
+}
+
+.text-title {
+  color: white;
+  font-family: "Montserrat", serif;
+  font-style: normal;
+}
+
+.text-content {
+  color: white;
+  font-family: "Cantarell", serif;
+  font-style: normal;
 }
 
 .btn-outline-register {
@@ -123,4 +146,21 @@
 .custom-select:hover {
   background-color: #2b2d42;
   color: white;
+}
+
+.container-welcome-parent {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  height: 100vh;
+}
+
+.container-welcome-teacher {
+  margin-left: 3rem;
+  padding: 2rem;
+  width: 900px;
+  height: auto;
+  border-radius: 2rem;
+  background-image: linear-gradient(to right, #1f7692, #433887);
+  opacity: .8;
 }
