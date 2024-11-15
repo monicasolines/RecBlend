@@ -48,10 +48,8 @@ export default CardDocente;
 // const CardDocente = () => {
 //     const [docentes, setDocentes] = useState([]);
 
-//     // useEffect para cargar datos de la API al montar el componente
 //     useEffect(() => {
-//         // URL de ejemplo, reemplázala con la URL de tu API
-//         fetch(`${process.env.REACT_APP_BACKEND_URL}/admin/teachers`)
+//         fetch(`${process.env.BACKEND_URL}/admin/teachers`)
 //             .then(response => {
 //                 if (!response.ok) {
 //                     throw new Error('Error al cargar los datos');
@@ -70,7 +68,7 @@ export default CardDocente;
 //                         <Card className={styles.card}>
 //                             <Card.Img
 //                                 variant="top"
-//                                 src={docente.img} // Asegúrate de que la propiedad img tenga la URL correcta en tu API
+//                                 src={docente.img} 
 //                                 alt={`Foto de ${docente.name}`}
 //                                 className={styles.cardImg}
 //                             />

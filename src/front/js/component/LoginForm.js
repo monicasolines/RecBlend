@@ -1,29 +1,42 @@
 import React, { useState } from 'react';
 import { Form, Button, Row, Col, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import styles from "../../styles/LoginForm.module.css"; 
+import styles from "../../styles/LoginForm.module.css";
 
 const LoginForm = () => {
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        const validUsername = "usuarioPrueba";
-        const validPassword = "contraseña123";
+        setError(''); // Limpiar errores previos
 
-        if (username === '' || password === '') {
+        if (email === '' || password === '') {
             setError('Por favor, complete todos los campos');
             return;
         }
 
-        if (username === validUsername && password === validPassword) {
-            setError('');
-            navigate('/home');
-        } else {
-            setError('Nombre de usuario o contraseña incorrectos');
+        try {
+            const response = await fetch(`${process.env.Backend_URL}/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                localStorage.setItem('token', data.token);
+                navigate('/home');
+            } else {
+                setError(data.message || 'Nombre de usuario o contraseña incorrectos');
+            }
+        } catch (error) {
+            setError('Ocurrió un error al intentar iniciar sesión');
         }
     };
 
@@ -33,14 +46,14 @@ const LoginForm = () => {
                 <Col xs={12} md={6} lg={4} className="mx-auto">
                     <h2 className="text-center mb-4"><strong>Iniciar Sesión</strong></h2>
                     {error && <Alert variant="danger">{error}</Alert>}
-                    <Form onSubmit={handleSubmit} className="p-4 border rounded shadow">
-                        <Form.Group controlId="username">
-                            <Form.Label>Nombre de Usuario</Form.Label>
+                    <Form onSubmit={handleSubmit} className={`${styles.form} p-4 border rounded shadow`}>
+                        <Form.Group controlId="email">
+                            <Form.Label>Email</Form.Label>
                             <Form.Control
                                 type="text"
-                                placeholder="Ingrese su usuario"
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
+                                placeholder="Ingrese su correo electrónico"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                                 required
                             />
                         </Form.Group>

@@ -1,4 +1,4 @@
-form {
+.form {
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
   padding: 20px;
@@ -15,15 +15,15 @@ h2 {
   text-decoration: underline;
 }
 
-form .form-control,
-form .form-select {
+.form .form-control,
+.form .form-select {
   box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   transition: all 0.2s ease;
 }
 
-form .form-control:focus,
-form .form-select:focus {
+.form .form-control:focus,
+.form .form-select:focus {
   box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2), inset 0px 2px 4px rgba(0, 0, 0, 0.1);
   border-color: #0a3d62;
   transform: scale(1.03);
@@ -38,7 +38,7 @@ form .form-select:focus {
 
 .LoginForm {
   background: linear-gradient(180deg, #0a3d62, #3c6382);
-  min-height: 91.3vh;
+  min-height: 94vh;
   display: flex;
   flex-direction: column;
   justify-content: center;

@@ -7,10 +7,8 @@ const RegistrationForm = () => {
         nombre: '',
         apellido: '',
         email: '',
-        username: '',
         direccion: '',
         celular: '',
-        relacion: '',
         motivo: ''
     });
 
@@ -19,17 +17,37 @@ const RegistrationForm = () => {
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // manejar datos
-        console.log(formData);
+        setError(''); // Limpiar errores previos
+
+        try {
+            const response = await fetch(`${process.env.REACT_APP_Backend_URL}/register`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                // Registro exitoso, redirigir o mostrar mensaje de éxito
+                navigate('/login');
+            } else {
+                setError(data.message || 'Error al registrarse');
+            }
+        } catch (error) {
+            setError('Ocurrió un error al intentar registrarse');
+        }
     };
 
     return (
-        <div className='ContainerF'>
-            <Container className="mt-4" id='ContainerForm'>
+        <div className={`${styles.ContainerF}`}>
+            <Container className="mt-4">
                 <h2 className="text-center mb-4"><strong>Formulario de Inscripción</strong></h2>
-                <Form onSubmit={handleSubmit}>
+                <Form onSubmit={handleSubmit} className={`${styles.ContainerForm}`}>
 
                     <Form.Group controlId="nombre">
                         <Form.Label><strong>Nombre</strong></Form.Label>
@@ -65,17 +83,6 @@ const RegistrationForm = () => {
                             required
                         />
                     </Form.Group>
-                    {/* <Form.Group controlId="username">
-                        <Form.Label><strong>Username</strong></Form.Label>
-                        <Form.Control
-                            type="username"
-                            placeholder="username"
-                            name="username"
-                            value={formData.username}
-                            onChange={handleChange}
-                            required
-                        />
-                    </Form.Group> */}
 
                     <Form.Group controlId="direccion">
                         <Form.Label><strong>Dirección</strong></Form.Label>
@@ -99,22 +106,8 @@ const RegistrationForm = () => {
                         />
                     </Form.Group>
 
-                    <Form.Group controlId="relacion">
-                        <Form.Label><strong>Relación con el alumno</strong></Form.Label>
-                        <Form.Control
-                            as="select"
-                            name="relacion"
-                            value={formData.relacion}
-                            onChange={handleChange}
-                        >
-                            <option value="">Selecciona una opción</option>
-                            <option value="Padre">Padre/Madre</option>
-                            <option value="Tutor">Representante</option>
-                        </Form.Control>
-                    </Form.Group>
-
                     <Form.Group controlId="motivo">
-                        <Form.Label><strong>¿Por qué inscribe a su hijo en la institución?</strong></Form.Label>
+                        <Form.Label id='textarea'><strong>¿Por qué inscribe a su hijo en la institución?</strong></Form.Label>
                         <Form.Control
                             as="textarea"
                             rows={3}

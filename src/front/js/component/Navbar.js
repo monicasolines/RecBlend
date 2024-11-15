@@ -22,7 +22,7 @@ const NavBar = () => {
         />
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" className={`${styles['navbar-toggler']}`} />
-      <Navbar.Collapse id="basic-navbar-nav" className={styles['collapse-custom']}>
+      <Navbar.Collapse id="basic-navbar-nav" className={`${styles.collapseCustom}`}>
         <Nav className="ms-auto text-center ml-4">
           <Nav.Link as={Link} to="/home" className={`${styles.NavButton} nav-link`}>Inicio</Nav.Link>
           <Nav.Link onClick={() => handleScrollToSection("profesorado")} className={`${styles.NavButton} nav-link`}>Profesorado</Nav.Link>

@@ -19,11 +19,17 @@
   }
 
   .carouselItem {
+    scale: 1;
+    transition: scale .6s ease-in-out;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     padding: 1rem;
+    
+    @starting-style {
+      scale:0;
+    }
   }
 
   .userName {
@@ -35,7 +41,6 @@
   .rating {
     font-size: 3.5rem;
     color: #ffaa00;
-    /* Color dorado para las estrellas */
     margin: 0.5rem 0;
   }
 
