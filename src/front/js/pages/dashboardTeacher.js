@@ -1,17 +1,17 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-
+import "../../styles/components.css";
 import { Context } from "../store/appContext";
-import { LeftMenuAdmin } from "../component/leftMenuAdmin";
+import { LeftMenuTeacher } from "../component/leftMenuTeacher";
 
-export const DashboardAdmin = () => {
+export const DashboardTeacher = () => {
     const { store, actions } = useContext(Context);
 
     return (
         <div className="container-fluid mt-5">
-            <div className="row">
-                <div className="col mt-5">
-                    <LeftMenuAdmin />
+            <div className="row" >
+                <div className="col mt-5" >
+                    <LeftMenuTeacher />
                 </div>
             </div>
         </div>
