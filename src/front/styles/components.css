@@ -1,28 +1,118 @@
+/* estilos para el renderizado del contenedor de los formularios */
+
+
 .render-content {
-  background-color: #D6EDFF;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  z-index: 1;
 }
 
-.text-welcome {
-  color: #2b2d42;
+
+/* Mensaje de bienvenida del dashboard*/
+
+
+.container-welcome-parent {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  height: 100vh;
 }
 
-.text-welcome-content {
-  color: #087ca7;
+.container-welcome-teacher {
+  margin-left: 3rem;
+  padding: 2rem;
+  width: 900px;
+  height: auto;
+  border-radius: 2rem;
+  background-image: linear-gradient(to right, #1f7692, #433887);
+  opacity: .8;
+}
+
+.welcome-message {
+  position: absolute;
+  z-index: 1;
+  overflow: visible;
+}
+
+.welcome-icon {
+  max-width: 60%;
+  width: 20%;
+  height: auto;
+  object-fit: contain;
+  margin-right: 1.3rem;
+}
+
+
+/*Estilos para títulos y contenidos*/
+
+
+.text-title {
+  color: white;
+  font-family: "Montserrat", serif;
+  font-style: normal;
+}
+
+.text-content {
+  color: white;
+  font-family: "Cantarell", serif;
+  font-style: normal;
+}
+
+
+/* Estilos para botón de registro del formulario */
+
+
+.btn-outline-register {
+  position: relative;
+  padding: 10px 20px;
+  border-radius: 3rem;
+  border: 1px solid rgb(61, 106, 255);
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 2px;
+  background: transparent;
+  color: #fff;
+  overflow: hidden;
+  box-shadow: 0 0 0 0 transparent;
+  -webkit-transition: all 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
 }
 
 .btn-outline-register {
-  background-color: transparent;
-  border: 2px solid #2b2d42;
-  color: #2b2d42;
-  padding: 0.375rem 0.75rem;
-  font-size: 1rem;
-  border-radius: 0.3rem;
-  transition: background-color 0.2s, color 0.2s;
+  background: rgb(61, 106, 255);
+  box-shadow: 0 0 6px 3px rgba(0, 142, 236, 0.815);
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
 }
 
-.btn-outline-register:hover {
-  background-color: #2b2d42;
-  color: white;
+.btn-outline-register:hover::before {
+  -webkit-animation: sh02 0.5s 0s linear;
+  -moz-animation: sh02 0.5s 0s linear;
+  animation: sh02 0.5s 0s linear;
+}
+
+.btn-outline-register::before {
+  content: '';
+  display: block;
+  width: 0px;
+  height: 86%;
+  position: absolute;
+  top: 7%;
+  left: 0%;
+  opacity: 0;
+  background: #fff;
+  box-shadow: 0 0 50px 30px #fff;
+  -webkit-transform: skewX(-20deg);
+  -moz-transform: skewX(-20deg);
+  -ms-transform: skewX(-20deg);
+  -o-transform: skewX(-20deg);
+  transform: skewX(-20deg);
 }
 
 .btn-outline-register:focus {
@@ -32,10 +122,32 @@
   outline-offset: 2px;
 }
 
-.btn-outline-register:active {
-  background-color: #2b2d42;
-  color: white;
+@keyframes sh02 {
+  from {
+    opacity: 0;
+    left: 0%;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    left: 100%;
+  }
 }
+
+.btn-outline-register:active {
+  box-shadow: 0 0 0 0 transparent;
+  -webkit-transition: box-shadow 0.2s ease-in;
+  -moz-transition: box-shadow 0.2s ease-in;
+  transition: box-shadow 0.2s ease-in;
+}
+
+
+/* Estilos para la opción de subir imagen en la vista de administrador*/
+
 
 .teacher-photo {
   border: 2px solid #087ca7;
@@ -67,6 +179,8 @@
   color: white;
 }
 
+
+/* Estilos para mouse over en los elementos del menú */
 
 
 .list-menu-item {
@@ -108,4 +222,23 @@
 .list-menu-item:hover::after {
   width: 100%;
   transition: width 0.25s ease-in-out 0.25s;
+}
+
+
+/* Estilos de mouse over para elementos de opción múltiple de los formularios */
+
+
+.custom-select {
+  background-color: transparent;
+  border: 2px solid #2b2d42;
+  color: #2b2d42;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  border-radius: 0.3rem;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.custom-select:hover {
+  background-color: #2b2d42;
+  color: white;
 }

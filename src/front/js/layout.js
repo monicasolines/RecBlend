@@ -15,7 +15,7 @@ import LoginForm from './component/LoginForm';
 const Layout = () => {
     const basename = process.env.BASENAME || "";
 
-    if (!process.env.REACT_APP_Backend_URL || process.env.REACT_APP_Backend_URL === "") {
+    if (!process.env.BACKEND_URL || process.env.BACKEND_URL === "") {
         return <BackendURL />;
     }
 

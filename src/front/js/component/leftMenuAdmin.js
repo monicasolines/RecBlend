@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import backgroundForViews from "../../img/background.jpg";
+import imgWelcome from "../../img/wellcomeicon.png"
 import "../../styles/components.css";
 import Swal from 'sweetalert2';
 
@@ -14,7 +16,9 @@ const FormCommon = ({ type }) => {
         email: '',
         password: '',
         description: '',
-        photo: null
+        photo: null,
+        classroomName: '',
+        subjectName: ''
     });
 
     const handleChange = (e) => {
@@ -52,18 +56,28 @@ const FormCommon = ({ type }) => {
         <div className="container ms-2">
             <h4 className="text-welcome">{`Registrar ${type === 'student' ? 'estudiante' : 'profesor'} nuevo`}</h4>
             <form onSubmit={submitStudentTeacherCreation}>
-                <div className="mb-3">
+
+                {/* Formulario con elementos comunes para crear profesor y estudiante */}
+
+                {(type === 'student' || type === 'teacher') && <div className="mb-3">
                     <label className="form-label text-welcome">Nombre:</label>
                     <input type="text" name="name" className="form-control" required value={formData.name} onChange={handleChange} />
-                </div>
-                <div className="mb-3">
+                </div>}
+                {(type === 'student' || type === 'teacher') && <div className="mb-3">
                     <label className="form-label text-welcome">Apellido:</label>
                     <input type="text" name="lastName" className="form-control" required value={formData.lastName} onChange={handleChange} />
-                </div>
-                <div className="mb-3">
+                </div>}
+                {(type === 'student' || type === 'teacher') && <div className="mb-3">
                     <label className="form-label text-welcome">Email:</label>
                     <input type="email" name="email" className="form-control" required value={formData.email} onChange={handleChange} />
-                </div>
+                </div>}
+                {type === 'student' && <div className="mb-3">
+                    <label className="form-label text-welcome">Fecha de nacimiento:</label> <br></br>
+                    <DatePicker selected={startDate} onChange={date => setStartDate(date)} dateFormat="yyyy/MM/dd" className="form-control" required />
+                </div>}
+
+                {/* Elementos específicos del formuario para crear profesor */}
+
                 {type === 'teacher' && (
                     <div className="mb-3">
                         <label className="form-label text-welcome">Contraseña:</label>
@@ -76,11 +90,19 @@ const FormCommon = ({ type }) => {
                         <textarea name="description" className="form-control" rows="3" required value={formData.description} onChange={handleChange}></textarea>
                     </div>
                 )}
-                {type === 'student' && <div className="mb-3">
-                    <label className="form-label text-welcome">Fecha de nacimiento:</label> <br></br>
-                    <DatePicker selected={startDate} onChange={date => setStartDate(date)} dateFormat="yyyy/MM/dd" className="form-control" required />
-                </div>}
-                {type === 'teacher' && ( // Only show this input for teachers  
+                {type === 'teacher' && (
+                    <div className="mb-3">
+                        <label className="form-label text-welcome">Rol:</label>
+                        <div className="input-group" onChange={handleChange}>
+                            <select className="custom-select" id="inputGroupSelect04">
+                                <option selected>Opciones...</option>
+                                <option value="1">Docente</option>
+                                <option value="2">Representante</option>
+                            </select>
+                        </div>
+                    </div>
+                )}
+                {type === 'teacher' && (
                     <div className="mb-3">
                         <label className="form-label text-welcome">Subir foto:</label>
                         <input type="file" accept="image/*" className="form-control select-image" onChange={handleUploadPhoto} required />
@@ -89,6 +111,108 @@ const FormCommon = ({ type }) => {
                         )}
                     </div>
                 )}
+
+                {/* Vista para editar estudiantes */}
+
+                {type === 'updateStudents' && (
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Email</th>
+                                <th>Fecha de nacimiento</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <input type="text" name="name" className="form-control" required value={formData.name} onChange={(e) => handleChange(e)} />
+                                </td>
+                                <td>
+                                    <input type="text" name="lastName" className="form-control" required value={formData.lastName} onChange={(e) => handleChange(e)} />
+                                </td>
+                                <td>
+                                    <input type="text" name="email" className="form-control" required value={formData.email} onChange={(e) => handleChange(e)} />
+                                </td>
+                                <td>
+                                    <input type="date" name="date" className="form-control" required value={formData.date} onChange={(e) => handleChange(e)} />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                )}
+
+
+                {/* Vista para editar profesores */}
+
+                {type === 'updateTeachers' && (
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Email</th>
+                                <th>Descripción</th>
+                                <th>Foto</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <input type="text" name="name" className="form-control" required value={formData.name} onChange={(e) => handleChange(e)} />
+                                </td>
+                                <td>
+                                    <input type="text" name="lastName" className="form-control" required value={formData.lastName} onChange={(e) => handleChange(e)} />
+                                </td>
+                                <td>
+                                    <input type="text" name="email" className="form-control" required value={formData.email} onChange={(e) => handleChange(e)} />
+                                </td>
+                                <td>
+                                    <textarea name="description" className="form-control" rows="3" required value={formData.description} onChange={(e) => handleChange(e)}></textarea>
+                                </td>
+                                <td>
+                                    <input type="file" accept="image/*" className="form-control select-image" onChange={handleUploadPhoto} required />
+                                    {photoPreview && (
+                                        <img src={photoPreview} alt="Preview" className="mt-2 teacher-photo" style={{ maxWidth: "30%", height: "auto" }} />
+                                    )}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                )}
+
+                {/* Formulario para añadir grados */}
+
+                {type === "addClassroom" && (
+                    <div className="mb-3">
+                        <label className="form-label text-welcome">Ingresa un nombre para crear un nuevo grado:</label>
+                        <input type="text" name="classroomName" className="form-control" required value={formData.classroomName} placeholder="1er Grado..." onChange={handleChange} />
+                    </div>
+                )}
+
+                {/* Formulario para añadir materias */}
+
+                {type === "addSubject" && (
+                    <div className="mb-3">
+                        <label className="form-label text-welcome">Selecciona el grado al que vas a asignar la materia:</label>
+                        <div className="input-group" onChange={handleChange}>
+                            <select className="custom-select" id="inputGroupSelect04">
+                                <option selected>Opciones...</option>
+                                <option value="1">1er Grado</option>
+                                <option value="2">2do Grado</option>
+                            </select>
+                        </div>
+                    </div>
+                )}
+
+                {type === "addSubject" && (
+                    <div className="mb-3">
+                        <label className="form-label text-welcome">Ingresa un nombre para crear una nueva materia:</label>
+                        <input type="text" name="subjectName" className="form-control" required value={formData.subjectName} onChange={handleChange} />
+                    </div>
+                )}
+
                 <button type="submit" className="btn btn-outline-register">Registrar</button>
             </form>
         </div>
@@ -106,18 +230,45 @@ export const LeftMenuAdmin = () => {
         setActiveContent("profesores");
     };
 
+    const handleUpdateStudentForm = () => {
+        setActiveContent("updateStudents");
+    }
+
+    const handleUpdateTeacherForm = () => {
+        setActiveContent("updateTeachers");
+    }
+
+    const handleAddClassroomForm = () => {
+        setActiveContent("addClassroom");
+    };
+
+    const handleAddSubjectForm = () => {
+        setActiveContent("addSubject");
+    };
+
     const renderContent = () => {
         switch (activeContent) {
             case "estudiantes":
                 return <FormCommon type="student" />;
             case "profesores":
                 return <FormCommon type="teacher" />;
+            case "updateStudents":
+                return <FormCommon type="updateStudents" />;
+            case "updateTeachers":
+                return <FormCommon type="updateTeachers" />;
+            case "addClassroom":
+                return <FormCommon type="addClassroom" />;
+            case "addSubject":
+                return <FormCommon type="addSubject" />;
             default:
                 return (
-                    <div className="jumbotron jumbotron-fluid ">
-                        <div className="container">
-                            <h1 className="text-welcome display-4">¡Qué bueno verte de regreso!</h1>
-                            <p className="lead text-welcome-content">Recuerda usar el menú de la izquierda para editar la información de los estudiantes y el profesorado.</p>
+                    <div className="container-fluid container-welcome-parent mt-3">
+                        <div className="container-welcome-teacher py-5 d-flex">
+                            <img src={imgWelcome} alt="welcome image" className="welcome-icon" />
+                            <div>
+                                <h1 className="text-title display-4">¡Qué bueno verte de regreso!</h1>
+                                <p className="lead text-content">Recuerda usar el menú de la izquierda para editar la información de los estudiantes y el profesorado.</p>
+                            </div>
                         </div>
                     </div>
                 );
@@ -125,7 +276,7 @@ export const LeftMenuAdmin = () => {
     };
 
     return (
-        <div className="container-fluid mt-5">
+        <div className="container-fluid mt-3">
             <div className="row flex-nowrap">
                 <div className="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-info rounded-start">
                     <div className="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
@@ -141,11 +292,13 @@ export const LeftMenuAdmin = () => {
                                 <ul className="collapse nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
                                     <li className="w-100">
                                         <Link to="#" className="nav-link px-0 text-white" onClick={handleStudentRegisterForm}>
+                                            <i className="fs-4 bi-mortarboard"></i>
                                             <span className="d-none d-sm-inline list-menu-item ms-2">Estudiantes</span>
                                         </Link>
                                     </li>
                                     <li>
                                         <Link to="#" className="nav-link px-0 text-white" onClick={handleTeacherRegisterForm}>
+                                            <i className="fs-4 bi-person-add"></i>
                                             <span className="d-none d-sm-inline list-menu-item ms-2">Profesores</span>
                                         </Link>
                                     </li>
@@ -159,12 +312,14 @@ export const LeftMenuAdmin = () => {
                                 <ul className="collapse nav flex-column ms-1" id="submenuEditar" data-bs-parent="#menu">
                                     <li className="w-100">
                                         <Link to="#" className="nav-link px-0 text-white">
-                                            <span className="d-none d-sm-inline list-menu-item ms-2">Estudiantes</span>
+                                            <i className="fs-4 bi-mortarboard"></i>
+                                            <span className="d-none d-sm-inline list-menu-item ms-2" onClick={handleUpdateStudentForm}>Estudiantes</span>
                                         </Link>
                                     </li>
                                     <li>
                                         <Link to="#" className="nav-link px-0 text-white">
-                                            <span className="d-none d-sm-inline list-menu-item ms-2">Profesores</span>
+                                            <i className="fs-4 bi-person-add"></i>
+                                            <span className="d-none d-sm-inline list-menu-item ms-2" onClick={handleUpdateTeacherForm}>Profesores</span>
                                         </Link>
                                     </li>
                                 </ul>
@@ -177,28 +332,27 @@ export const LeftMenuAdmin = () => {
                                 <ul className="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
                                     <li className="w-100">
                                         <Link to="#" className="nav-link px-0 text-white">
-                                            <span className="d-none d-sm-inline list-menu-item">Item</span> 1
+                                            <i className="fs-4 bi-plus-square"></i>
+                                            <span className="d-none d-sm-inline list-menu-item ms-2" onClick={handleAddClassroomForm}>Añadir</span>
                                         </Link>
                                     </li>
                                     <li>
                                         <Link to="#" className="nav-link px-0 text-white">
-                                            <span className="d-none d-sm-inline list-menu-item">Item</span> 2
+                                            <i className="fs-4 bi-journal-plus"></i>
+                                            <span className="d-none d-sm-inline list-menu-item ms-2" onClick={handleAddSubjectForm}>Materias</span>
                                         </Link>
                                     </li>
                                 </ul>
-                            </li>
-                            <li>
-                                <Link to="#submenu3" data-bs-toggle="collapse" className="nav-link px-0 align-middle text-white">
-                                    <i className="fs-4 bi-door-open"></i>
-                                    <span className="ms-1 d-none d-sm-inline list-menu-item">Permisos</span>
-                                </Link>
                             </li>
                         </ul>
                         <hr />
                     </div>
                 </div>
-                <div className="render-content col py-3 ">
-                    {renderContent()}
+                <div className="render-content col py-3 "
+                    style={{ backgroundImage: `url(${backgroundForViews})` }}>
+                    <div className="welcome-message">
+                        {renderContent()}
+                    </div>
                 </div>
             </div>
         </div>

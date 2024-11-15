@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import backgroundForViews from "../../img/background.jpg";
+import imgWelcome from "../../img/wellcomeicon.png"
 import "../../styles/components.css";
 import Swal from 'sweetalert2';
 
@@ -69,19 +71,34 @@ const FormCommon = ({ type }) => {
                         </div>
                     </div>
                 )}
-                {type === 'calificar' && (
-                    <div className="mb-3">
-                        <label className="form-label text-welcome">Selecciona una evaluación:</label> <br></br>
-                        <div className="input-group" onChange={handleChange}>
-                            <select className="custom-select" id="inputGroupSelect04">
-                                <option selected>Pendientes...</option>
-                                <option value="1">Evaluación preparatoria</option>
-                                <option value="2">Evaluación Lenguaje</option>
-                                <option value="3">Evaluación Matemáticas</option>
-                            </select>
+                <div className="d-flex">
+                    {type === 'calificar' && (
+                        <div className="mb-3 me-5">
+                            <label className="form-label text-welcome">Elige un grado:</label> <br></br>
+                            <div className="input-group" onChange={handleChange}>
+                                <select className="custom-select" id="inputGroupSelect04">
+                                    <option selected>Grado...</option>
+                                    <option value="1">1er Grado</option>
+                                    <option value="2">2do Grado</option>
+                                    <option value="3">3er Grado</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                )}
+                    )}
+                    {type === 'calificar' && (
+                        <div className="mb-3">
+                            <label className="form-label text-welcome">Selecciona una evaluación:</label> <br></br>
+                            <div className="input-group" onChange={handleChange}>
+                                <select className="custom-select" id="inputGroupSelect04">
+                                    <option selected>Pendientes...</option>
+                                    <option value="1">Evaluación preparatoria</option>
+                                    <option value="2">Evaluación Lenguaje</option>
+                                    <option value="3">Evaluación Matemáticas</option>
+                                </select>
+                            </div>
+                        </div>
+                    )}
+                </div>
                 {type === 'calificar' && (
                     <table class="table table-hover">
                         <thead>
@@ -97,20 +114,6 @@ const FormCommon = ({ type }) => {
                                 <td>Doe</td>
                                 <td>
                                     <input type="number" name="grade" className="form-control" required value={formData.grade} onChange={(e) => handleChange(e)} />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Mary</td>
-                                <td>Moe</td>
-                                <td>
-                                    <input type="text" name="grade" className="form-control" required value={formData.grade} onChange={handleChange} />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>July</td>
-                                <td>Dooley</td>
-                                <td>
-                                    <input type="text" name="grade" className="form-control" required value={formData.grade} onChange={handleChange} />
                                 </td>
                             </tr>
                         </tbody>
@@ -142,10 +145,13 @@ export const LeftMenuTeacher = () => {
                 return <FormCommon type="calificar" />;
             default:
                 return (
-                    <div className="container-fluid ">
-                        <div className="container py-5">
-                            <h1 className="text-welcome display-4">¡Siempre es un gusto tenerte de vuelta!</h1>
-                            <p className="lead text-welcome-content">Recuerda usar el menú de la izquierda para ingresar o editar la información de los estudiantes.</p>
+                    <div className="container-fluid container-welcome-parent mt-3">
+                        <div className="container-welcome-teacher py-5 d-flex">
+                            <img src={imgWelcome} alt="welcome image" className="welcome-icon" />
+                            <div>
+                                <h1 className="text-title display-4">¡Siempre es un gusto tenerte de vuelta!</h1>
+                                <p className="lead text-content">Recuerda usar el menú de la izquierda para ingresar o editar la información de los estudiantes.</p>
+                            </div>
                         </div>
                     </div>
                 );
@@ -153,7 +159,7 @@ export const LeftMenuTeacher = () => {
     };
 
     return (
-        <div className="container-fluid mt-5">
+        <div className="container-fluid mt-3">
             <div className="row flex-nowrap">
                 <div className="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-info rounded-start">
                     <div className="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
@@ -169,11 +175,13 @@ export const LeftMenuTeacher = () => {
                                 <ul className="collapse nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
                                     <li className="w-100">
                                         <Link to="#" className="nav-link px-0 text-white">
+                                            <i className="fs-4 bi-file-earmark-plus"></i>
                                             <span className="ms-2 d-none d-sm-inline list-menu-item" onClick={handleCreateEvaluation}>Crear</span>
                                         </Link>
                                     </li>
                                     <li>
                                         <Link to="#" className="nav-link px-0 text-white">
+                                            <i className="fs-4 bi-file-earmark-check"></i>
                                             <span className="ms-2 d-none d-sm-inline list-menu-item" onClick={handleGradeEvaluation}>Calificar</span>
                                         </Link>
                                     </li>
@@ -186,7 +194,7 @@ export const LeftMenuTeacher = () => {
                                     <span className="ms-1 d-none d-sm-inline list-menu-item">Editar</span>
                                 </Link>
                             </li>
-                            <li>
+                            {/*<li>
                                 <Link to="#submenu2" data-bs-toggle="collapse" className="nav-link px-0 align-middle text-white">
                                     <i className="fs-4 bi-calendar2-date"></i>
                                     <span className="ms-1 d-none d-sm-inline list-menu-item">Eventos</span>
@@ -209,13 +217,16 @@ export const LeftMenuTeacher = () => {
                                     <i className="fs-4 bi-chat-left-text"></i>
                                     <span className="ms-1 d-none d-sm-inline list-menu-item">Comunicados</span>
                                 </Link>
-                            </li>
+                            </li>*/}
                         </ul>
                         <hr />
                     </div>
                 </div>
-                <div className="render-content col py-3 ">
-                    {renderContent()}
+                <div className="render-content col py-3"
+                    style={{ backgroundImage: `url(${backgroundForViews})` }}>
+                    <div className="welcome-message">
+                        {renderContent()}
+                    </div>
                 </div>
             </div>
         </div>
