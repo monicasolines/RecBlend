@@ -10,7 +10,7 @@ export const DashboardTeacher = () => {
     return (
         <div className="container-fluid mt-5">
             <div className="row" >
-                <div className="col" >
+                <div className="col mt-5" >
                     <LeftMenuTeacher />
                 </div>
             </div>

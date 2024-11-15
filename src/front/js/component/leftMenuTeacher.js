@@ -145,7 +145,7 @@ export const LeftMenuTeacher = () => {
                 return <FormCommon type="calificar" />;
             default:
                 return (
-                    <div className="container-fluid container-welcome-parent">
+                    <div className="container-fluid container-welcome-parent mt-3">
                         <div className="container-welcome-teacher py-5 d-flex">
                             <img src={imgWelcome} alt="welcome image" className="welcome-icon" />
                             <div>
@@ -159,7 +159,7 @@ export const LeftMenuTeacher = () => {
     };
 
     return (
-        <div className="container-fluid mt-5">
+        <div className="container-fluid mt-3">
             <div className="row flex-nowrap">
                 <div className="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-info rounded-start">
                     <div className="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">

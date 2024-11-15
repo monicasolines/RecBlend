@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import backgroundForViews from "../../img/background.jpg";
+import imgWelcome from "../../img/wellcomeicon.png"
 import "../../styles/components.css";
 import Swal from 'sweetalert2';
 
@@ -260,10 +262,13 @@ export const LeftMenuAdmin = () => {
                 return <FormCommon type="addSubject" />;
             default:
                 return (
-                    <div className="jumbotron jumbotron-fluid ">
-                        <div className="container">
-                            <h1 className="text-welcome display-4">¡Qué bueno verte de regreso!</h1>
-                            <p className="lead text-welcome-content">Recuerda usar el menú de la izquierda para editar la información de los estudiantes y el profesorado.</p>
+                    <div className="container-fluid container-welcome-parent mt-3">
+                        <div className="container-welcome-teacher py-5 d-flex">
+                            <img src={imgWelcome} alt="welcome image" className="welcome-icon" />
+                            <div>
+                                <h1 className="text-title display-4">¡Qué bueno verte de regreso!</h1>
+                                <p className="lead text-content">Recuerda usar el menú de la izquierda para editar la información de los estudiantes y el profesorado.</p>
+                            </div>
                         </div>
                     </div>
                 );
@@ -271,7 +276,7 @@ export const LeftMenuAdmin = () => {
     };
 
     return (
-        <div className="container-fluid mt-5">
+        <div className="container-fluid mt-3">
             <div className="row flex-nowrap">
                 <div className="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-info rounded-start">
                     <div className="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
@@ -343,8 +348,11 @@ export const LeftMenuAdmin = () => {
                         <hr />
                     </div>
                 </div>
-                <div className="render-content col py-3 ">
-                    {renderContent()}
+                <div className="render-content col py-3 "
+                    style={{ backgroundImage: `url(${backgroundForViews})` }}>
+                    <div className="welcome-message">
+                        {renderContent()}
+                    </div>
                 </div>
             </div>
         </div>
