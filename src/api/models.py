@@ -10,7 +10,7 @@ class Role(db.Model):
     nombre = db.Column(db.String(20))
 
     def __repr__(self):
-        return f"{self.nombre}"
+        return self.nombre
 
 class EmailAuthorized(db.Model):
     __tablename__="Email_Autorizado"
@@ -18,9 +18,9 @@ class EmailAuthorized(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(50), unique=True, nullable=False)
     isRegistered = db.Column(db.Boolean(), nullable=False, default=False)
-    role_id = db.Column(db.Integer, db.ForeignKey('role.id'), nullable=True)
+    role_id = db.Column(db.Integer, db.ForeignKey('role.id'))
 
-
+    
     def __repr__(self):
         return f"Email: {self.email} - Registered: {self.isRegistered} - Role: {self.role_id}"
 
