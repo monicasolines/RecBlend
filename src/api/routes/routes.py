@@ -1,13 +1,13 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-from flask import Flask, request, jsonify, url_for, Blueprint
+import requests
+from flask import Flask, request, jsonify, Blueprint
 from marshmallow import ValidationError
-from api.models import db, User, EmailAuthorized, BlockedTokenList, Estudiante, Role
-from api.utils import generate_sitemap, APIException
+from api.models import db, User, EmailAuthorized, BlockedTokenList, Role
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt, get_jwt_identity
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt
 from api.schemas import UserSchema
 
 app = Flask(__name__)
@@ -107,3 +107,18 @@ def handle_logout():
 
     return jsonify({"msg": "Logged Out"}),200
 
+@api.route('/recoverypassword', methods=['POST'])
+def handle_change_password_request():
+    body = request.get_json()
+    url = 'https://api.emailjs.com/api/v1.0/email/send'
+    
+    if not body:
+        return jsonify({"msg": "Missing body"}),400
+    email = body.get('email')
+    user = User.query.filter_by(email=email).first()
+    
+    if not user:
+        return jsonify({"msg": "User not found"})
+    
+    # try:
+    #     r = requests.post(url,)

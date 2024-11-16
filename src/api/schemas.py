@@ -37,13 +37,18 @@ class StudentSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Estudiante
         sqla_session = db.session
-
+        
     id = auto_field(dump_only=True)
+    nombre = auto_field()
+    apellido = auto_field()
+    fecha_nacimiento = auto_field()
     representante_id = auto_field(load_only=True)
     fecha_ingreso = auto_field(dump_only=True)
     is_active= auto_field(missing=True)
+    
+    
     representante = Nested(UserSchema, dump_only=True, exclude=['role_id','id', 'is_active'])
-
+    grado = Nested('GradoSchema', dump_only=True)
 class AuthorizedEmailSchema(SQLAlchemyAutoSchema):
 
     class Meta:
@@ -65,17 +70,20 @@ class MateriasSchema(SQLAlchemyAutoSchema):
         model = Materias
         sqla_session = db.session
         dump_only = ('id',)
-        ordered = True
 
     grado_id = auto_field(required=True, load_only=True)
-    grado = Nested(GradoSchema, dump_only=True, exclude=["id"])
+    grado = Nested(GradoSchema, dump_only=True)
         
 class EvaluacionSchema(SQLAlchemyAutoSchema):
     class Meta:
+        include_fk = True
         model = Evaluacion
         sqla_session = db.session
         dump_only = ('id',)
+        load_only =('profesor_id','materia_id')
 
+    materia = Nested(MateriasSchema, dump_only=True, exclude=['descripcion'])
+    docente = Nested(TeacherSchema, dump_only=True)
 
 class DocenteMateriaSchema(SQLAlchemyAutoSchema):
 

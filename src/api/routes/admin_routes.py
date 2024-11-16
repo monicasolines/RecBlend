@@ -120,7 +120,6 @@ def remove_teacher(id):
     return delete_instance(Docente,id)
     
 # /////////////////////////////// Students Endpoints CRUD //////////////////////////
-
 @admin_routes.route('/student', methods=['POST'])
 def add_student():
     body = request.get_json()
@@ -168,6 +167,7 @@ def update_student(id):
 @admin_routes.route('/students/<int:student_id>', methods=['DELETE'])
 def remove_student(student_id):
     return delete_instance(Estudiante,student_id)
+
 # ////////////////////// Materias endpoints CRUD ///////////////
 @admin_routes.route('/materias', methods=['GET'])
 def get_materias():

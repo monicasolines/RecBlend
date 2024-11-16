@@ -16,13 +16,14 @@ from api.commands import setup_commands
 
 # from models import Person
 
-ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
+ENV = "development" if os.getenv("FLASK_DEBUG") == 1 else "production"
 static_file_dir = os.path.join(os.path.dirname(
     os.path.realpath(__file__)), '../public/')
 
     
 app = Flask(__name__)
 app.url_map.strict_slashes = False
+app.config ['JSON_SORT_KEYS'] = False
 
 
 app.config["JWT_SECRET_KEY"] = os.getenv("JWT_API_KEY")

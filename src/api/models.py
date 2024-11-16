@@ -30,13 +30,13 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     nombre = db.Column(db.String(50), nullable=False)
     apellido = db.Column(db.String(50), nullable=False)
-    direccion = db.Column(db.String(100), nullable=False)
-    telefono = db.Column(db.String(20))
-    password = db.Column(db.String(200), nullable=False)
+    direccion = db.Column(db.String(200), nullable=False)
+    telefono = db.Column(db.String(50))
+    password = db.Column(db.String(500), nullable=False)
     is_active = db.Column(db.Boolean(), default=True, nullable=False)
     role_id = db.Column(db.Integer, db.ForeignKey('role.id'), nullable=False)
 
-    rol = db.relationship(Role)
+    role = db.relationship('Role', backref='users')
 
     def __repr__(self):
         return f'{self.nombre} {self.apellido} - {self.role_id}'
@@ -104,7 +104,7 @@ class Estudiante(db.Model):
     
     grado = db.relationship(Grados, back_populates="estudiantes")
 
-    representante = db.relationship('User')
+    representante = db.relationship('User', backref="representados")
     calificaciones = db.relationship('Calificacion', back_populates='estudiante')
     
     __table_args__ = (db.UniqueConstraint(nombre, apellido, representante_id, name="estudiante_representante_unique"),)
@@ -125,7 +125,7 @@ class Evaluacion(db.Model):
     calificaciones = db.relationship('Calificacion', back_populates="evaluaciones")
 
     profesor = db.relationship(Docente, back_populates='evaluaciones')
-    materia = db.relationship(Materias)
+    materia = db.relationship(Materias, backref="evaluaciones")
 
     def __repr__(self):
         return f"{self.nombre} - {self.materia.nombre} - {self.profesor.nombre}"
@@ -144,9 +144,8 @@ class Calificacion(db.Model):
     def __repr__(self):
         return f"{self.evaluaciones.nombre} - {self.evaluaciones.materia.nombre} - {self.nota}"
 
-class BlockedTokenList (db.Model):
+class BlockedTokenList(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     jti = db.Column(db.String(500))
 
 
-    
