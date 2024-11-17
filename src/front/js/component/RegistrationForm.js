@@ -1,15 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Form, Container } from 'react-bootstrap';
 import styles from "../../styles/RegistrationForm.module.css";
+import { Context } from '../store/appContext';
+import { useNavigate } from 'react-router-dom';
 
 const RegistrationForm = () => {
+    const { store, actions } = useContext(Context)
+    const navigate = useNavigate()
+    const [error, setError] = useState('')
     const [formData, setFormData] = useState({
         nombre: '',
         apellido: '',
         email: '',
         direccion: '',
-        celular: '',
-        motivo: ''
+        telefono: '',
+        password: ''
+        // motivo: ''
     });
 
     const handleChange = (e) => {
@@ -19,34 +25,21 @@ const RegistrationForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setError(''); // Limpiar errores previos
+        setError('');
+        const response = await actions.handleRegister(formData)
 
-        try {
-            const response = await fetch(`${process.env.REACT_APP_Backend_URL}/register`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
-
-            const data = await response.json();
-
-            if (response.ok) {
-                // Registro exitoso, redirigir o mostrar mensaje de éxito
-                navigate('/login');
-            } else {
-                setError(data.message || 'Error al registrarse');
-            }
-        } catch (error) {
-            setError('Ocurrió un error al intentar registrarse');
+        if (response != true) {
+            setError(response)
+            return 
         }
+        navigate('/login');
     };
 
     return (
         <div className={`${styles.ContainerF}`}>
             <Container className="mt-4">
                 <h2 className="text-center mb-4"><strong>Formulario de Inscripción</strong></h2>
+                {error != ''?<div className='alert alert-danger text-center'>{error}</div>:''}
                 <Form onSubmit={handleSubmit} className={`${styles.ContainerForm}`}>
 
                     <Form.Group controlId="nombre">
@@ -95,18 +88,29 @@ const RegistrationForm = () => {
                         />
                     </Form.Group>
 
-                    <Form.Group controlId="celular">
+                    <Form.Group controlId="telefono">
                         <Form.Label><strong>Celular</strong></Form.Label>
                         <Form.Control
                             type="tel"
                             placeholder="XXXX-XX-XXXX"
-                            name="celular"
-                            value={formData.celular}
+                            name="telefono"
+                            value={formData.telefono}
                             onChange={handleChange}
                         />
                     </Form.Group>
 
-                    <Form.Group controlId="motivo">
+                    <Form.Group controlId="password">
+                        <Form.Label><strong>Password</strong></Form.Label>
+                        <Form.Control
+                            type="pass"
+                            placeholder="******"
+                            name="password"
+                            value={formData.password}
+                            onChange={handleChange}
+                        />
+                    </Form.Group>
+
+                    {/* <Form.Group controlId="motivo">
                         <Form.Label id='textarea'><strong>¿Por qué inscribe a su hijo en la institución?</strong></Form.Label>
                         <Form.Control
                             as="textarea"
@@ -116,7 +120,7 @@ const RegistrationForm = () => {
                             value={formData.motivo}
                             onChange={handleChange}
                         />
-                    </Form.Group>
+                    </Form.Group> */}
 
                     <div className="d-flex justify-content-center mt-3">
                         <button
@@ -126,7 +130,6 @@ const RegistrationForm = () => {
                             Enviar Inscripción
                         </button>
                     </div>
-
                 </Form>
             </Container>
         </div>

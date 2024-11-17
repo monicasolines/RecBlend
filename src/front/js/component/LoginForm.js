@@ -1,42 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Form, Button, Row, Col, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import styles from "../../styles/LoginForm.module.css";
+import { Context } from '../store/appContext';
 
 const LoginForm = () => {
+    const { actions } = useContext(Context);
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        setError(''); // Limpiar errores previos
+        setError('');
 
         if (email === '' || password === '') {
             setError('Por favor, complete todos los campos');
             return;
         }
 
-        try {
-            const response = await fetch(`${process.env.Backend_URL}/login`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, password }),
-            });
+        const response = await actions.handleLogin({ email, password });
 
-            const data = await response.json();
-
-            if (response.ok) {
-                localStorage.setItem('token', data.token);
-                navigate('/home');
-            } else {
-                setError(data.message || 'Nombre de usuario o contraseña incorrectos');
-            }
-        } catch (error) {
-            setError('Ocurrió un error al intentar iniciar sesión');
+        if (response !== true) {
+            setError(response);
+        } else {
+            navigate('/home');
         }
     };
 
