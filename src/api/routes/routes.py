@@ -1,14 +1,15 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-from flask import Flask, request, jsonify, url_for, Blueprint
+import requests
+from flask import Flask, request, jsonify, Blueprint
 from marshmallow import ValidationError
-from api.models import db, User, EmailAuthorized, BlockedTokenList, Estudiante, Role
-from api.utils import generate_sitemap, APIException
+from api.models import db, User, EmailAuthorized, BlockedTokenList, Role
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt, get_jwt_identity
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt
 from api.schemas import UserSchema
+from api.services.email_services import send_recovery_email
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
@@ -30,7 +31,6 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
-
 
 
 @api.route('/signup', methods=['POST'])
@@ -97,7 +97,7 @@ def handle_login():
                     "role": role.nombre})
 
 
-@api.route('/logout', methods=['POST'])
+@api.route('/session/logout', methods=['POST'])
 @jwt_required()
 def handle_logout():
     token = get_jwt()
@@ -107,3 +107,22 @@ def handle_logout():
 
     return jsonify({"msg": "Logged Out"}),200
 
+@api.route('/recoverypassword', methods=['POST'])
+def handle_change_password_request():
+    body = request.get_json()
+
+    if not body:
+        return jsonify({"msg": "Missing body"}),400
+    email = body.get('email')
+    user = User.query.filter_by(email=email).first()
+    
+    if not user:
+        return jsonify({"msg": "User not found"}),400
+    
+    pwdToken= create_access_token(identity=user.id, additional_claims={'type': 'password'})
+    
+    username = f"{user.nombre} {user.apellido}"
+    
+    send_recovery_email(email, pwdToken, username)
+    
+    
