@@ -22,6 +22,9 @@ CORS(admin_routes)
 
 @admin_routes.before_request
 def get_role():
+    if request.method == 'OPTIONS':
+        return ' ',203
+    
     verify_jwt_in_request()
     claims = get_jwt()
     role = Role.query.get(claims["role"])
@@ -81,7 +84,7 @@ def add_teacher():
     if not body:
         return jsonify({"msg":"Error"}),400
     
-    email = body['email']
+    email = body.get('email')
     body["role_id"] = 2
     body['password'] = bcrypt.generate_password_hash(body['password'])
     user_exists = User.query.filter_by(email=email).first()

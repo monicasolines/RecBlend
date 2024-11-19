@@ -122,7 +122,7 @@ class Evaluacion(db.Model):
     descripcion = db.Column(db.String(100))
     fecha = db.Column(db.Date)
     finalizada = db.Column(db.Boolean(), default=False, nullable=False)
-    calificaciones = db.relationship('Calificacion', back_populates="evaluaciones")
+    calificaciones = db.relationship('Calificacion', back_populates="evaluacion")
 
     profesor = db.relationship(Docente, back_populates='evaluaciones')
     materia = db.relationship(Materias, backref="evaluaciones")
@@ -138,11 +138,11 @@ class Calificacion(db.Model):
     estudiante_id = db.Column(db.Integer, db.ForeignKey('estudiante.id'))
     nota = db.Column(db.Float, nullable=False)
 
-    evaluaciones = db.relationship('Evaluacion', back_populates="calificaciones")
+    evaluacion = db.relationship('Evaluacion', back_populates="calificaciones")
     estudiante = db.relationship('Estudiante', back_populates="calificaciones")
 
     def __repr__(self):
-        return f"{self.evaluaciones.nombre} - {self.evaluaciones.materia.nombre} - {self.nota}"
+        return f"{self.evaluacion.nombre} - {self.evaluacion.materia.nombre} - {self.nota}"
 
 class BlockedTokenList(db.Model):
     id = db.Column(db.Integer, primary_key=True)

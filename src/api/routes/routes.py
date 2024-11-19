@@ -9,6 +9,7 @@ from flask_cors import CORS
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt
 from api.schemas import UserSchema
+from api.services.email_services import send_recovery_email
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
@@ -30,7 +31,6 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
-
 
 
 @api.route('/signup', methods=['POST'])
@@ -97,7 +97,7 @@ def handle_login():
                     "role": role.nombre})
 
 
-@api.route('/logout', methods=['POST'])
+@api.route('/session/logout', methods=['POST'])
 @jwt_required()
 def handle_logout():
     token = get_jwt()
@@ -110,15 +110,19 @@ def handle_logout():
 @api.route('/recoverypassword', methods=['POST'])
 def handle_change_password_request():
     body = request.get_json()
-    url = 'https://api.emailjs.com/api/v1.0/email/send'
-    
+
     if not body:
         return jsonify({"msg": "Missing body"}),400
     email = body.get('email')
     user = User.query.filter_by(email=email).first()
     
     if not user:
-        return jsonify({"msg": "User not found"})
+        return jsonify({"msg": "User not found"}),400
     
-    # try:
-    #     r = requests.post(url,)
+    pwdToken= create_access_token(identity=user.id, additional_claims={'type': 'password'})
+    
+    username = f"{user.nombre} {user.apellido}"
+    
+    send_recovery_email(email, pwdToken, username)
+    
+    

@@ -1,6 +1,7 @@
 from marshmallow_sqlalchemy import SQLAlchemySchema, SQLAlchemyAutoSchema, auto_field
 from marshmallow_sqlalchemy.fields import Nested
-from .models import db, User, Estudiante, Docente, EmailAuthorized, Materias, Evaluacion, Grados, DocenteMaterias, Role
+from marshmallow import Schema, fields, validate
+from .models import Calificacion, db, User, Estudiante, Docente, EmailAuthorized, Materias, Evaluacion, Grados, DocenteMaterias, Role
 from marshmallow import post_load
 
 class UserSchema(SQLAlchemyAutoSchema):
@@ -84,6 +85,7 @@ class EvaluacionSchema(SQLAlchemyAutoSchema):
 
     materia = Nested(MateriasSchema, dump_only=True, exclude=['descripcion'])
     docente = Nested(TeacherSchema, dump_only=True)
+    finalizada= auto_field(required=False, missing=False)
 
 class DocenteMateriaSchema(SQLAlchemyAutoSchema):
 
@@ -111,3 +113,24 @@ class RoleSchema(SQLAlchemyAutoSchema):
         model = Role
         sqla_session = db.session
         dump_only = ('id',)
+
+class CalificacionSchema(SQLAlchemyAutoSchema):
+    
+    class Meta:
+        model = Calificacion
+        sqla_session = db.session
+        dump_only = ('id',)
+        include_fk = True
+        
+    estudiante = Nested(StudentSchema, dump_only=True, exclude=['representante', 'is_active','fecha_ingreso','fecha_nacimiento', 'grado'])
+    evaluacion = Nested(EvaluacionSchema, dump_only=True, exclude=['materia_id', 'profesor_id','descripcion'])
+    nota = auto_field(validate=validate.Range(min_inclusive=0,))
+    
+class EstudianteNotaRequestSchema(Schema):
+    estudiante_id = fields.Integer(required=True, strict=True)
+    nota = fields.Float(required=True, validate=validate.Range(min=0, max=10))  
+    
+class CalificacionRequestSchema(Schema):
+    evaluacion_id = fields.Integer(required=True, strict=True)
+    materia_id = fields.Integer(required=True, strict=True)
+    estudiantes_notas = fields.List(Nested(EstudianteNotaRequestSchema), required=True, strict=True)
