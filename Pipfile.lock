@@ -102,7 +102,6 @@
                 "sha256:d667207822eb83f1c4b50949b1623c8fc8d51f2341d65f72e1a1815397551136"
             ],
             "index": "pypi",
-            "markers": "python_version >= '3.9'",
             "version": "==3.1.0"
         },
         "flask-admin": {
@@ -589,7 +588,6 @@
                 "sha256:f8d76180d7239c94c6322f7990ae1216dae3659b7aa1cee94b6318bdffb474b9"
             ],
             "index": "pypi",
-            "markers": "python_version >= '3.8'",
             "version": "==3.1.2"
         }
     },

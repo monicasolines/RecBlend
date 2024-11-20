@@ -1,135 +1,72 @@
-const baseUrl = process.env.BACKEND_URL + "/api"
+const backendURL = process.env.BACKEND_URL || ""
+
 
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
+			role: '',
+			token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTczMjA1NjkyNywianRpIjoiMDY1NGYyODctYzRjYy00NWQ4LWFjOWMtNDI4YzkyMjdjMDBiIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MywibmJmIjoxNzMyMDU2OTI3LCJjc3JmIjoiYTc2MGY3YzYtYTY1YS00MTgwLTg2OTgtYmQ0NTEyYTVhMDNjIiwiZXhwIjoxNzMyMDU3ODI3LCJyb2xlIjoyfQ.0Z0QygRAy2TdbNB3sML7CfvFBjkDO1aoWEDIEOvqMS0',
 
 			profesores: [],
 			grados: [],
-			materias: []
+			materias: [],
 		},
 		actions: {
+			// Use getActions to call a function within a fuction
+			fetchRoute: async (endpoint, { method = 'GET', body = '', isPrivate = false, bluePrint = '' } = {}) => {
 
-
-
-
-
-
-			// Operaciones CRUD para crear, editar y eliminar profesores
-
-			getTeachers: async () => {
-				const response = await fetch(baseUrl + "/admin/teachers")
-				try {
-					if (!response.ok) throw Error(response.statusText)
-					return false
-
-					const data = await response.json()
-					setStore({ profesores: data })
-				} catch (error) {
-					console.error("Error", error)
-					return false
+				const headers = {
+					'Content-Type': 'application/json',
+					'Access-Control-Allow-Origin': '*',
 				}
-			},
 
-			updateTeacher: async (id) => {
-				const token = localStorage.getItem("token");
-				try {
-					const updateTeacher = await fetch(baseUrl + "/admin/teacher/" + id, {
-						method: "PUT",
-						headers: {
-							"Access-Control-Allow-Origin": "*",
-							"Content-Type": "application/json",
-							"Authorization": "Bearer " + token
-						}
-					})
+				const { token } = getStore()
 
-					if (!updateTeacher.ok) throw Error(updateTeacher.statusText)
-					setStore({ profesores: data })
-
-				} catch (error) {
-					console.error("Error", error)
+				if (isPrivate && token) {
+					headers['Authorization'] = `Bearer ${token}`
 				}
-			},
 
-			postTeacher: async (teacherData) => {
-				const token = localStorage.getItem("token");
-				try {
-					const createTeacher = await fetch(baseUrl + "/admin/teacher", {
-						method: "POST",
-						headers: {
-							"Access-Control-Allow-Origin": "*",
-							"Content-Type": "application/json",
-							"Authorization": "Bearer " + token
-						},
-						body: JSON.stringify(teacherData)
-					})
-
-					if (!createTeacher.ok) throw Error(createTeacher.statusText)
-					setStore({ profesores: data })
-
-				} catch (error) {
-					console.error("Error", error)
+				if (isPrivate && (!token || !bluePrint)) {
+					throw new Error("Faltan datos para la solicitud privada")
 				}
-			},
 
-			// Operaciones CRUD para traer y crear grados
+				const URL = isPrivate ? `${backendURL}api/${bluePrint}/${endpoint}` : `${backendURL}api/${endpoint}`
 
-			getCourses: async () => {
-				const response = await fetch(baseUrl + "/admin/grados")
-				try {
-					if (!response.ok) throw Error(response.statusText)
-					return false
-
-					const data = await response.json()
-					setStore({ grados: data })
-				} catch (error) {
-					console.error("Error", error)
-					return false
+				const params = {
+					method,
+					headers
 				}
-			},
 
-			postCourses: async (gradoData) => {
-				const token = localStorage.getItem("token");
-				try {
-					const createCourse = await fetch(baseUrl + "/admin/grados", {
-						method: "POST",
-						headers: {
-							"Access-Control-Allow-Origin": "*",
-							"Content-Type": "application/json",
-							"Authorization": "Bearer " + token
-						},
-						body: JSON.stringify(gradoData)
-					})
-
-					if (!createCourse.ok) throw Error(createCourse.statusText)
-					//setStore({ grados: data })
-
-				} catch (error) {
-					console.error("Error", error)
+				if (body) {
+					params.body = JSON.stringify(body);
 				}
-			},
 
-			// Operaciones CRUD para crear materias
-			createSubject: async (subjectData) => {
-				const response = await fetch(baseUrl + "/admin/materias")
 				try {
+					const response = await fetch(URL, params)
+
 					if (!response.ok) {
-						const createSubject = await fetch(baseUrl + "/admin/materias", {
-							method: "POST",
-							headers: {
-								"Content-Type": "application/json"
-							},
-							body: JSON.stringify({ subjectData })
-						})
-						const data = await response.json()
-						setStore({ materias: data })
+						throw new Error(`Error con la solicitud: ${response.statusText}`)
 					}
+
+					const data = await response.json()
+					return data
 				} catch (error) {
-					console.error("Error", error)
+					console.error(error)
+					throw Error
 				}
+
+			}, loadSession: () => {
+				const token = localStorage.getItem('token')
+				const role = localStorage.getItem('role')
+				if (token && role) {
+					setStore({ 'token': token, 'role': role })
+
+					console.info("Session Loaded")
+				}
+				console.info("No credentials found")
 			}
 		}
-	};
+	}
 };
 
 export default getState;

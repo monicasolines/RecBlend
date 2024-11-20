@@ -1,6 +1,7 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
+from datetime import timedelta
 import os
 from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_migrate import Migrate
@@ -13,26 +14,41 @@ from api.routes.admin_routes import admin_routes
 from api.routes.teacher_routes import teacher_routes
 from api.admin import setup_admin
 from api.commands import setup_commands
+import firebase_admin
+from firebase_admin import credentials
+from flask_cors import CORS
+
 
 # from models import Person
 
-ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
+ENV = "development" if os.getenv("FLASK_DEBUG") == 1 else "production"
 static_file_dir = os.path.join(os.path.dirname(
     os.path.realpath(__file__)), '../public/')
 
     
 app = Flask(__name__)
 app.url_map.strict_slashes = False
+CORS(app)
 
 
 app.config["JWT_SECRET_KEY"] = os.getenv("JWT_API_KEY")
+app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=1)
 jwt = JWTManager(app)
 
+
+cred = credentials.Certificate("firebase_key.json")
+firebase_admin.initialize_app(cred)
 
 #Check revoked Token
 @jwt.token_in_blocklist_loader
 def check_if_token_revoked(jwt_header, jwt_payload: dict) -> bool:
+    is_pwd_type = jwt_payload["type"] == "password"  and request.path != '/api/resetpassword'
+
+    if is_pwd_type:
+        return True
+    
     jti = jwt_payload["jti"]
+    
     token = BlockedTokenList.query.filter_by(jti=jti).first()
     return token is not None
 
