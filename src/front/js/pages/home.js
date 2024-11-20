@@ -18,7 +18,6 @@ export const Home = () => {
       }
     }
 
-    // Intersection Observer para animar las secciones al hacer scroll
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -27,13 +26,11 @@ export const Home = () => {
       });
     }, { threshold: 0.1 });
 
-    // Observamos todas las secciones
     const sections = document.querySelectorAll('.section');
     sections.forEach(section => {
       observer.observe(section);
     });
 
-    // Limpiamos el observer cuando el componente se desmonta
     return () => {
       sections.forEach(section => {
         observer.unobserve(section);
@@ -45,7 +42,7 @@ export const Home = () => {
     <div className="allSection">
       <section id="bienvenida" className="section alternate">
         <div className="container">
-          <div className="text-content">
+          <div className="text-content p-5">
             <h1>Bienvenidos a SchoolHub</h1>
             <p className="Parrafos">
               Una plataforma de uso múltiple donde cada usuario podrá aprovecharla de diferente manera.

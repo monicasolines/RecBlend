@@ -33,19 +33,19 @@
   }
 
   .userName {
-    font-size: 3.25rem;
+    font-size: 2.25rem;
     font-weight: bold;
     color: black;
   }
 
   .rating {
-    font-size: 3.5rem;
+    font-size: 2.5rem;
     color: #ffaa00;
     margin: 0.5rem 0;
   }
 
   .comment {
-    font-size: 3.5rem;
+    font-size: 2rem;
     color: #055 ;
     margin-top: 0.5rem;
   }

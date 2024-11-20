@@ -11,8 +11,8 @@ const LoginForm = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
         setError('');
 
         if (email === '' || password === '') {
@@ -22,11 +22,17 @@ const LoginForm = () => {
 
         const response = await actions.handleLogin({ email, password });
 
-        if (response !== true) {
-            setError(response);
+        if (response.success) {
+            const route = 
+                response.role === 1 ? "/dashboardAdmin" :
+                response.role === 2 ? "/dashboardTeacher" :
+                response.role === 3 ? "/representante" :
+                null; 
+            route ? navigate(route) : setError("Rol no reconocido.");
         } else {
-            navigate('/home');
+            setError(response.message);
         }
+        
     };
 
     return (
@@ -39,7 +45,7 @@ const LoginForm = () => {
                         <Form.Group controlId="email">
                             <Form.Label>Email</Form.Label>
                             <Form.Control
-                                type="text"
+                                type="email"
                                 placeholder="Ingrese su correo electrónico"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}

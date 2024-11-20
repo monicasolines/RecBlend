@@ -8,19 +8,17 @@ import NavBar from "./component/Navbar";
 import { Footer } from "./component/footer";
 import { DashboardAdmin } from "./pages/dashboardAdmin";
 import { DashboardTeacher } from "./pages/dashboardTeacher";
+import { DashboardRepresentative } from "./pages/dashboardRepresentante";
 import RegistrationForm from './component/RegistrationForm';
 import LoginForm from './component/LoginForm';
 import ProtectedRoute from "./component/ProtectedRoutes";
-import { DashboardRepresentative } from "./pages/dashboardRepresentante";
 import Unauthorized from "./pages/Unauthorized";
-
-
 
 const Layout = () => {
     const basename = process.env.BASENAME || "";
 
     if (!process.env.BACKEND_URL || process.env.BACKEND_URL === "") {
-        return <BackendURL />;
+        return <div>Error: Backend URL no configurada</div>;
     }
 
     return (
@@ -29,8 +27,14 @@ const Layout = () => {
                 <ScrollToTop>
                     <NavBar />
                     <Routes>
+                        {/* Rutas Públicas */}
                         <Route element={<Home />} path="/home" />
                         <Route element={<Home />} path="/" />
+                        <Route element={<RegistrationForm />} path="/register" />
+                        <Route element={<LoginForm />} path="/login" />
+                        <Route element={<Unauthorized />} path="/unauthorized" />
+
+                        {/* Rutas Protegidas */}
                         <Route 
                             path="/dashboardAdmin" 
                             element={
@@ -55,10 +59,9 @@ const Layout = () => {
                                 </ProtectedRoute>
                             } 
                         />
-                        <Route element={<RegistrationForm />} path="/register" />
-                        <Route element={<LoginForm />} path="/login" />
-                        <Route element={<Unauthorized />} path="/unauthorized" />
-                        <Route element={<h1>Not found!</h1>} />
+
+                        {/* Ruta para páginas no encontradas */}
+                        <Route element={<h1>Página no encontrada</h1>} />
                     </Routes>
                     <Footer />
                 </ScrollToTop>

@@ -1,15 +1,18 @@
-import React, { useContext } from 'react';
-import { Navigate } from 'react-router-dom';
-import { Context } from '../store/appContext';
+import React, { useContext } from "react";
+import { Navigate } from "react-router-dom";
+import { Context } from "../store/appContext";
 
 const ProtectedRoute = ({ children, roles }) => {
-    const { store, actions } = useContext(Context);
+    const { store } = useContext(Context);
 
-    if (!actions.isAuthorized(roles)) {
-        return <Navigate to="/unauthorized" />; 
+    const userRole = store.role; 
+
+    if (!roles.includes(userRole)) {
+        return <Navigate to="/unauthorized" />; // Redirige si no tiene permisos
     }
 
-    return children;
+    return children; // Renderiza el contenido si está autorizado
 };
 
 export default ProtectedRoute;
+
