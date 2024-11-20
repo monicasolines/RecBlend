@@ -20,6 +20,7 @@ const injectContext = (PassedComponent) => {
             })
         );
 
+<<<<<<< HEAD
         // Lógica que se ejecuta al montar la aplicación
         useEffect(() => {
             const initializeApp = async () => {
@@ -31,6 +32,17 @@ const injectContext = (PassedComponent) => {
                     if (token) {
                         await actions.verifyToken(token); // Verifica y carga datos del usuario
                     }
+=======
+		useEffect(() => {
+			/**
+			 * EDIT THIS!
+			 * This function is the equivalent to "window.onLoad", it only runs once on the entire application lifetime
+			 * you should do your ajax requests or fetch api requests here. Do not use setState() to save data in the
+			 * store, instead use actions, like this:
+			 **/
+			state.actions.loadSession()
+		}, []);
+>>>>>>> dev
 
                     // Cargar datos iniciales (roles y configuración)
                     await actions.fetchRoles();

@@ -22,6 +22,9 @@ CORS(admin_routes)
 
 @admin_routes.before_request
 def get_role():
+    if request.method == 'OPTIONS':
+        return ' ',203
+    
     verify_jwt_in_request()
     claims = get_jwt()
     role = Role.query.get(claims["role"])
@@ -81,7 +84,7 @@ def add_teacher():
     if not body:
         return jsonify({"msg":"Error"}),400
     
-    email = body['email']
+    email = body.get('email')
     body["role_id"] = 2
     body['password'] = bcrypt.generate_password_hash(body['password'])
     user_exists = User.query.filter_by(email=email).first()
@@ -120,7 +123,6 @@ def remove_teacher(id):
     return delete_instance(Docente,id)
     
 # /////////////////////////////// Students Endpoints CRUD //////////////////////////
-
 @admin_routes.route('/student', methods=['POST'])
 def add_student():
     body = request.get_json()
@@ -168,6 +170,7 @@ def update_student(id):
 @admin_routes.route('/students/<int:student_id>', methods=['DELETE'])
 def remove_student(student_id):
     return delete_instance(Estudiante,student_id)
+
 # ////////////////////// Materias endpoints CRUD ///////////////
 @admin_routes.route('/materias', methods=['GET'])
 def get_materias():
