@@ -91,7 +91,7 @@ def handle_login():
     if not valid_password:
         return jsonify({"msg": "Invalid Credentials"}),400
     
-    access_token = create_access_token(identity=user.id, additional_claims={"role":role.id})
+    access_token = create_access_token(identity=str(user.id), additional_claims={"role":role.id})
 
     return jsonify({"token": access_token,
                     "role": role.nombre})
