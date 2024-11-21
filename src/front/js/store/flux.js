@@ -5,14 +5,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			role: '',
-			token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTczMjA1NjkyNywianRpIjoiMDY1NGYyODctYzRjYy00NWQ4LWFjOWMtNDI4YzkyMjdjMDBiIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MywibmJmIjoxNzMyMDU2OTI3LCJjc3JmIjoiYTc2MGY3YzYtYTY1YS00MTgwLTg2OTgtYmQ0NTEyYTVhMDNjIiwiZXhwIjoxNzMyMDU3ODI3LCJyb2xlIjoyfQ.0Z0QygRAy2TdbNB3sML7CfvFBjkDO1aoWEDIEOvqMS0',
-
+			token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTczMjA2MzIwOSwianRpIjoiODRlYzNhYzAtMmY5Yi00ZDhiLWJlMTEtNDNiY2FkZTg2ZjhjIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MiwibmJmIjoxNzMyMDYzMjA5LCJjc3JmIjoiMTIyNjcwMGYtZmI1MS00ODUwLWIxZjUtMzE1MmEwMDU3MmY4IiwiZXhwIjoxNzMyMDY2ODA5LCJyb2xlIjoxfQ.ZTWAu4iy9sSsZMrILPxrjoWrNcKjvbafYu-lKTt8xLM',
 			profesores: [],
 			grados: [],
 			materias: [],
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
+
+
 			fetchRoute: async (endpoint, { method = 'GET', body = '', isPrivate = false, bluePrint = '' } = {}) => {
 
 				const headers = {
@@ -50,6 +51,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					const data = await response.json()
 					return data
+
 				} catch (error) {
 					console.error(error)
 					throw Error
@@ -64,7 +66,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.info("Session Loaded")
 				}
 				console.info("No credentials found")
-			}
+			},
+
+			postTeacher: async (body) => {
+				const actions = getActions()
+				const data = await actions.fetchRoute("teacher", {
+					method: "POST",
+					body: body,
+					isPrivate: true,
+					bluePrint: 'admin'
+				});
+				actions.getTeachers()
+			},
+
+			getTeachers: async () => {
+				const actions = getActions()
+				const data = await actions.fetchRoute("teachers", {
+					method: "GET",
+					isPrivate: true,
+					bluePrint: 'admin'
+				});
+				setStore({ profesores: data })
+			},
 		}
 	}
 };

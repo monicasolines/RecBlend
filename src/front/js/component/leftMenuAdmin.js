@@ -15,8 +15,10 @@ const FormCommon = ({ type }) => {
     const [formData, setFormData] = useState({
         name: '',
         lastName: '',
+        birthDate: '',
         email: '',
         password: '',
+        address: '',
         description: '',
         photo: null,
         classroomName: '',
@@ -45,7 +47,16 @@ const FormCommon = ({ type }) => {
 
         try {
             if (type === 'teacher') {
-                await actions.postTeacher(formData);
+                await actions.postTeacher({
+                    "nombre": formData.name,
+                    "apellido": formData.lastName,
+                    "email": formData.email,
+                    "password": formData.password,
+                    "descripcion": formData.description,
+                    "direccion": formData.address,
+                    "foto": "abc"
+                });
+
             }
             if (type === 'addClassroom') {
                 let classroom = formData.classroomName
@@ -60,8 +71,10 @@ const FormCommon = ({ type }) => {
             setFormData({
                 name: '',
                 lastName: '',
+                birthDate: '',
                 email: '',
                 password: '',
+                address: '',
                 description: '',
                 photo: null,
                 classroomName: '',
@@ -79,7 +92,7 @@ const FormCommon = ({ type }) => {
     };
 
     return (
-        <div className="container ms-2 ">
+        <div className="container ms-2">
 
             <form onSubmit={(e) => submitFormData(e)} className="container-welcome-teacher">
                 <h4 className="text-title d-flex justify-content-center">{`Registrar ${type === 'student' ? 'estudiante nuevo' : type === 'teacher' ? 'profesor nuevo' : type === 'addClassroom' ? 'grado nuevo' : type === 'addSubject' ? 'materia nueva' : ''}`}</h4>
@@ -99,7 +112,11 @@ const FormCommon = ({ type }) => {
                 </div>}
                 {type === 'student' && <div className="mb-3">
                     <label className="form-label text-form">Fecha de nacimiento:</label> <br></br>
-                    <DatePicker selected={startDate} onChange={date => setStartDate(date)} dateFormat="yyyy/MM/dd" className="form-control rounded-pill" required />
+                    <DatePicker selected={startDate} name="birthDate" value={formData.birthDate} onChange={date => setStartDate(date)} dateFormat="yyyy/MM/dd" className="form-control rounded-pill" required />
+                </div>}
+                {(type === 'student' || type === 'teacher') && <div className="mb-3">
+                    <label className="form-label text-form">Dirección:</label>
+                    <input type="text" name="address" className="form-control rounded-pill" required value={formData.address} onChange={handleChange} />
                 </div>}
 
                 {/* Elementos específicos del formuario para crear profesor */}
@@ -114,18 +131,6 @@ const FormCommon = ({ type }) => {
                     <div className="mb-3">
                         <label className="form-label text-form">Descripción:</label>
                         <textarea name="description" className="form-control teacher-description" rows="3" required value={formData.description} onChange={handleChange}></textarea>
-                    </div>
-                )}
-                {type === 'teacher' && (
-                    <div className="mb-3">
-                        <label className="form-label text-form">Rol:</label>
-                        <div className="input-group " onChange={handleChange}>
-                            <select className="custom-select rounded-pill" id="inputGroupSelect04">
-                                <option selected>Opciones...</option>
-                                <option value="1">Docente</option>
-                                <option value="2">Representante</option>
-                            </select>
-                        </div>
                     </div>
                 )}
                 {type === 'teacher' && (
@@ -303,7 +308,7 @@ export const LeftMenuAdmin = () => {
 
     return (
         <div className="container-fluid mt-3">
-            <div className="row flex-nowrap">
+            <div className="row flex-nowrap" >
                 <div className="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark rounded-start">
                     <div className="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                         <Link to="/" className="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
@@ -374,8 +379,8 @@ export const LeftMenuAdmin = () => {
                         <hr />
                     </div>
                 </div>
-                <div className="render-content col py-3 "
-                    style={{ backgroundImage: `url(${backgroundForViews})` }}>
+                <div className="d-flex justify-content-center render-content col py-3 "
+                    style={{ backgroundImage: `url(${backgroundForViews})`, backgroundSize: "cover" }}>
                     <div className="welcome-message">
                         {renderContent()}
                     </div>
