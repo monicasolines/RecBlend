@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 import DatePicker from "react-datepicker";
@@ -24,6 +24,12 @@ const FormCommon = ({ type }) => {
         classroomName: '',
         subjectName: ''
     });
+
+    useEffect(() => {
+        if (type === 'addSubject') {
+            actions.getCourses();
+        }
+    }, [type]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -60,8 +66,9 @@ const FormCommon = ({ type }) => {
             }
             if (type === 'addClassroom') {
                 let classroom = formData.classroomName
-                await actions.postCourses({ "nombre": classroom });
-            } else if (type === 'addSubject') {
+                await actions.postCourse({ "nombre": classroom });
+            }
+            if (type === 'addSubject') {
                 await actions.createSubject({ "nombre": formData.subjectName });
             }
             Swal.fire({
@@ -112,7 +119,7 @@ const FormCommon = ({ type }) => {
                 </div>}
                 {type === 'student' && <div className="mb-3">
                     <label className="form-label text-form">Fecha de nacimiento:</label> <br></br>
-                    <DatePicker selected={startDate} name="birthDate" value={formData.birthDate} onChange={date => setStartDate(date)} dateFormat="yyyy/MM/dd" className="form-control rounded-pill" required />
+                    <DatePicker selected={startDate} name="birthDate" onChange={date => setStartDate(date)} dateFormat="yyyy/MM/dd" className="form-control rounded-pill" required />
                 </div>}
                 {(type === 'student' || type === 'teacher') && <div className="mb-3">
                     <label className="form-label text-form">Dirección:</label>
@@ -225,28 +232,36 @@ const FormCommon = ({ type }) => {
                 {/* Formulario para añadir materias */}
 
                 {type === "addSubject" && (
-                    <div className="mb-3">
+
+
+
+                    < div className="mb-3">
                         <label className="form-label text-title">Selecciona el grado al que vas a asignar la materia:</label>
-                        <div className="input-group" onChange={handleChange}>
-                            <select className="custom-select rounded-pill" id="inputGroupSelect04">
-                                <option selected>Opciones...</option>
-                                <option value="1">1er Grado</option>
-                                <option value="2">2do Grado</option>
+                        <div className="input-group" required>
+                            <select className="custom-select rounded-pill" id="inputGroupSelect04" onChange={handleChange}>
+                                <option value="" disabled selected>Opciones...</option>
+                                {store.grados.map(grado =>
+                                    <option key={grado.id} value="grado.id">{grado.nombre}</option>
+
+                                )}
                             </select>
                         </div>
                     </div>
-                )}
+                )
+                }
 
-                {type === "addSubject" && (
-                    <div className="mb-3">
-                        <label className="form-label text-title">Ingresa un nombre para crear una nueva materia:</label>
-                        <input type="text" name="subjectName" className="form-control rounded-pill" required value={formData.subjectName} onChange={handleChange} />
-                    </div>
-                )}
+                {
+                    type === "addSubject" && (
+                        <div className="mb-3">
+                            <label className="form-label text-title">Ingresa un nombre para crear una nueva materia:</label>
+                            <input type="text" name="subjectName" className="form-control rounded-pill" required value={formData.subjectName} onChange={handleChange} />
+                        </div>
+                    )
+                }
 
                 <button type="submit" className="btn btn-outline-register">Registrar</button>
-            </form>
-        </div>
+            </form >
+        </div >
     );
 };
 

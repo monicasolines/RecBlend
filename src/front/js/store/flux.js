@@ -5,7 +5,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			role: '',
-			token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTczMjA2MzIwOSwianRpIjoiODRlYzNhYzAtMmY5Yi00ZDhiLWJlMTEtNDNiY2FkZTg2ZjhjIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MiwibmJmIjoxNzMyMDYzMjA5LCJjc3JmIjoiMTIyNjcwMGYtZmI1MS00ODUwLWIxZjUtMzE1MmEwMDU3MmY4IiwiZXhwIjoxNzMyMDY2ODA5LCJyb2xlIjoxfQ.ZTWAu4iy9sSsZMrILPxrjoWrNcKjvbafYu-lKTt8xLM',
+			token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTczMjIwNDM4NSwianRpIjoiODU0ZjY3MGQtMjVhNS00ODE0LThkM2QtMTdlZTMyMjU5ZmNlIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjIiLCJuYmYiOjE3MzIyMDQzODUsImNzcmYiOiI0ZWMxN2MzOS1lZTFkLTQzZjctYWI5ZS1kMTAzYjQzNjg4MGMiLCJleHAiOjE3MzIyMDc5ODUsInJvbGUiOjF9.0ARjLXKWepgAOXF6lc8ru7mfhyX7DjGO_Hi32YLdmAE',
 			profesores: [],
 			grados: [],
 			materias: [],
@@ -88,8 +88,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 				});
 				setStore({ profesores: data })
 			},
+
+			postCourse: async (grado) => {
+				const actions = getActions()
+				const data = await actions.fetchRoute("grados", {
+					method: "POST",
+					body: grado,
+					isPrivate: true,
+					bluePrint: 'admin'
+				});
+				actions.getCourses()
+			},
+
+			getCourses: async () => {
+				const actions = getActions()
+				const data = await actions.fetchRoute("grados", {
+					method: "GET",
+					isPrivate: true,
+					bluePrint: 'admin'
+				});
+				setStore({ grados: data })
+			}
 		}
 	}
-};
+}
+
 
 export default getState;
