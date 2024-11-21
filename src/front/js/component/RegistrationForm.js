@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Form, Container } from 'react-bootstrap';
 import styles from "../../styles/RegistrationForm.module.css";
+// import styles from "../../styles/LoginForm.module.css";
 import { Context } from '../store/appContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -40,7 +41,7 @@ const RegistrationForm = () => {
             <Container className="mt-4">
                 <h2 className="text-center mb-4"><strong>Formulario de Inscripción</strong></h2>
                 {error != ''?<div className='alert alert-danger text-center'>{error}</div>:''}
-                <Form onSubmit={handleSubmit} className={`${styles.ContainerForm}`}>
+                <Form onSubmit={handleSubmit} className={`${styles.ContainerForm} border`}>
 
                     <Form.Group controlId="nombre">
                         <Form.Label><strong>Nombre</strong></Form.Label>

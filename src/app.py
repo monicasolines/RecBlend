@@ -14,8 +14,6 @@ from api.routes.admin_routes import admin_routes
 from api.routes.teacher_routes import teacher_routes
 from api.admin import setup_admin
 from api.commands import setup_commands
-import firebase_admin
-from firebase_admin import credentials
 from flask_cors import CORS
 
 
@@ -35,9 +33,6 @@ app.config["JWT_SECRET_KEY"] = os.getenv("JWT_API_KEY")
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=1)
 jwt = JWTManager(app)
 
-
-cred = credentials.Certificate("firebase_key.json")
-firebase_admin.initialize_app(cred)
 
 #Check revoked Token
 @jwt.token_in_blocklist_loader

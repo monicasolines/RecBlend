@@ -5,7 +5,7 @@ import styles from "../../styles/LoginForm.module.css";
 import { Context } from '../store/appContext';
 
 const LoginForm = () => {
-    const { actions } = useContext(Context);
+    const { actions, store } = useContext(Context);
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -19,15 +19,18 @@ const LoginForm = () => {
             setError('Por favor, complete todos los campos');
             return;
         }
-
+    
         const response = await actions.handleLogin({ email, password });
+        console.log("Resultado de handleLogin:", response);
 
         if (response.success) {
             const route = 
-                response.role === 1 ? "/dashboardAdmin" :
-                response.role === 2 ? "/dashboardTeacher" :
-                response.role === 3 ? "/representante" :
-                null; 
+                store.role === "admin" ? "/dashboardAdmin" :
+                store.role === "docente" ? "/dashboardTeacher" :
+                store.role === "representante" ? "/dashboardRepresentante" :
+                null;
+                console.log(route) 
+
             route ? navigate(route) : setError("Rol no reconocido.");
         } else {
             setError(response.message);
@@ -41,7 +44,7 @@ const LoginForm = () => {
                 <Col xs={12} md={6} lg={4} className="mx-auto">
                     <h2 className="text-center mb-4"><strong>Iniciar Sesión</strong></h2>
                     {error && <Alert variant="danger">{error}</Alert>}
-                    <Form onSubmit={handleSubmit} className={`${styles.form} p-4 border rounded shadow`}>
+                    <Form onSubmit={handleSubmit} className={`${styles.formLog} p-4 border shadow`}>
                         <Form.Group controlId="email">
                             <Form.Label>Email</Form.Label>
                             <Form.Control
@@ -68,9 +71,9 @@ const LoginForm = () => {
                         <Button
                             variant="link"
                             onClick={() => navigate('/register')}
-                            className="w-100 mt-3 text-center"
+                            className="w-100 mt-3 text-center" style={{'text-decoration': 'none'}}
                         >
-                            <strong>¿No tienes cuenta? Regístrate</strong>
+                            <span className={`${styles.spanLog}`}>¿No tienes cuenta? Regístrate</span>
                         </Button>
                     </Form>
                 </Col>

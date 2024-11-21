@@ -7,7 +7,7 @@ import { LeftMenuAdmin } from "../component/leftMenuAdmin";
 const AdminPanel = () => {
     const { actions } = useContext(Context);
 
-    if (!actions.isAuthorized([1])) {
+    if (!actions.isAuthorized("admin")) {
         return <div className="alert alert-danger">No tienes permisos para ver esto.</div>;
     }
 

@@ -1,13 +1,14 @@
 .ContainerForm {
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
-    border-radius: 10px;
+    border-radius: 2rem;
     padding: 20px;
-    background-color: whitesmoke;
+    background-image: linear-gradient(to right, rgba(31, 118, 146, 0.5), rgba(67, 56, 135, 0.5));
     color: #060606;
     font-weight: 500;
     align-self: center;
     width: 100%;
     margin: 20px 40px;
+    color: white;
 }
 .ContainerF {
     background: linear-gradient(180deg, #0a3d62, #3c6382);
@@ -30,7 +31,7 @@
     font-weight: 600;
     letter-spacing: 2px;
     background: transparent;
-    color: #0d0d0d;
+    color: #FFFFFF;
     overflow: hidden;
     box-shadow: 0 0 0 0 transparent;
     -webkit-transition: all 0.2s ease-in;

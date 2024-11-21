@@ -32,36 +32,46 @@ const Layout = () => {
                         <Route element={<Home />} path="/" />
                         <Route element={<RegistrationForm />} path="/register" />
                         <Route element={<LoginForm />} path="/login" />
-                        <Route element={<Unauthorized />} path="/unauthorized" />
 
-                        {/* Rutas Protegidas */}
-                        <Route 
-                            path="/dashboardAdmin" 
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        
+                        <Route
+                            path="/dashboardAdmin"
                             element={
-                                <ProtectedRoute roles={[1]}>
+                                <ProtectedRoute roles={["admin"]}>
                                     <DashboardAdmin />
                                 </ProtectedRoute>
-                            } 
+                            }
                         />
-                        <Route 
-                            path="/dashboardTeacher" 
+                        <Route
+                            path="/dashboardTeacher"
                             element={
-                                <ProtectedRoute roles={[2]}>
+                                <ProtectedRoute roles={["docente"]}>
                                     <DashboardTeacher />
                                 </ProtectedRoute>
-                            } 
+                            }
                         />
-                        <Route 
-                            path="/representante" 
+                        <Route
+                            path="/dashboardRepresentante"
                             element={
-                                <ProtectedRoute roles={[3]}>
+                                <ProtectedRoute roles={["representante"]}>
                                     <DashboardRepresentative />
                                 </ProtectedRoute>
-                            } 
+                            }
                         />
-
-                        {/* Ruta para páginas no encontradas */}
-                        <Route element={<h1>Página no encontrada</h1>} />
+                        <Route element={<Unauthorized />} path="/unauthorized" />
                     </Routes>
                     <Footer />
                 </ScrollToTop>

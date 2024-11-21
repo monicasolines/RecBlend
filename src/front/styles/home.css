@@ -8,10 +8,12 @@
 /* src/App.css */
 
 .footer {
+  /* position: absolute; */
   background-color: #2b2d42;
   color: white;
   font-weight: bold;
   font-size: 20px;
+  bottom: 0;
 }
 
 .footer a {
@@ -26,7 +28,7 @@
 
 .section h2 {
   color: #f2f4f5;
-  text-decoration: underline;
+  text-decoration: none;
   margin-bottom: 20px;
 }
 
@@ -218,6 +220,5 @@
 
   .allSection {
     margin-top: 6%;
-
   }
 }

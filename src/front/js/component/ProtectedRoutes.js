@@ -5,7 +5,10 @@ import { Context } from "../store/appContext";
 const ProtectedRoute = ({ children, roles }) => {
     const { store } = useContext(Context);
 
-    const userRole = store.role; 
+    const userRole = store.role?.toLowerCase(); // Normaliza a minúsculas
+
+    console.log("Rol del usuario:", userRole);
+    console.log("Roles permitidos:", roles);
 
     if (!roles.includes(userRole)) {
         return <Navigate to="/unauthorized" />; // Redirige si no tiene permisos

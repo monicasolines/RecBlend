@@ -59,32 +59,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 				if (token && role) {
 					setStore({ 'token': token, 'role': role })
 
-					console.info("Session Loaded")
+					console.info("Sesión cargada exitosamente")
 				}
-				console.info("No credentials found")
+				console.info("No se encontraron credenciales")
 			},
-			// handleRegister: async (body) => {
-			// 	try {
-			// 		const response = await fetch(`${backend_url}/signup`, {
-			// 			method: 'POST',
-			// 			headers: {
-			// 				'Content-Type': 'application/json',
-			// 				'Access-Control-Allow-Origin': '*',
-			// 			},
-			// 			body: JSON.stringify(body),
-			// 		});
-
-			// 		const data = await response.json();
-
-			// 		if (response.ok) {
-			// 			return true;
-			// 		} else {
-			// 			return data.message || 'Error al registrarse';
-			// 		}
-			// 	} catch (error) {
-			// 		return 'Ocurrió un error al intentar registrarse';
-			// 	}
-			// },
 			handleRegister: async (body) => {
 				try {
 					const data = await actions.fetchRoute('signup', { method: 'POST', body });
@@ -94,60 +72,37 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return 'Ocurrió un error al intentar registrarse';
 				}
 			},
-			// handleLogin: async (body) => {
-			// 	try {
-			// 		const response = await fetch(`${backend_url}/login`, {
-			// 			method: 'POST',
-			// 			headers: {
-			// 				'Content-Type': 'application/json',
-			// 				'Access-Control-Allow-Origin': '*',
-			// 			},
-			// 			body: JSON.stringify(body),
-			// 		});
-
-			// 		const data = await response.json();
-
-			// 		if (response.ok) {
-			// 			localStorage.setItem('token', data.token);
-			// 			setStore({ token: data.token, role: data.role });
-			// 			return { success: true, role: data.role };
-			// 		} else {
-			// 			return { success: false, message: data.message || 'Nombre de usuario o contraseña incorrectos' };
-			// 		}
-			// 	} catch (error) {
-			// 		return { success: false, message: 'Ocurrió un error al intentar iniciar sesión' };
-			// 	}
-			// },
 			handleLogin: async (body) => {
 				try {
-					const data = await actions.fetchRoute('login', { method: 'POST', body });
-					localStorage.setItem('token', data.token);
-					localStorage.setItem('role', data.role);
-					setStore({ token: data.token, role: data.role });
-					return { success: true, role: data.role };
+					const data = await getActions().fetchRoute("login", { 
+						method: "POST", 
+						body 
+					});
+			
+					console.log("Respuesta del backend en handleLogin:", data);
+			
+					if (data.token && data.role) {
+						const rol = data.role.toLowerCase(); // Asegura que siempre sea minúsculas
+						localStorage.setItem("token", data.token);
+						localStorage.setItem("role", rol);
+			
+						setStore({ token: data.token, role: rol }); // Actualiza el contexto global
+						return { success: true, role: rol };
+					}
+			
+					return { success: false, message: "Respuesta incompleta del backend" };
 				} catch (error) {
-					console.error("Error en handleLogin:", error);
-					return { success: false, message: 'Ocurrió un error al intentar iniciar sesión' };
+					console.error("Error en handleLogin:", error.message);
+					return { success: false, message: error.message || "Error desconocido" };
 				}
 			},
+			
 			isAuthorized: (requiredRoles) => {
 				const store = getStore();
+				console.log("store.role:", store.role);
+				console.log("requiredRoles:", requiredRoles);
 				return requiredRoles.includes(store.role);
 			},
-			// fetchStudent: async () => {
-			// 	try {
-			// 		const response = await fetch(`${process.env.BACKEND_URL}/api/students/<student_id>`, {
-			// 			headers: {
-			// 				Authorization: `Bearer ${localStorage.getItem("token")}`,
-			// 			},
-			// 		});
-			// 		if (!response.ok) throw new Error("Error al obtener los datos del representado");
-			// 		return await response.json();
-			// 	} catch (error) {
-			// 		console.error("fetchStudent Error:", error);
-			// 		throw error;
-			// 	}
-			// },
 			fetchStudent: async (studentId) => {
 				try {
 					const data = await actions.fetchRoute(`students/${studentId}`, {
@@ -160,29 +115,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error("fetchStudent Error:", error);
 					throw error;
 				}
-			},
-			// fetchMaterias: async () => {
-			// 	try {
-			// 		const response = await fetch(`${process.env.BACKEND_URL}/api/materias`, {
-			// 			headers: {
-			// 				Authorization: `Bearer ${localStorage.getItem("token")}`,
-			// 			},
-			// 		});
-			// 		if (!response.ok) throw new Error("Error al obtener las materias");
-			// 		return await response.json(); // Retorna las materias relacionadas
-			// 	} catch (error) {
-			// 		console.error("fetchMaterias Error:", error);
-			// 		throw error;
-			// 	}
-			// },
+			},	
 			fetchMaterias: async () => {
 				try {
 					const data = await actions.fetchRoute('materias', {
 						method: 'GET',
 						isPrivate: true,
-						bluePrint: 'materias'
+						bluePrint: 'teachers'
 					});
-					return data; // Retorna las materias relacionadas
+					return data; 
 				} catch (error) {
 					console.error("fetchMaterias Error:", error);
 					throw error;
