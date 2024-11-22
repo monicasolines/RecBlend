@@ -4,7 +4,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 import requests
 from flask import Flask, request, jsonify, Blueprint
 from marshmallow import ValidationError
-from api.models import db, User, EmailAuthorized, BlockedTokenList, Role
+from api.models import Docente, db, User, EmailAuthorized, BlockedTokenList, Role
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt
@@ -107,6 +107,19 @@ def handle_logout():
 
     return jsonify({"msg": "Logged Out"}),200
 
+
+
+@api.route('/teachers/info', methods=['GET'])
+def get_teachers_cards():
+     teachers = Docente.query.all()
+     
+     if not teachers:
+         return jsonify({"docentes": []}),404
+     
+     return jsonify({"docentes": [{"fullName": f"{teacher.nombre} {teacher.apellido}",
+                                   "descripcion": teacher.descripcion,
+                                   "foto": teacher.foto} for teacher in teachers]}),200
+
 @api.route('/recoverypassword', methods=['POST'])
 def handle_change_password_request():
     body = request.get_json()
@@ -119,10 +132,9 @@ def handle_change_password_request():
     if not user:
         return jsonify({"msg": "User not found"}),400
     
-    pwdToken= create_access_token(identity=user.id, additional_claims={'type': 'password'})
+    pwdToken= create_access_token(identity=str(user.id), additional_claims={'type': 'password'})
     
     username = f"{user.nombre} {user.apellido}"
     
     send_recovery_email(email, pwdToken, username)
-    
     

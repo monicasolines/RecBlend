@@ -44,14 +44,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const response = await fetch(URL, params)
 
 					if (!response.ok) {
-						throw new Error(`Error con la solicitud: ${response.statusText}`)
+						let error = await response.json()
+						throw new Error(`Error con la solicitud: ${error.msg ?? error.error}`)
 					}
 
 					const data = await response.json()
 					return data
 				} catch (error) {
-					console.error(error)
-					throw Error
+					console.error(error.message)
+					throw error
 				}
 
 			}, loadSession: () => {
@@ -65,32 +66,34 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				console.info("No credentials found")
 
-			}, subjectsOperations: async (method, id = '', body = '') => {
+			}, crudOperation: async (entity, method, { id = '', body = null, bluePrint = '' } = {}) => {
+				const validMethods = ['GET', 'POST', 'PUT', 'DELETE']
+				if (!validMethods.includes(method)) {
+					throw new Error(`Invalid method "${method}". Allowed methods: ${validMethods.join(', ')}`);
+
+				}
+
+				if (['PUT', 'DELETE'].includes(method) && !id) {
+					throw new Error(`Missing URL parameters for method "${method}".`);
+				}
 				try {
-					let validMethods = ['GET', 'POST', 'PUT', 'DELETE']
-					if (!validMethods.includes(method)) {
-						throw new Error(`Metodo no reconocido ${method}`);
-
-					}
-
-					if (['PUT', 'DELETE'].includes(method) && !id) {
-						throw new Error(`Missing URL parameters for method "${method}"`);
-					}
-
-
-					const response = await getActions().fetchRoute(`materias/${id}`, {
+					let endpoint = id ? `${entity}/${id}` : entity
+					const response = await getActions().fetchRoute(endpoint, {
 						method,
 						isPrivate: true,
-						bluePrint: 'admin',
-						body: method !== 'GET' ? body : '',
-
+						bluePrint: bluePrint,
+						body: method !== 'GET' ? body : null
 					})
 
 					return response
+
+				} catch (error) {
+					console.error(`Error in CRUD operation for ${entity}: ${error.message}`);
+					throw error
 				}
-				catch (error) {
-					console.error(error.message)
-				}
+
+			}, subjectsOperations: async (method, body = '', id = '') => {
+				return getActions().crudOperation('materias', method, { id, body, bluePrint: 'admin' })
 			}
 		}
 	}

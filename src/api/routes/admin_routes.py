@@ -77,7 +77,7 @@ def get_email_authorizations():
     return get_all_instances(EmailAuthorized,authorized_emails_schema)
 
 # ////////////////////////////// Teachers Endpoints CRUD ////////////////////
-@admin_routes.route('/teacher', methods=['POST'])
+@admin_routes.route('/teachers', methods=['POST'])
 def add_teacher():
     body = request.get_json()
 
@@ -123,7 +123,7 @@ def remove_teacher(id):
     return delete_instance(Docente,id)
     
 # /////////////////////////////// Students Endpoints CRUD //////////////////////////
-@admin_routes.route('/student', methods=['POST'])
+@admin_routes.route('/students', methods=['POST'])
 def add_student():
     body = request.get_json()
 
