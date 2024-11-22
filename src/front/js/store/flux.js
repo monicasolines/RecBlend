@@ -5,27 +5,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			role: '',
-			token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTczMjA1NjkyNywianRpIjoiMDY1NGYyODctYzRjYy00NWQ4LWFjOWMtNDI4YzkyMjdjMDBiIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MywibmJmIjoxNzMyMDU2OTI3LCJjc3JmIjoiYTc2MGY3YzYtYTY1YS00MTgwLTg2OTgtYmQ0NTEyYTVhMDNjIiwiZXhwIjoxNzMyMDU3ODI3LCJyb2xlIjoyfQ.0Z0QygRAy2TdbNB3sML7CfvFBjkDO1aoWEDIEOvqMS0',
+			token: '',
 			message: null,
 			demo: [],
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
 			fetchRoute: async (endpoint, { method = 'GET', body = '', isPrivate = false, bluePrint = '' } = {}) => {
+				if (isPrivate) getActions().loadSession();
 
 				const headers = {
 					'Content-Type': 'application/json',
 					'Access-Control-Allow-Origin': '*',
 				}
-
 				const { token } = getStore()
+
 
 				if (isPrivate && token) {
 					headers['Authorization'] = `Bearer ${token}`
 				}
 
 				if (isPrivate && (!token || !bluePrint)) {
-					throw new Error("Faltan datos para la solicitud privada")
+					throw new Error(`Missing: Token: ${!token}, bluePrint: ${!bluePrint} for private route`)
 				}
 
 				const URL = isPrivate ? `${backendURL}api/${bluePrint}/${endpoint}` : `${backendURL}api/${endpoint}`
@@ -60,8 +61,36 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({ 'token': token, 'role': role })
 
 					console.info("Session Loaded")
+					return
 				}
 				console.info("No credentials found")
+
+			}, subjectsOperations: async (method, id = '', body = '') => {
+				try {
+					let validMethods = ['GET', 'POST', 'PUT', 'DELETE']
+					if (!validMethods.includes(method)) {
+						throw new Error(`Metodo no reconocido ${method}`);
+
+					}
+
+					if (['PUT', 'DELETE'].includes(method) && !id) {
+						throw new Error(`Missing URL parameters for method "${method}"`);
+					}
+
+
+					const response = await getActions().fetchRoute(`materias/${id}`, {
+						method,
+						isPrivate: true,
+						bluePrint: 'admin',
+						body: method !== 'GET' ? body : '',
+
+					})
+
+					return response
+				}
+				catch (error) {
+					console.error(error.message)
+				}
 			}
 		}
 	}
