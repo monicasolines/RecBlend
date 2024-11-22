@@ -11,6 +11,7 @@ import { DashboardAdmin } from "./pages/dashboardAdmin";
 import { DashboardTeacher } from "./pages/dashboardTeacher";
 import RegistrationForm from './component/RegistrationForm';
 import LoginForm from './component/LoginForm';
+import ParentDashboard from "./pages/ParentDashboard.jsx";
 
 const Layout = () => {
     const basename = process.env.BASENAME || "";
@@ -30,6 +31,7 @@ const Layout = () => {
                         <Route element={<Home />} path="/" />
                         <Route element={<DashboardAdmin />} path="/dashboardAdmin" />
                         <Route element={<DashboardTeacher />} path="/dashboardTeacher" />
+                        <Route element={<ParentDashboard />} path="/dashboard/parent" />
                         <Route element={<RegistrationForm />} path="/register" />
                         <Route element={<LoginForm />} path="/login" />
                         <Route element={<h1>Not found!</h1>} />
