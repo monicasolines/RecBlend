@@ -68,11 +68,46 @@ const getState = ({ getStore, getActions, setStore }) => {
 				console.info("No credentials found")
 			},
 
+			// CRUD para usuarios autorizados
+
+			postUser: async (body) => {
+				const actions = getActions()
+				const data = await actions.fetchRoute("user/auth", {
+					method: "POST",
+					body: body,
+					isPrivate: true,
+					bluePrint: 'admin'
+				});
+				actions.getTeachers()
+			},
+
+			deleteUser: async (id) => {
+				const actions = getActions()
+				const data = await actions.fetchRoute(`user/auth/${id}`, {
+					method: "DELETE",
+					isPrivate: true,
+					bluePrint: 'admin'
+				});
+				actions.getTeachers()
+			},
+
+			// CRUD para profesores
+
 			postTeacher: async (body) => {
 				const actions = getActions()
 				const data = await actions.fetchRoute("teacher", {
 					method: "POST",
 					body: body,
+					isPrivate: true,
+					bluePrint: 'admin'
+				});
+				actions.getTeachers()
+			},
+
+			deleteTeacher: async (id) => {
+				const actions = getActions()
+				const data = await actions.fetchRoute(`teacher/${id}`, {
+					method: "DELETE",
 					isPrivate: true,
 					bluePrint: 'admin'
 				});
@@ -89,11 +124,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ profesores: data })
 			},
 
+			// CRUD para grados
+
 			postCourse: async (grado) => {
 				const actions = getActions()
 				const data = await actions.fetchRoute("grados", {
 					method: "POST",
 					body: grado,
+					isPrivate: true,
+					bluePrint: 'admin'
+				});
+				actions.getCourses()
+			},
+
+			deleteCourse: async (id) => {
+				const actions = getActions()
+				const data = await actions.fetchRoute(`grados/${id}`, {
+					method: "DELETE",
 					isPrivate: true,
 					bluePrint: 'admin'
 				});
