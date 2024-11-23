@@ -8,7 +8,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			role: '',
 			token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTczMjA1NjkyNywianRpIjoiMDY1NGYyODctYzRjYy00NWQ4LWFjOWMtNDI4YzkyMjdjMDBiIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MywibmJmIjoxNzMyMDU2OTI3LCJjc3JmIjoiYTc2MGY3YzYtYTY1YS00MTgwLTg2OTgtYmQ0NTEyYTVhMDNjIiwiZXhwIjoxNzMyMDU3ODI3LCJyb2xlIjoyfQ.0Z0QygRAy2TdbNB3sML7CfvFBjkDO1aoWEDIEOvqMS0',
 			message: null,
-			demo: [],
 		},
 		actions: {
 			fetchRoute: async (endpoint, { method = 'GET', body = '', isPrivate = false, bluePrint = '' } = {}) => {
@@ -103,32 +102,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 				console.log("requiredRoles:", requiredRoles);
 				return requiredRoles.includes(store.role);
 			},
-			fetchStudent: async (studentId) => {
+			handleLogout: async () => {
+				const { fetchRoute } = getActions();
 				try {
-					const data = await actions.fetchRoute(`students/${studentId}`, {
-						method: 'GET',
-						isPrivate: true,
-						bluePrint: 'students'
+					const resp = await fetchRoute("/logout", { 
+						method: "POST", 
+						isPrivate: true,  
+						bluePrint: "session"
 					});
-					return data;
+			
+					if (!resp) {
+						console.error("No se pudo cerrar sesión");
+						return;
+					}
+			
+					setStore({ token: undefined, role: undefined });
+					localStorage.removeItem("token");
+					localStorage.removeItem("role");
 				} catch (error) {
-					console.error("fetchStudent Error:", error);
-					throw error;
-				}
-			},	
-			fetchMaterias: async () => {
-				try {
-					const data = await actions.fetchRoute('materias', {
-						method: 'GET',
-						isPrivate: true,
-						bluePrint: 'teachers'
-					});
-					return data; 
-				} catch (error) {
-					console.error("fetchMaterias Error:", error);
-					throw error;
+					console.error("Error al cerrar sesión:", error);
 				}
 			},
+			
 		}
 	}
 };

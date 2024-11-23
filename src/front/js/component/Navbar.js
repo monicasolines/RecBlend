@@ -24,7 +24,7 @@ const NavBar = () => {
       <Navbar.Toggle aria-controls="basic-navbar-nav" className={`${styles['navbar-toggler']}`} />
       <Navbar.Collapse id="basic-navbar-nav" className={`${styles.collapseCustom}`}>
         <Nav className="ms-auto text-center ml-4">
-          <Nav.Link as={Link} to="/home" className={`${styles.NavButton} nav-link`}>Inicio</Nav.Link>
+          <Nav.Link onClick={() => handleScrollToSection("bienvenida")} className={`${styles.NavButton} nav-link`}>Inicio</Nav.Link>
           <Nav.Link onClick={() => handleScrollToSection("profesorado")} className={`${styles.NavButton} nav-link`}>Profesorado</Nav.Link>
           <Nav.Link onClick={() => handleScrollToSection("caracteristicas")} className={`${styles.NavButton} nav-link`}>Características</Nav.Link>
           <Nav.Link as={Link} to="/login" className={`${styles.NavButton} nav-link`}>Iniciar Sesión</Nav.Link>
