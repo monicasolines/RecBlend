@@ -113,11 +113,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log("Respuesta del backend en handleLogin:", data);
 			
 					if (data.token && data.role) {
-						const rol = data.role.toLowerCase(); // Asegura que siempre sea minúsculas
+						const rol = data.role.toLowerCase(); 
 						localStorage.setItem("token", data.token);
 						localStorage.setItem("role", rol);
 			
-						setStore({ token: data.token, role: rol }); // Actualiza el contexto global
+						setStore({ token: data.token, role: rol }); 
 						return { success: true, role: rol };
 					}
 			

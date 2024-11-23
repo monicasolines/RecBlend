@@ -49,7 +49,6 @@ const AdminPanel = () => {
                         </table>
                     </div>
 
-                    {/* Estadísticas */}
                     <div className="mt-4">
                         <h5>Estadísticas</h5>
                         <div className="row">
@@ -78,8 +77,6 @@ const AdminPanel = () => {
 };
 
 export const DashboardAdmin = () => {
-    const { store, actions } = useContext(Context);
-
     return (
         <div className="container-fluid mt-5">
             <div className="row">
