@@ -11,6 +11,7 @@ import { DashboardTeacher } from "./pages/dashboardTeacher";
 import { DashboardRepresentative } from "./pages/dashboardRepresentante";
 import RegistrationForm from './component/RegistrationForm';
 import LoginForm from './component/LoginForm';
+import ParentDashboard from "./pages/ParentDashboard.jsx";
 import ProtectedRoute from "./component/ProtectedRoutes";
 import Unauthorized from "./pages/Unauthorized";
 
@@ -30,6 +31,7 @@ const Layout = () => {
                         {/* Rutas Públicas */}
                         <Route element={<Home />} path="/home" />
                         <Route element={<Home />} path="/" />
+                        <Route element={<ParentDashboard />} path="/dashboard/parent" />
                         <Route element={<RegistrationForm />} path="/register" />
                         <Route element={<LoginForm />} path="/login" />
 

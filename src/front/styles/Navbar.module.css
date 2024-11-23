@@ -22,6 +22,7 @@
   font-weight: bold;
   justify-content: flex-start;
   color: white;
+  height: 100px
 }
 
 #basic-navbar-nav {
@@ -67,11 +68,11 @@
   transition: all 1.3s ease;
 }
 
- .navbar-toggler:hover{
-  background-color: #bbbaaa !important; 
+.navbar-toggler:hover {
+  background-color: #bbbaaa !important;
 }
 
-.navbar-toggler:focus{
+.navbar-toggler:focus {
   color: transparent !important;
 }
 

@@ -6,25 +6,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			role: '',
-			token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTczMjA1NjkyNywianRpIjoiMDY1NGYyODctYzRjYy00NWQ4LWFjOWMtNDI4YzkyMjdjMDBiIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MywibmJmIjoxNzMyMDU2OTI3LCJjc3JmIjoiYTc2MGY3YzYtYTY1YS00MTgwLTg2OTgtYmQ0NTEyYTVhMDNjIiwiZXhwIjoxNzMyMDU3ODI3LCJyb2xlIjoyfQ.0Z0QygRAy2TdbNB3sML7CfvFBjkDO1aoWEDIEOvqMS0',
+			token: '',
 			message: null,
 		},
 		actions: {
 			fetchRoute: async (endpoint, { method = 'GET', body = '', isPrivate = false, bluePrint = '' } = {}) => {
+				if (isPrivate) getActions().loadSession();
 
 				const headers = {
 					'Content-Type': 'application/json',
 					'Access-Control-Allow-Origin': '*',
 				}
-
 				const { token } = getStore()
+
 
 				if (isPrivate && token) {
 					headers['Authorization'] = `Bearer ${token}`
 				}
 
 				if (isPrivate && (!token || !bluePrint)) {
-					throw new Error("Faltan datos para la solicitud privada")
+					throw new Error(`Missing: Token: ${!token}, bluePrint: ${!bluePrint} for private route`)
 				}
 
 				const URL = isPrivate ? `${backendURL}api/${bluePrint}/${endpoint}` : `${backendURL}api/${endpoint}`
@@ -42,14 +43,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const response = await fetch(URL, params)
 
 					if (!response.ok) {
-						throw new Error(`Error con la solicitud: ${response.statusText}`)
+						let error = await response.json()
+						throw new Error(`Error con la solicitud: ${error.msg ?? error.error}`)
 					}
 
 					const data = await response.json()
 					return data
 				} catch (error) {
-					console.error(error)
-					throw Error
+					console.error(error.message)
+					throw error
 				}
 
 			}, loadSession: () => {
@@ -58,11 +60,41 @@ const getState = ({ getStore, getActions, setStore }) => {
 				if (token && role) {
 					setStore({ 'token': token, 'role': role })
 
-					console.info("Sesión cargada exitosamente")
+					console.info("Session Loaded")
+					return
 				}
-				console.info("No se encontraron credenciales")
+				console.info("No credentials found")
+
+			}, crudOperation: async (entity, method, { id = '', body = null, bluePrint = '' } = {}) => {
+				const validMethods = ['GET', 'POST', 'PUT', 'DELETE']
+				if (!validMethods.includes(method)) {
+					throw new Error(`Invalid method "${method}". Allowed methods: ${validMethods.join(', ')}`);
+
+				}
+
+				if (['PUT', 'DELETE'].includes(method) && !id) {
+					throw new Error(`Missing URL parameters for method "${method}".`);
+				}
+				try {
+					let endpoint = id ? `${entity}/${id}` : entity
+					const response = await getActions().fetchRoute(endpoint, {
+						method,
+						isPrivate: true,
+						bluePrint: bluePrint,
+						body: method !== 'GET' ? body : null
+					})
+
+					return response
+
+				} catch (error) {
+					console.error(`Error in CRUD operation for ${entity}: ${error.message}`);
+					throw error
+				}
+
+			}, subjectsOperations: async (method, body = '', id = '') => {
+				return getActions().crudOperation('materias', method, { id, body, bluePrint: 'admin' })
 			},
-			handleRegister: async (body) => {
+				handleRegister: async (body) => {
 				try {
 					const data = await actions.fetchRoute('signup', { method: 'POST', body });
 					return true;

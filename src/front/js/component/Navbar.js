@@ -12,12 +12,14 @@ const NavBar = () => {
   };
 
   return (
-    <Navbar expand="lg" className={`${styles['navbar-custom']} py-3 navbar-dark fixed-top`}>
+    <Navbar expand="lg" className={`${styles['navbar-custom']} navbar-dark fixed-top`}>
+
+
       <Navbar.Brand as={Link} to="/home">
         <img
           src={logo}
           alt="logo"
-          style={{ width: '30%'}}
+          style={{ height: "50px" }}
           className='ms-4'
         />
       </Navbar.Brand>
