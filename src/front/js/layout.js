@@ -34,21 +34,6 @@ const Layout = () => {
                         <Route element={<ParentDashboard />} path="/dashboard/parent" />
                         <Route element={<RegistrationForm />} path="/register" />
                         <Route element={<LoginForm />} path="/login" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        
                         <Route
                             path="/dashboardAdmin"
                             element={
