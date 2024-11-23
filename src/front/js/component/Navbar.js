@@ -13,8 +13,6 @@ const NavBar = () => {
 
   return (
     <Navbar expand="lg" className={`${styles['navbar-custom']} navbar-dark fixed-top`}>
-
-
       <Navbar.Brand as={Link} to="/home">
         <img
           src={logo}
