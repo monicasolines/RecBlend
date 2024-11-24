@@ -18,7 +18,7 @@ const NavBar = () => {
           src={logo}
           alt="logo"
           style={{ height: "50px" }}
-          className='ms-4'
+          className='ms-5 ps-3'
         />
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" className={`${styles['navbar-toggler']}`} />
