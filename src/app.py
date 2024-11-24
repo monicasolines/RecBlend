@@ -34,6 +34,9 @@ app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=1)
 jwt = JWTManager(app)
 
 
+#cred = credentials.Certificate("firebase_key.json")
+#firebase_admin.initialize_app(cred)
+
 #Check revoked Token
 @jwt.token_in_blocklist_loader
 def check_if_token_revoked(jwt_header, jwt_payload: dict) -> bool:
