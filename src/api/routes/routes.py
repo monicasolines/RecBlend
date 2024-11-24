@@ -55,7 +55,6 @@ def handle_register():
         if not rol:
             return jsonify({"msg": "Rol no válido"})
         
-        
         user["role_id"] = rol.id
         user["is_active"] = True
         hashed_password = bcrypt.generate_password_hash(user["password"]).decode('utf-8')
@@ -138,3 +137,7 @@ def handle_change_password_request():
     
     send_recovery_email(email, pwdToken, username)
     
+@api.route('/resetpassword', methods=['PUT'])
+@jwt_required()
+def handle_password_change():
+    pass
