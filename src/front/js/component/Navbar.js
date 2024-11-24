@@ -12,16 +12,19 @@ const NavBar = () => {
   };
 
   return (
-    <Navbar expand="lg" className={`${styles['navbar-custom']} py-3 navbar-dark fixed-top`}>
+    <Navbar expand="lg" className={`${styles['navbar-custom']} navbar-dark fixed-top`}>
+
+
       <Navbar.Brand as={Link} to="/home">
         <img
           src={logo}
           alt="logo"
-          style={{ width: '30%'}}
+          style={{ height: "50px" }}
           className='ms-4'
         />
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" className={`${styles['navbar-toggler']}`} />
+
       <Navbar.Collapse id="basic-navbar-nav" className={styles['collapse-custom']}>
         <Nav className="ms-auto">
           <Nav.Link as={Link} to="/home" className={`${styles.NavButton} nav-link`}>Inicio</Nav.Link>

@@ -17,7 +17,7 @@ def create_instance(model,body,schema):
     
     except ValidationError as e:
         db.session.rollback()
-        return jsonify({"validation_error": e.messages}),400
+        return jsonify({"error":{"validation_error": e.messages}}),400
     except SQLAlchemyError as e:
         db.session.rollback()
         return jsonify({"error": str(e)}),400
