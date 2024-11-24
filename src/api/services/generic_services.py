@@ -4,7 +4,7 @@ from api.models import db
 from marshmallow import ValidationError
 from tempfile import NamedTemporaryFile
 from datetime import timedelta
-from firebase_admin import storage
+
 
 def create_instance(model,body,schema):
     
@@ -85,19 +85,19 @@ def allowed_file(filename):
     allowed_extensions = {'png', 'jpg', 'jpeg'}
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_extensions
 
-def upload_image(file, name):
+# def upload_image(file, name):
     
-    if (not allowed_file(file.filename)):
-        return jsonify({"msg": "Formato de archivo no admitido"}),400
+#     if (not allowed_file(file.filename)):
+#         return jsonify({"msg": "Formato de archivo no admitido"}),400
     
     
-    extension = file.filename.split(".")[1]
-    temp=NamedTemporaryFile(delete=False)
-    file.save(temp.name)
+#     extension = file.filename.split(".")[1]
+#     temp=NamedTemporaryFile(delete=False)
+#     file.save(temp.name)
     
-    bucket = storage.bucket(name='schoolhub4geeks.firebasestorage.app')
-    filename ='picturesschoolhub/' + name + "." + extension
-    resource = bucket.blob(filename)
-    resource.upload_from_filename(temp.name, content_type="image/"+extension)
+#     bucket = storage.bucket(name='schoolhub4geeks.firebasestorage.app')
+#     filename ='picturesschoolhub/' + name + "." + extension
+#     resource = bucket.blob(filename)
+#     resource.upload_from_filename(temp.name, content_type="image/"+extension)
     
-    return filename
+#     return filename

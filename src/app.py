@@ -14,8 +14,6 @@ from api.routes.admin_routes import admin_routes
 from api.routes.teacher_routes import teacher_routes
 from api.admin import setup_admin
 from api.commands import setup_commands
-import firebase_admin
-from firebase_admin import credentials
 from flask_cors import CORS
 
 

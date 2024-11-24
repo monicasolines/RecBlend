@@ -1,3 +1,4 @@
+// const backend_url = process.env.BACKEND_URL + 'api'
 const backendURL = process.env.BACKEND_URL || ""
 
 
@@ -198,10 +199,72 @@ const getState = ({ getStore, getActions, setStore }) => {
 					bluePrint: 'admin'
 				});
 				setStore({ grados: data })
-			}
+			},
+				handleRegister: async (body) => {
+				try {
+					const data = await actions.fetchRoute('signup', { method: 'POST', body });
+					return true;
+				} catch (error) {
+					console.error("Error en handleRegister:", error);
+					return 'Ocurrió un error al intentar registrarse';
+				}
+			},
+			handleLogin: async (body) => {
+				try {
+					const data = await getActions().fetchRoute("login", { 
+						method: "POST", 
+						body 
+					});
+			
+					console.log("Respuesta del backend en handleLogin:", data);
+			
+					if (data.token && data.role) {
+						const rol = data.role.toLowerCase(); 
+						localStorage.setItem("token", data.token);
+						localStorage.setItem("role", rol);
+			
+						setStore({ token: data.token, role: rol }); 
+						return { success: true, role: rol };
+					}
+			
+					return { success: false, message: "Respuesta incompleta del backend" };
+				} catch (error) {
+					console.error("Error en handleLogin:", error.message);
+					return { success: false, message: error.message || "Error desconocido" };
+				}
+			},
+			
+			isAuthorized: (requiredRoles) => {
+				const store = getStore();
+				console.log("store.role:", store.role);
+				console.log("requiredRoles:", requiredRoles);
+				return requiredRoles.includes(store.role);
+			},
+			handleLogout: async () => {
+				const { fetchRoute } = getActions();
+				try {
+					const resp = await fetchRoute("/logout", { 
+						method: "POST", 
+						isPrivate: true,  
+						bluePrint: "session"
+					});
+			
+					if (!resp) {
+						console.error("No se pudo cerrar sesión");
+						return;
+					}
+			
+					setStore({ token: undefined, role: undefined });
+					localStorage.removeItem("token");
+					localStorage.removeItem("role");
+				} catch (error) {
+					console.error("Error al cerrar sesión:", error);
+				}
+			},
+			
 		}
 	}
-}
+};
 
 
 export default getState;

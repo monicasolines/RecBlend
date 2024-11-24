@@ -1,30 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Form, Button, Row, Col, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import styles from "../../styles/LoginForm.module.css"; // Importa los estilos
+import styles from "../../styles/LoginForm.module.css";
+import { Context } from '../store/appContext';
 
 const LoginForm = () => {
-    const [username, setUsername] = useState('');
+    const { actions, store } = useContext(Context);
+    const navigate = useNavigate();
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const navigate = useNavigate();
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const validUsername = "usuarioPrueba";
-        const validPassword = "contraseña123";
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError('');
 
-        if (username === '' || password === '') {
+        if (email === '' || password === '') {
             setError('Por favor, complete todos los campos');
             return;
         }
+    
+        const response = await actions.handleLogin({ email, password });
+        console.log("Resultado de handleLogin:", response);
 
-        if (username === validUsername && password === validPassword) {
-            setError('');
-            navigate('/home');
+        if (response.success) {
+            const route = 
+                store.role === "admin" ? "/dashboardAdmin" :
+                store.role === "docente" ? "/dashboardTeacher" :
+                store.role === "representante" ? "/dashboardRepresentante" :
+                null;
+                console.log(route) 
+
+            route ? navigate(route) : setError("Rol no reconocido.");
         } else {
-            setError('Nombre de usuario o contraseña incorrectos');
+            setError(response.message);
         }
+        
     };
 
     return (
@@ -33,14 +44,14 @@ const LoginForm = () => {
                 <Col xs={12} md={6} lg={4} className="mx-auto">
                     <h2 className="text-center mb-4"><strong>Iniciar Sesión</strong></h2>
                     {error && <Alert variant="danger">{error}</Alert>}
-                    <Form onSubmit={handleSubmit} className="p-4 border rounded shadow">
-                        <Form.Group controlId="username">
-                            <Form.Label>Nombre de Usuario</Form.Label>
+                    <Form onSubmit={handleSubmit} className={`${styles.formLog} p-4 border shadow`}>
+                        <Form.Group controlId="email">
+                            <Form.Label>Email</Form.Label>
                             <Form.Control
-                                type="text"
-                                placeholder="Ingrese su usuario"
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
+                                type="email"
+                                placeholder="Ingrese su correo electrónico"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                                 required
                             />
                         </Form.Group>
@@ -60,9 +71,9 @@ const LoginForm = () => {
                         <Button
                             variant="link"
                             onClick={() => navigate('/register')}
-                            className="w-100 mt-3 text-center"
+                            className="w-100 mt-3 text-center" style={{'text-decoration': 'none'}}
                         >
-                            <strong>¿No tienes cuenta? Regístrate</strong>
+                            <span className={`${styles.spanLog}`}>¿No tienes cuenta? Regístrate</span>
                         </Button>
                     </Form>
                 </Col>
