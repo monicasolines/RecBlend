@@ -1,6 +1,7 @@
 import React from "react";
 import { Nav } from "react-bootstrap";
 import styled from "styled-components";
+import Avatar from "./Avatar.jsx";
 
 const ListMenuItem = styled.span`
   color: #ffffff;
@@ -44,11 +45,14 @@ const ListMenuItem = styled.span`
 `;
 
 const SidebarWrapper = styled.div`
-  width: 21vw;
-  background-color: #f8f9fa;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 20vw;
+  min-width: 100px;
 
   @media (max-width: 786px) {
-    width: 20vw;
+    width: 19vw;
   }
 `;
 
@@ -59,13 +63,14 @@ const ResponsiveNavLink = styled(Nav.Link)`
   @media (max-width: 786px) {
     justify-content: center;
     .list-menu-item-text {
-      display: none; /* Oculta el texto en pantallas pequeñas */
+      display: none;
     }
   }
 `;
 
 const StyledICon = styled.i`
   font-size: 150%;
+  min-width: 40px;
 
   @media (max-width: 786px) {
     font-size: 5vw;
@@ -76,19 +81,32 @@ const StyledICon = styled.i`
   }
 `;
 
-const ParentSideBar = ({ items, activeKey, onSelect }) => {
+const StyledNav = styled(Nav)`
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  background: linear-gradient(
+    180deg,
+    rgba(43, 45, 66, 1) 0%,
+    rgba(28, 124, 153, 1) 63%,
+    rgba(0, 212, 255, 1) 100%
+  );
+`;
+
+const ParentSideBar = ({
+  items,
+  activeKey,
+  onSelect,
+  src = "https://placehold.co/100",
+  name = "Sample Name",
+}) => {
   return (
     <SidebarWrapper>
-      <Nav
+      <StyledNav
         variant="tab"
-        className="flex-column gap-3 rounded-start"
+        className="gap-3"
         activeKey={activeKey}
-        onSelect={onSelect}
-        style={{
-          backgroundColor: "#0DCAF0",
-          minHeight: "100vh",
-          margin: "12px 10px 0 12px",
-        }}>
+        onSelect={onSelect}>
         {items.map((item, index) => (
           <Nav.Item key={index}>
             <ResponsiveNavLink
@@ -105,7 +123,7 @@ const ParentSideBar = ({ items, activeKey, onSelect }) => {
             </ResponsiveNavLink>
           </Nav.Item>
         ))}
-      </Nav>
+      </StyledNav>
     </SidebarWrapper>
   );
 };

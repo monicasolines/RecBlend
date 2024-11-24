@@ -50,6 +50,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					if (!response.ok) {
 						let error = await response.json()
+						if (error.msg?.includes("Token has expired")) {
+							window.location.href = '/login'
+							throw new Error("Session Expired")
+						}
+
+
 						throw new Error(`Error con la solicitud: ${error.msg ?? error.error}`)
 					}
 

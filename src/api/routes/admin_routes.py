@@ -86,7 +86,7 @@ def add_teacher():
     
     email = body.get('email')
     body["role_id"] = 2
-    body['password'] = bcrypt.generate_password_hash(body['password'])
+    body['password'] = bcrypt.generate_password_hash(body['password']).decode('utf-8')
     user_exists = User.query.filter_by(email=email).first()
 
     if user_exists:
