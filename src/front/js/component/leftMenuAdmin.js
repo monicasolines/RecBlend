@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -8,18 +9,27 @@ import "../../styles/components.css";
 import Swal from 'sweetalert2';
 
 const FormCommon = ({ type }) => {
+    const { store, actions } = useContext(Context)
     const [startDate, setStartDate] = useState(new Date());
     const [photoPreview, setPhotoPreview] = useState(null)
     const [formData, setFormData] = useState({
         name: '',
         lastName: '',
+        birthDate: '',
         email: '',
         password: '',
+        address: '',
         description: '',
         photo: null,
         classroomName: '',
         subjectName: ''
     });
+
+    useEffect(() => {
+        if (type === 'addSubject') {
+            actions.getCourses();
+        }
+    }, [type]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -38,74 +48,102 @@ const FormCommon = ({ type }) => {
         }
     };
 
-    const submitStudentTeacherCreation = (event) => {
+    const submitFormData = async (event) => {
         event.preventDefault();
-        const formDataToSend = new FormData();
-        for (const key in formData) {
-            formDataToSend.append(key, formData[key]);
-        }
-        console.log('Form submitted', formDataToSend);
-        Swal.fire({
-            title: "Datos registrados correctamente",
-            icon: "success"
-        });
 
+        try {
+            if (type === 'teacher') {
+                await actions.postTeacher({
+                    "nombre": formData.name,
+                    "apellido": formData.lastName,
+                    "email": formData.email,
+                    "password": formData.password,
+                    "descripcion": formData.description,
+                    "direccion": formData.address,
+                    "foto": "abc"
+                });
+
+            }
+            if (type === 'addClassroom') {
+                let classroom = formData.classroomName
+                await actions.postCourse({ "nombre": classroom });
+            }
+            if (type === 'addSubject') {
+                await actions.createSubject({ "nombre": formData.subjectName });
+            }
+            Swal.fire({
+                title: "Datos registrados correctamente",
+                icon: "success"
+            });
+            setFormData({
+                name: '',
+                lastName: '',
+                birthDate: '',
+                email: '',
+                password: '',
+                address: '',
+                description: '',
+                photo: null,
+                classroomName: '',
+                subjectName: ''
+            });
+            setPhotoPreview(null);
+
+        } catch (error) {
+            console.error("Error submitting data", error)
+            Swal.fire({
+                title: "Error al registrar los datos",
+                icon: "error"
+            });
+        }
     };
 
     return (
         <div className="container ms-2">
-            <h4 className="text-welcome">{`Registrar ${type === 'student' ? 'estudiante' : 'profesor'} nuevo`}</h4>
-            <form onSubmit={submitStudentTeacherCreation}>
 
+            <form onSubmit={(e) => submitFormData(e)} className="container-welcome-teacher">
+                <h4 className="text-title d-flex justify-content-center">{`Registrar ${type === 'student' ? 'estudiante nuevo' : type === 'teacher' ? 'profesor nuevo' : type === 'addClassroom' ? 'grado nuevo' : type === 'addSubject' ? 'materia nueva' : ''}`}</h4>
                 {/* Formulario con elementos comunes para crear profesor y estudiante */}
 
                 {(type === 'student' || type === 'teacher') && <div className="mb-3">
-                    <label className="form-label text-welcome">Nombre:</label>
-                    <input type="text" name="name" className="form-control" required value={formData.name} onChange={handleChange} />
+                    <label className="form-label text-form">Nombre:</label>
+                    <input type="text" name="name" className="form-control rounded-pill" required value={formData.name} onChange={handleChange} />
                 </div>}
                 {(type === 'student' || type === 'teacher') && <div className="mb-3">
-                    <label className="form-label text-welcome">Apellido:</label>
-                    <input type="text" name="lastName" className="form-control" required value={formData.lastName} onChange={handleChange} />
+                    <label className="form-label text-form">Apellido:</label>
+                    <input type="text" name="lastName" className="form-control rounded-pill" required value={formData.lastName} onChange={handleChange} />
                 </div>}
                 {(type === 'student' || type === 'teacher') && <div className="mb-3">
-                    <label className="form-label text-welcome">Email:</label>
-                    <input type="email" name="email" className="form-control" required value={formData.email} onChange={handleChange} />
+                    <label className="form-label text-form">Email:</label>
+                    <input type="email" name="email" className="form-control rounded-pill" required value={formData.email} onChange={handleChange} />
                 </div>}
                 {type === 'student' && <div className="mb-3">
-                    <label className="form-label text-welcome">Fecha de nacimiento:</label> <br></br>
-                    <DatePicker selected={startDate} onChange={date => setStartDate(date)} dateFormat="yyyy/MM/dd" className="form-control" required />
+                    <label className="form-label text-form">Fecha de nacimiento:</label> <br></br>
+                    <DatePicker selected={startDate} name="birthDate" onChange={date => setStartDate(date)} dateFormat="yyyy/MM/dd" className="form-control rounded-pill" required />
+                </div>}
+                {(type === 'student' || type === 'teacher') && <div className="mb-3">
+                    <label className="form-label text-form">Dirección:</label>
+                    <input type="text" name="address" className="form-control rounded-pill" required value={formData.address} onChange={handleChange} />
                 </div>}
 
                 {/* Elementos específicos del formuario para crear profesor */}
 
                 {type === 'teacher' && (
                     <div className="mb-3">
-                        <label className="form-label text-welcome">Contraseña:</label>
-                        <input type="password" name="password" className="form-control" required value={formData.password} onChange={handleChange} />
+                        <label className="form-label text-form">Contraseña:</label>
+                        <input type="password" name="password" className="form-control rounded-pill" required value={formData.password} onChange={handleChange} />
                     </div>
                 )}
                 {type === 'teacher' && (
                     <div className="mb-3">
-                        <label className="form-label text-welcome">Descripción:</label>
-                        <textarea name="description" className="form-control" rows="3" required value={formData.description} onChange={handleChange}></textarea>
+                        <label className="form-label text-form">Descripción:</label>
+                        <textarea name="description" className="form-control teacher-description" rows="3" required value={formData.description} onChange={handleChange}></textarea>
                     </div>
                 )}
                 {type === 'teacher' && (
                     <div className="mb-3">
-                        <label className="form-label text-welcome">Rol:</label>
-                        <div className="input-group" onChange={handleChange}>
-                            <select className="custom-select" id="inputGroupSelect04">
-                                <option selected>Opciones...</option>
-                                <option value="1">Docente</option>
-                                <option value="2">Representante</option>
-                            </select>
-                        </div>
-                    </div>
-                )}
-                {type === 'teacher' && (
-                    <div className="mb-3">
-                        <label className="form-label text-welcome">Subir foto:</label>
-                        <input type="file" accept="image/*" className="form-control select-image" onChange={handleUploadPhoto} required />
+                        <label className="form-label text-form">Subir foto:</label>
+                        <input type="file" accept="image/*" className="form-control select-image rounded-pill" onChange={handleUploadPhoto} required />
                         {photoPreview && (
                             <img src={photoPreview} alt="Preview" className="mt-2 teacher-photo" style={{ maxWidth: "30%", height: "auto" }} />
                         )}
@@ -147,8 +185,8 @@ const FormCommon = ({ type }) => {
                 {/* Vista para editar profesores */}
 
                 {type === 'updateTeachers' && (
-                    <table class="table table-hover">
-                        <thead>
+                    <table class="table table-hover ">
+                        <thead className="table-design">
                             <tr>
                                 <th>Nombre</th>
                                 <th>Apellido</th>
@@ -157,7 +195,7 @@ const FormCommon = ({ type }) => {
                                 <th>Foto</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody className="table-design">
                             <tr>
                                 <td>
                                     <input type="text" name="name" className="form-control" required value={formData.name} onChange={(e) => handleChange(e)} />
@@ -186,36 +224,44 @@ const FormCommon = ({ type }) => {
 
                 {type === "addClassroom" && (
                     <div className="mb-3">
-                        <label className="form-label text-welcome">Ingresa un nombre para crear un nuevo grado:</label>
-                        <input type="text" name="classroomName" className="form-control" required value={formData.classroomName} placeholder="1er Grado..." onChange={handleChange} />
+                        <label className="form-label text-title">Ingresa un nombre para crear un nuevo grado:</label>
+                        <input type="text" name="classroomName" className="form-control rounded-pill" required value={formData.classroomName} placeholder="1er Grado..." onChange={(e) => handleChange(e)} />
                     </div>
                 )}
 
                 {/* Formulario para añadir materias */}
 
                 {type === "addSubject" && (
-                    <div className="mb-3">
-                        <label className="form-label text-welcome">Selecciona el grado al que vas a asignar la materia:</label>
-                        <div className="input-group" onChange={handleChange}>
-                            <select className="custom-select" id="inputGroupSelect04">
-                                <option selected>Opciones...</option>
-                                <option value="1">1er Grado</option>
-                                <option value="2">2do Grado</option>
+
+
+
+                    < div className="mb-3">
+                        <label className="form-label text-title">Selecciona el grado al que vas a asignar la materia:</label>
+                        <div className="input-group" required>
+                            <select className="custom-select rounded-pill" id="inputGroupSelect04" onChange={handleChange}>
+                                <option value="" disabled selected>Opciones...</option>
+                                {store.grados.map(grado =>
+                                    <option key={grado.id} value="grado.id">{grado.nombre}</option>
+
+                                )}
                             </select>
                         </div>
                     </div>
-                )}
+                )
+                }
 
-                {type === "addSubject" && (
-                    <div className="mb-3">
-                        <label className="form-label text-welcome">Ingresa un nombre para crear una nueva materia:</label>
-                        <input type="text" name="subjectName" className="form-control" required value={formData.subjectName} onChange={handleChange} />
-                    </div>
-                )}
+                {
+                    type === "addSubject" && (
+                        <div className="mb-3">
+                            <label className="form-label text-title">Ingresa un nombre para crear una nueva materia:</label>
+                            <input type="text" name="subjectName" className="form-control rounded-pill" required value={formData.subjectName} onChange={handleChange} />
+                        </div>
+                    )
+                }
 
                 <button type="submit" className="btn btn-outline-register">Registrar</button>
-            </form>
-        </div>
+            </form >
+        </div >
     );
 };
 
@@ -277,8 +323,8 @@ export const LeftMenuAdmin = () => {
 
     return (
         <div className="container-fluid mt-3">
-            <div className="row flex-nowrap">
-                <div className="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-info rounded-start">
+            <div className="row flex-nowrap" >
+                <div className="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark rounded-start">
                     <div className="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                         <Link to="/" className="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                             <span className="fs-5 d-none d-sm-inline ">Menú</span>
@@ -348,8 +394,8 @@ export const LeftMenuAdmin = () => {
                         <hr />
                     </div>
                 </div>
-                <div className="render-content col py-3 "
-                    style={{ backgroundImage: `url(${backgroundForViews})` }}>
+                <div className="d-flex justify-content-center render-content col py-3 "
+                    style={{ backgroundImage: `url(${backgroundForViews})`, backgroundSize: "cover" }}>
                     <div className="welcome-message">
                         {renderContent()}
                     </div>

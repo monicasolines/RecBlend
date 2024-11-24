@@ -8,7 +8,7 @@ export const DashboardAdmin = () => {
     const { store, actions } = useContext(Context);
 
     return (
-        <div className="container-fluid mt-5">
+        <div className="container-fluid ">
             <div className="row">
                 <div className="col mt-5">
                     <LeftMenuAdmin />
