@@ -10,7 +10,8 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 250px;
+  /* padding-bottom: 5%; */
+  /* width: 250px; */
   height: 100vh;
   background-color: #060707;
   z-index: 999;
@@ -31,7 +32,7 @@
   background-color: white;
 }
 
-.collapse-custom {
+.collapseCustom {
   background-color: #2b2d42;
   padding: 1em;
   border-radius: 8px;
@@ -39,15 +40,18 @@
   justify-content: flex-end;
   position: relative;
   overflow: hidden;
+  width:fit-content;
 }
 
-/* Para que el menú colapsado muestre su contenido de forma gradual */
-.collapse-custom.show {
+.collapseCustom.show {
   max-height: 500px;
   right: 10px;
   max-width: 25%;
-  background: transparent;
+  background: none;
+  width:fit-content;
+  text-align: center;
 }
+
 
 .navbar-toggler {
   border: none;

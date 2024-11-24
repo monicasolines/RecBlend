@@ -1,17 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Form, Container } from 'react-bootstrap';
 import styles from "../../styles/RegistrationForm.module.css";
+// import styles from "../../styles/LoginForm.module.css";
+import { Context } from '../store/appContext';
+import { useNavigate } from 'react-router-dom';
 
 const RegistrationForm = () => {
+    const { store, actions } = useContext(Context)
+    const navigate = useNavigate()
+    const [error, setError] = useState('')
     const [formData, setFormData] = useState({
         nombre: '',
         apellido: '',
         email: '',
-        username: '',
         direccion: '',
-        celular: '',
-        relacion: '',
-        motivo: ''
+        telefono: '',
+        password: ''
+        // motivo: ''
     });
 
     const handleChange = (e) => {
@@ -19,17 +24,24 @@ const RegistrationForm = () => {
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // manejar datos
-        console.log(formData);
+        setError('');
+        const response = await actions.handleRegister(formData)
+
+        if (response != true) {
+            setError(response)
+            return 
+        }
+        navigate('/login');
     };
 
     return (
-        <div className='ContainerF'>
-            <Container className="mt-4" id='ContainerForm'>
+        <div className={`${styles.ContainerF}`}>
+            <Container className="mt-4">
                 <h2 className="text-center mb-4"><strong>Formulario de Inscripción</strong></h2>
-                <Form onSubmit={handleSubmit}>
+                {error != ''?<div className='alert alert-danger text-center'>{error}</div>:''}
+                <Form onSubmit={handleSubmit} className={`${styles.ContainerForm} border`}>
 
                     <Form.Group controlId="nombre">
                         <Form.Label><strong>Nombre</strong></Form.Label>
@@ -65,17 +77,6 @@ const RegistrationForm = () => {
                             required
                         />
                     </Form.Group>
-                    <Form.Group controlId="username">
-                        <Form.Label><strong>Username</strong></Form.Label>
-                        <Form.Control
-                            type="username"
-                            placeholder="username"
-                            name="username"
-                            value={formData.username}
-                            onChange={handleChange}
-                            required
-                        />
-                    </Form.Group>
 
                     <Form.Group controlId="direccion">
                         <Form.Label><strong>Dirección</strong></Form.Label>
@@ -88,33 +89,30 @@ const RegistrationForm = () => {
                         />
                     </Form.Group>
 
-                    <Form.Group controlId="celular">
+                    <Form.Group controlId="telefono">
                         <Form.Label><strong>Celular</strong></Form.Label>
                         <Form.Control
                             type="tel"
                             placeholder="XXXX-XX-XXXX"
-                            name="celular"
-                            value={formData.celular}
+                            name="telefono"
+                            value={formData.telefono}
                             onChange={handleChange}
                         />
                     </Form.Group>
 
-                    <Form.Group controlId="relacion">
-                        <Form.Label><strong>Relación con el alumno</strong></Form.Label>
+                    <Form.Group controlId="password">
+                        <Form.Label><strong>Password</strong></Form.Label>
                         <Form.Control
-                            as="select"
-                            name="relacion"
-                            value={formData.relacion}
+                            type="pass"
+                            placeholder="******"
+                            name="password"
+                            value={formData.password}
                             onChange={handleChange}
-                        >
-                            <option value="">Selecciona una opción</option>
-                            <option value="Padre">Padre/Madre</option>
-                            <option value="Tutor">Tutor</option>
-                        </Form.Control>
+                        />
                     </Form.Group>
 
-                    <Form.Group controlId="motivo">
-                        <Form.Label><strong>¿Por qué inscribe a su hijo en la institución?</strong></Form.Label>
+                    {/* <Form.Group controlId="motivo">
+                        <Form.Label id='textarea'><strong>¿Por qué inscribe a su hijo en la institución?</strong></Form.Label>
                         <Form.Control
                             as="textarea"
                             rows={3}
@@ -123,7 +121,7 @@ const RegistrationForm = () => {
                             value={formData.motivo}
                             onChange={handleChange}
                         />
-                    </Form.Group>
+                    </Form.Group> */}
 
                     <div className="d-flex justify-content-center mt-3">
                         <button
@@ -133,7 +131,6 @@ const RegistrationForm = () => {
                             Enviar Inscripción
                         </button>
                     </div>
-
                 </Form>
             </Container>
         </div>
