@@ -7,6 +7,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			role: '',
 			token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTczMjIwNDM4NSwianRpIjoiODU0ZjY3MGQtMjVhNS00ODE0LThkM2QtMTdlZTMyMjU5ZmNlIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjIiLCJuYmYiOjE3MzIyMDQzODUsImNzcmYiOiI0ZWMxN2MzOS1lZTFkLTQzZjctYWI5ZS1kMTAzYjQzNjg4MGMiLCJleHAiOjE3MzIyMDc5ODUsInJvbGUiOjF9.0ARjLXKWepgAOXF6lc8ru7mfhyX7DjGO_Hi32YLdmAE',
 			profesores: [],
+			usuarios: [],
 			grados: [],
 			materias: [],
 		},
@@ -70,6 +71,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			// CRUD para usuarios autorizados
 
+			getUsers: async () => {
+				const actions = getActions()
+				const data = await actions.fetchRoute("user/auth", {
+					method: "GET",
+					isPrivate: true,
+					bluePrint: 'admin'
+				});
+				setStore({ usuarios: data })
+			},
+
 			postUser: async (body) => {
 				const actions = getActions()
 				const data = await actions.fetchRoute("user/auth", {
@@ -78,7 +89,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					isPrivate: true,
 					bluePrint: 'admin'
 				});
-				actions.getTeachers()
+				actions.getUsers()
 			},
 
 			deleteUser: async (id) => {
@@ -88,7 +99,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					isPrivate: true,
 					bluePrint: 'admin'
 				});
-				actions.getTeachers()
+				actions.getUsers()
 			},
 
 			// CRUD para profesores
