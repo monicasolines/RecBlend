@@ -6,7 +6,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			role: '',
-			token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTczMjIwNDM4NSwianRpIjoiODU0ZjY3MGQtMjVhNS00ODE0LThkM2QtMTdlZTMyMjU5ZmNlIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjIiLCJuYmYiOjE3MzIyMDQzODUsImNzcmYiOiI0ZWMxN2MzOS1lZTFkLTQzZjctYWI5ZS1kMTAzYjQzNjg4MGMiLCJleHAiOjE3MzIyMDc5ODUsInJvbGUiOjF9.0ARjLXKWepgAOXF6lc8ru7mfhyX7DjGO_Hi32YLdmAE',
+			token: '',
 			profesores: [],
 			usuarios: [],
 			grados: [],
@@ -14,8 +14,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
-
-
 			fetchRoute: async (endpoint, { method = 'GET', body = '', isPrivate = false, bluePrint = '' } = {}) => {
 				if (isPrivate) getActions().loadSession();
 
@@ -172,11 +170,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					bluePrint: 'admin'
 				});
 				setStore({ profesores: data })
-			},
-
-			// CRUD para grados
-
-			postCourse: async (grado) => {
+			}, postCourse: async (grado) => {
 				const actions = getActions()
 				const data = await actions.fetchRoute("grados", {
 					method: "POST",
@@ -185,28 +179,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 					bluePrint: 'admin'
 				});
 				actions.getCourses()
-			},
-
-			deleteCourse: async (id) => {
+			}, deleteCourse: async (id) => {
 				const actions = getActions()
 				const data = await actions.fetchRoute(`grados/${id}`, {
 					method: "DELETE",
 					isPrivate: true,
 					bluePrint: 'admin'
 				});
-				actions.getCourses()
-			},
-
-			getCourses: async () => {
+				await actions.getCourses()
+			}, getCourses: async () => {
 				const actions = getActions()
+
+				console.log(getActions())
 				const data = await actions.fetchRoute("grados", {
 					method: "GET",
 					isPrivate: true,
 					bluePrint: 'admin'
 				});
 				setStore({ grados: data })
-			},
-				handleRegister: async (body) => {
+
+				return data
+			}, handleRegister: async (body) => {
 				try {
 					const data = await actions.fetchRoute('signup', { method: 'POST', body });
 					return true;
@@ -214,52 +207,48 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error("Error en handleRegister:", error);
 					return 'Ocurrió un error al intentar registrarse';
 				}
-			},
-			handleLogin: async (body) => {
+			}, handleLogin: async (body) => {
 				try {
-					const data = await getActions().fetchRoute("login", { 
-						method: "POST", 
-						body 
+					const data = await getActions().fetchRoute("login", {
+						method: "POST",
+						body
 					});
-			
-					console.log("Respuesta del backend en handleLogin:", data);
-			
+
+
 					if (data.token && data.role) {
-						const rol = data.role.toLowerCase(); 
+						const rol = data.role.toLowerCase();
 						localStorage.setItem("token", data.token);
 						localStorage.setItem("role", rol);
-			
-						setStore({ token: data.token, role: rol }); 
+
+						setStore({ token: data.token, role: rol });
+
 						return { success: true, role: rol };
 					}
-			
 					return { success: false, message: "Respuesta incompleta del backend" };
+
 				} catch (error) {
 					console.error("Error en handleLogin:", error.message);
 					return { success: false, message: error.message || "Error desconocido" };
 				}
-			},
-			
-			isAuthorized: (requiredRoles) => {
+			}, isAuthorized: (requiredRoles) => {
 				const store = getStore();
 				console.log("store.role:", store.role);
 				console.log("requiredRoles:", requiredRoles);
 				return requiredRoles.includes(store.role);
-			},
-			handleLogout: async () => {
+			}, handleLogout: async () => {
 				const { fetchRoute } = getActions();
 				try {
-					const resp = await fetchRoute("/logout", { 
-						method: "POST", 
-						isPrivate: true,  
+					const resp = await fetchRoute("/logout", {
+						method: "POST",
+						isPrivate: true,
 						bluePrint: "session"
 					});
-			
+
 					if (!resp) {
 						console.error("No se pudo cerrar sesión");
 						return;
 					}
-			
+
 					setStore({ token: undefined, role: undefined });
 					localStorage.removeItem("token");
 					localStorage.removeItem("role");
@@ -267,7 +256,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error("Error al cerrar sesión:", error);
 				}
 			},
-			
+
 		}
 	}
 };
