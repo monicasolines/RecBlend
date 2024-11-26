@@ -15,7 +15,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			]
 		},
+				coins: [], 
+				loadingCoins: true, 
+
 		actions: {
+			fetchCoins: async () => {
+                setStore({ loadingCoins: true }); 
+                try {
+                    const response = await fetch(
+                        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=30&page=1&sparkline=false"
+                    );
+                    const data = await response.json();
+                    setStore({ coins: data, loadingCoins: false }); 
+                } catch (error) {
+                    console.error("Error fetching coins:", error);
+                    setStore({ loadingCoins: false }); 
+                }
+            },
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
