@@ -1,37 +1,91 @@
+/* 
+    General Styles used on every website (Don't Repeat Yourself)
+*/
+
 /* Navbar CSS */
 
+
 /* Footer CSS */
+.footer {
+  border-top: 1px solid white;
+  text-decoration: none;
+  color: white;
+  background-color: black;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.link,
+.link:link {
+  text-decoration: none;
+}
+.link:visited {
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: none;
+}
+
+.link:active {
+  text-decoration: none;
+}
+
+.about {
+  height: 670px;
+  width: 400px;
+  color: black;
+  background-color: white;
+  margin: auto;
+}
+.firstContactDiv {
+  height: 670px;
+}
+
+.contact {
+  border: 1px solid black;
+  height: 90%;
+  width: 540px;
+  color: black;
+  background-color: white;
+  margin: auto;
+}
+.text {
+  width: 100%;
+  max-height: 600px;
+  min-height: 573px;
+}
 
 /* Landing page CSS */
 
 #landingPage {
-    display: grid;
-    background-color: black;
+  display: grid;
+  background-color: black;
 }
 
 .previewBox {
-    margin: 4vh auto;
-    display: flex;
-    height: 550px;
-    scale: .1; opacity: 0;
-    animation: fade-in linear forwards;
-    animation-timeline: view();
-    animation-range-start: cover;
-    animation-range-end: 85vh
+  margin: 4vh auto;
+  display: flex;
+  height: 550px;
+  scale: 0.1;
+  opacity: 0;
+  animation: fade-in linear forwards;
+  animation-timeline: view();
+  animation-range-start: cover;
+  animation-range-end: 85vh;
 }
 
 #listingPreview {
-    
 }
 
 .previewPhoto {
-    height: 550px;
-    width: 450px;
-    box-shadow: 0px 0px 55px 10px #39FF14;
-    border-radius: 5%;
-    margin-left: 50px;
-    margin-right:50px;
-    /* scale: .1; opacity: 0;
+  height: 550px;
+  width: 450px;
+  box-shadow: 0px 0px 55px 10px #39ff14;
+  border-radius: 5%;
+  margin-left: 50px;
+  margin-right: 50px;
+  /* scale: .1; opacity: 0;
     animation: fade-in linear forwards;
     animation-timeline: view();
     animation-range-start: cover;
@@ -39,41 +93,43 @@
 }
 
 @keyframes fade-in {
-    
-    to { scale: 1; opacity: 1;}
+  to {
+    scale: 1;
+    opacity: 1;
+  }
 }
 
 .blurbContainer {
-    text-align: center;
-    margin: auto;
+  text-align: center;
+  margin: auto;
 }
 
 #switchToListing {
-    background-color:#39FF14;
-    border-color: black;
-    border-width: 3px;
+  background-color: #39ff14;
+  border-color: black;
+  border-width: 3px;
 }
 
 #switchToListing:hover {
-    box-shadow: 0px 0px 35px 5px #39FF14;
+  box-shadow: 0px 0px 35px 5px #39ff14;
 }
 
 .listingLogin {
-    background-color:#39FF14;
-    border-color: black;
-    border-width: 3px;
+  background-color: #39ff14;
+  border-color: black;
+  border-width: 3px;
 }
 
 .listingLogin:hover {
-    box-shadow: 0px 0px 35px 5px #39FF14;
+  box-shadow: 0px 0px 35px 5px #39ff14;
 }
 
 .blurb {
-    font-size: 30px;
-    width: 550px;
-    margin-bottom: 2vh;
-    color:#39FF14;
-    /* scale: .1; opacity: 0;
+  font-size: 30px;
+  width: 550px;
+  margin-bottom: 2vh;
+  color: #39ff14;
+  /* scale: .1; opacity: 0;
     animation: fade-in linear forwards;
     animation-timeline: view();
     animation-range-start: cover;
@@ -146,5 +202,3 @@
 /* Contact us modal */
 
 /* about us page CSS */
-
-
