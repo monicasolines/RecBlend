@@ -8,6 +8,7 @@ export const Landing = () => {
 
 	return (
 		<div id="landingPage">
+			
 			<div className="previewBox" id="listingPreview">
 				<div className="blurbContainer">
 					<div className="blurb">Effortlessly explore a database of over 15,000 cryptocurrencies</div>
