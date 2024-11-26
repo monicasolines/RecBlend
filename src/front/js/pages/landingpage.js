@@ -1,10 +1,13 @@
-import React, { useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import PropTypes from "prop-types";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
-import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
+
 
 export const Landing = () => {
 	const { store, actions } = useContext(Context);
+	const navigate = useNavigate()
 
 	return (
 		<div id="landingPage">
