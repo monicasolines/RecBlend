@@ -5,8 +5,6 @@ const backendURL = process.env.BACKEND_URL || ""
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			role: '',
-			token: '',
 			profesores: [],
 			usuarios: [],
 			grados: [],
@@ -65,16 +63,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 					throw error
 				}
 
-			}, loadSession: () => {
-				const token = localStorage.getItem('token')
-				const role = localStorage.getItem('role')
-				if (token && role) {
-					setStore({ 'token': token, 'role': role })
+			}, loadSession: async () => {
+				let token = localStorage.getItem('token')
+				let role = localStorage.getItem('role')
 
-					console.info("Session Loaded")
-					return
+				if (!token) {
+					token = null
+					console.info("No token found")
 				}
-				console.info("No credentials found")
+
+				if (!role) {
+					role = null
+
+					console.info("No role found")
+				}
+				setStore({ 'token': token, 'role': role })
+
+				console.info("Session Loaded")
 
 			}, crudOperation: async (entity, method, { id = '', body = null, bluePrint = '' } = {}) => {
 				const validMethods = ['GET', 'POST', 'PUT', 'DELETE']
@@ -249,7 +254,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						return;
 					}
 
-					setStore({ token: undefined, role: undefined });
+					setStore({ token: null, role: null });
 					localStorage.removeItem("token");
 					localStorage.removeItem("role");
 				} catch (error) {
