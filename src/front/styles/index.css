@@ -4,7 +4,6 @@
 
 /* Navbar CSS */
 
-
 /* Footer CSS */
 .footer {
   border-top: 1px solid white;
@@ -52,7 +51,7 @@
 }
 .text {
   width: 100%;
-  max-height: 600px;
+  max-height: 790px;
   min-height: 573px;
 }
 

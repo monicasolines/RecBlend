@@ -22,7 +22,7 @@ export const ContactUs = props => {
                     <label for="message"></label>
                     <textarea className="text" id="message" name="message" placeholder="Enter your message" rows="5" required></textarea>
 
-                    <button type="submit" id="submitBtn">Submit</button>
+                    <button type="submit" id="submitBtn" class="btn btn-success">Submit</button>
                 </form>
             </div>
         </div>
