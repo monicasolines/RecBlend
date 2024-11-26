@@ -5,6 +5,10 @@ const getState = ({ getStore, getActions, setStore }) => {
             // ... other state variables
         },
         actions: {
+            signUp: (username, password) => {
+                console.log(`Sign-up request for: ${username}`);
+                // Implement API call or logic for user registration
+            },
             login: () => {
                 setStore({ username: "JohnDoe" }); // Replace with actual login logic
                 console.log("User logged in"); // Optional: Debugging message
