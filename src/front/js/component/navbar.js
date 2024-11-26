@@ -37,20 +37,19 @@ export const Navbar = () => {
         actions.signUp(email.value, password.value);
         setShowModal(false); // Close the modal
     };
-    
 
     return (
         <>
-            <nav className="navbar navbar-expand-lg navbar-light bg-light">
+            <nav className="navbar navbar-expand-lg" style={{ backgroundColor: "black" }}>
                 <div className="container-fluid">
                     <Link className="navbar-brand" to="/">
-                        <img src={Logo} alt="Logo" width="30" height="30" className="d-inline-block align-top" />
+                        <img src={Logo} alt="Logo" width="75" height="75" className="d-inline-block align-top" /> {/* Adjusted size */}
                     </Link>
                     <div className="collapse navbar-collapse" id="navbarNav">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/listingpage">Listing Page</Link>
-                            </li>
+                        <li className="nav-item">
+    <Link className="btn btn-outline-success" to="/listingpage">List of Coins</Link> {/* Match the search button */}
+</li>
                         </ul>
                         <form className="d-flex" onSubmit={(e) => e.preventDefault()}>
                             <input
@@ -66,7 +65,7 @@ export const Navbar = () => {
                     {/* Conditional Login/Logout */}
                     {username ? (
                         <>
-                            <span className="navbar-text ms-3">Hello, {username}</span>
+                            <span className="navbar-text text-light ms-3">Hello, {username}</span>
                             <button className="btn btn-outline-danger ms-3" onClick={() => actions.logout()}>Logout</button>
                         </>
                     ) : (
@@ -77,8 +76,8 @@ export const Navbar = () => {
                         <img
                             src={gear}
                             alt="Profile"
-                            width="40"
-                            height="40"
+                            width="60"
+                            height="60"
                             className="rounded-circle dropdown-toggle"
                             id="profileDropdown"
                             data-bs-toggle="dropdown"
@@ -139,25 +138,24 @@ export const Navbar = () => {
                                     </form>
                                 ) : (
                                     <form onSubmit={handleSignUp}>
-                                    <div className="mb-3">
-                                        <label htmlFor="email" className="form-label">Email</label>
-                                        <input type="email" className="form-control" id="email" name="email" required />
-                                    </div>
-                                    <div className="mb-3">
-                                        <label htmlFor="confirmEmail" className="form-label">Confirm Email</label>
-                                        <input type="email" className="form-control" id="confirmEmail" name="confirmEmail" required />
-                                    </div>
-                                    <div className="mb-3">
-                                        <label htmlFor="password" className="form-label">Password</label>
-                                        <input type="password" className="form-control" id="password" name="password" required />
-                                    </div>
-                                    <div className="mb-3">
-                                        <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
-                                        <input type="password" className="form-control" id="confirmPassword" name="confirmPassword" required />
-                                    </div>
-                                    <button type="submit" className="btn btn-primary">Sign Up</button>
-                                </form>
-                                
+                                        <div className="mb-3">
+                                            <label htmlFor="email" className="form-label">Email</label>
+                                            <input type="email" className="form-control" id="email" name="email" required />
+                                        </div>
+                                        <div className="mb-3">
+                                            <label htmlFor="confirmEmail" className="form-label">Confirm Email</label>
+                                            <input type="email" className="form-control" id="confirmEmail" name="confirmEmail" required />
+                                        </div>
+                                        <div className="mb-3">
+                                            <label htmlFor="password" className="form-label">Password</label>
+                                            <input type="password" className="form-control" id="password" name="password" required />
+                                        </div>
+                                        <div className="mb-3">
+                                            <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
+                                            <input type="password" className="form-control" id="confirmPassword" name="confirmPassword" required />
+                                        </div>
+                                        <button type="submit" className="btn btn-primary">Sign Up</button>
+                                    </form>
                                 )}
                             </div>
                         </div>
