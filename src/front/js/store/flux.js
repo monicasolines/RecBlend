@@ -1,10 +1,37 @@
 const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
-            username: null, // Initially no user is logged in
-            // ... other state variables
-        },
+			message: null,
+			demo: [
+				{
+					title: "FIRST",
+					background: "white",
+					initial: "white"
+				},
+				{
+					title: "SECOND",
+					background: "white",
+					initial: "white"
+				}
+			],
+			username: null, // Initially no user is logged in
+			coins: [],
+			loadingCoins: true,
+		},
         actions: {
+            fetchCoins: async () => {
+				setStore({ loadingCoins: true });
+				try {
+					const response = await fetch(
+						"https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=30&page=1&sparkline=false"
+					);
+					const data = await response.json();
+					setStore({ coins: data, loadingCoins: false });
+				} catch (error) {
+					console.error("Error fetching coins:", error);
+					setStore({ loadingCoins: false });
+				}
+			},
             signUp: (username, password) => {
                 console.log(`Sign-up request for: ${username}`);
                 // Implement API call or logic for user registration

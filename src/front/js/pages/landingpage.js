@@ -8,25 +8,25 @@ export const Landing = () => {
 
 	return (
 		<div id="landingPage">
-			<div id="listingPreview">
-				<div id="blurb"></div>
-				<img id="previewPhoto" src=""></img>
+			<div className="previewBox" id="listingPreview">
+				<span id="blurb">Effortlessly explore a database of over 15,000 cryptocurrencies</span>
+				<img className="previewPhoto" src="https://placehold.co/450x550"/>
 			</div>
-			<div id="infoPreview">
-				<img id="previewPhoto" src=""></img>
-				<div id="blurb"></div>
+			<div className="previewBox" id="perfPreview">
+				<img className="previewPhoto" src="https://placehold.co/450x550"/>
+				<div id="blurb">Upon logging in immediately see the most important thing: the overall performance of your holdings</div>
 			</div>
-			<div id="favPreview">
-				<div id="blurb"></div>
-				<img id="previewPhoto" src=""></img>
+			<div className="previewBox" id="infoPreview">
+				<div id="blurb">View tailored historical performance in your preferred currency, access current price and demand insights, and stay updated with real-time news specific to your chosen coin</div>
+				<img className="previewPhoto" src="https://placehold.co/450x550"/>
 			</div>
-			<div id="walletPreview">
-				<img id="previewPhoto" src=""></img>
-				<div id="blurb"></div>
+			<div className="previewBox" id="favPreview">
+				<img className="previewPhoto" src="https://placehold.co/450x550"/>
+				<div id="blurb">Add coins to your favorites list for easy access and tracking, and the ability to set price notification alerts via text</div>
 			</div>
-			<div id="perfPreview">
-				<div id="blurb"></div>
-				<img id="previewPhoto" src=""></img>
+			<div className="previewBox" id="walletPreview">
+				<div id="blurb">Track the coins you currently own in your wallet and access more info about them</div>
+				<img className="previewPhoto" src="https://placehold.co/450x550"/>
 			</div>
 		</div>
 	);
