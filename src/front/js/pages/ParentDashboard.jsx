@@ -4,6 +4,7 @@ import styled from "styled-components";
 import img from "./../../img/background.jpg";
 import { Context } from "../store/appContext.js";
 import MainDashboard from "../component/leftMenuParent/MainDashboard.jsx";
+import ChatComponent from "../component/chatComponent";
 
 let Content = styled.div`
   background-image: url(${img});
@@ -63,7 +64,14 @@ const ParentDashboard = () => {
         onSelect={handleSelect}
       />
 
-      <Content>{handleContentRender(activeKey)}</Content>
+      <Content>
+        {handleContentRender(activeKey)}
+        <ChatComponent
+          userRole="Representante"
+          userName="Representante Nombre"
+          userAvatar={null} 
+        />
+      </Content>
     </div>
   );
 };

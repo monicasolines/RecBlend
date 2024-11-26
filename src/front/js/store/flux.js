@@ -256,7 +256,35 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error("Error al cerrar sesión:", error);
 				}
 			},
+			// funciones para el chatComponent
+			// getMessages: async () => {
+			//     try {
+			//         const data = await getActions().fetchRoute("messages", {
+			//             method: "GET",
+			//             isPrivate: true,
+			//             bluePrint: "messaging"
+			//         });
+			//         setStore({ mensajes: data });
+			//     } catch (error) {
+			//         console.error("Error al obtener mensajes:", error);
+			//     }
+			// },
 
+			// Enviar un nuevo mensaje al backend
+			// sendMessage: async (message) => {
+			//     try {
+			//         await getActions().fetchRoute("messages", {
+			//             method: "POST",
+			//             body: message,
+			//             isPrivate: true,
+			//             bluePrint: "messaging"
+			//         });
+			//         // Actualizar la lista de mensajes
+			//         await getActions().getMessages();
+			//     } catch (error) {
+			//         console.error("Error al enviar mensaje:", error);
+			//     }
+			// },
 		}
 	}
 };
