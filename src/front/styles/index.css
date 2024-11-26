@@ -33,6 +33,57 @@
 
 /* Landing page CSS */
 
+#landingPage {
+    display: grid;
+    background-color: black;
+}
+
+.previewBox {
+    margin: 4vh auto;
+    display: flex;
+    height: 550px;
+    scale: .1; opacity: 0;
+    animation: fade-in linear forwards;
+    animation-timeline: view();
+    animation-range-start: cover;
+    animation-range-end: 85vh
+}
+
+#listingPreview {
+    
+}
+
+.previewPhoto {
+    height: 550px;
+    width: 450px;
+    box-shadow: 0px 0px 55px #39FF14;
+    border-radius: 5%;
+    margin-left: 50px;
+    margin-right:50px;
+    /* scale: .1; opacity: 0;
+    animation: fade-in linear forwards;
+    animation-timeline: view();
+    animation-range-start: cover;
+    animation-range-end: 90vh */
+}
+
+@keyframes fade-in {
+    
+    to { scale: 1; opacity: 1;}
+}
+
+#blurb {
+    font-size: 30px;
+    width: 550px;
+    text-align: center;
+    margin: auto;
+    color:#39FF14;
+    /* scale: .1; opacity: 0;
+    animation: fade-in linear forwards;
+    animation-timeline: view();
+    animation-range-start: cover;
+    animation-range-end: 50vh */
+}
 /* Listing page CSS */
 
 /* Favorites CSS */
