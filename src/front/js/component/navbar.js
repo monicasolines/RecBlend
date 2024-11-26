@@ -19,10 +19,25 @@ export const Navbar = () => {
 
     const handleSignUp = (e) => {
         e.preventDefault();
-        const { username, password } = e.target.elements;
-        actions.signUp(username.value, password.value); // Add sign-up logic in Flux
-        setShowModal(false);
+        const { email, confirmEmail, password, confirmPassword } = e.target.elements;
+    
+        // Check if email and confirmEmail match
+        if (email.value !== confirmEmail.value) {
+            alert("Emails do not match. Please try again.");
+            return;
+        }
+    
+        // Check if password and confirmPassword match
+        if (password.value !== confirmPassword.value) {
+            alert("Passwords do not match. Please try again.");
+            return;
+        }
+    
+        // If validation passes, proceed with sign-up logic
+        actions.signUp(email.value, password.value);
+        setShowModal(false); // Close the modal
     };
+    
 
     return (
         <>
@@ -124,16 +139,25 @@ export const Navbar = () => {
                                     </form>
                                 ) : (
                                     <form onSubmit={handleSignUp}>
-                                        <div className="mb-3">
-                                            <label htmlFor="email" className="form-label">Email</label>
-                                            <input type="text" className="form-control" id="username" name="username" required />
-                                        </div>
-                                        <div className="mb-3">
-                                            <label htmlFor="password" className="form-label">Password</label>
-                                            <input type="password" className="form-control" id="password" name="password" required />
-                                        </div>
-                                        <button type="submit" className="btn btn-primary">Sign Up</button>
-                                    </form>
+                                    <div className="mb-3">
+                                        <label htmlFor="email" className="form-label">Email</label>
+                                        <input type="email" className="form-control" id="email" name="email" required />
+                                    </div>
+                                    <div className="mb-3">
+                                        <label htmlFor="confirmEmail" className="form-label">Confirm Email</label>
+                                        <input type="email" className="form-control" id="confirmEmail" name="confirmEmail" required />
+                                    </div>
+                                    <div className="mb-3">
+                                        <label htmlFor="password" className="form-label">Password</label>
+                                        <input type="password" className="form-control" id="password" name="password" required />
+                                    </div>
+                                    <div className="mb-3">
+                                        <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
+                                        <input type="password" className="form-control" id="confirmPassword" name="confirmPassword" required />
+                                    </div>
+                                    <button type="submit" className="btn btn-primary">Sign Up</button>
+                                </form>
+                                
                                 )}
                             </div>
                         </div>
