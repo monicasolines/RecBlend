@@ -6,9 +6,10 @@ import { Landing } from "./pages/landingpage";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
-
+import { AboutUs } from "./pages/aboutUs";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import { ContactUs } from "./pages/contactUs";
 
 //create your first component
 const Layout = () => {
@@ -25,6 +26,8 @@ const Layout = () => {
                     <Navbar />
                     <Routes>
                         <Route element={<Landing />} path="/" />
+                        <Route element={<AboutUs />} path="/about" />
+                        <Route element={<ContactUs />} path="/contact" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />

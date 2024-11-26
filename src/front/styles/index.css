@@ -8,7 +8,7 @@
 
 /* Footer CSS */
 .footer{
-    
+    border-top: 1px solid white;
     text-decoration: none;
     color: white;
     background-color: black;
@@ -29,6 +29,28 @@
   
   .link:active {
         text-decoration: none;
+  }
+
+  .about{
+    height: 670px;
+    width: 400px;
+    color: black;
+    background-color: white;
+    margin: auto;
+  }
+  .firstContactDiv{
+    height: 670px;
+
+  }
+
+  .contact{
+    border: 1px solid black;
+    height: 500px;
+    width: 400px;
+    color: black;
+    background-color: white;
+    margin: auto;
+
   }
 
 /* Landing page CSS */
