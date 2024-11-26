@@ -17,8 +17,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 			username: null, // Initially no user is logged in
 			coins: [],
 			loadingCoins: true,
+            showModal: false
 		},
         actions: {
+            setShowModal: () => {
+                setStore({ showModal: !getStore().showModal })
+            },
             fetchCoins: async () => {
 				setStore({ loadingCoins: true });
 				try {
