@@ -1,20 +1,35 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 const ProtectedRoute = ({ children, roles }) => {
     const { store } = useContext(Context);
 
-    const userRole = store.role?.toLowerCase(); // Normaliza a minúsculas
 
-    console.log("Rol del usuario:", userRole);
-    console.log("Roles permitidos:", roles);
 
-    if (!roles.includes(userRole)) {
-        return <Navigate to="/unauthorized" />; // Redirige si no tiene permisos
+    const getSession = () => {
+        switch (store.token) {
+            case undefined:
+
+                return <h1>Cargando aplicacion</h1>
+
+            case null:
+
+                return <Navigate to="/login" />
+            default:
+
+                if (roles.includes(store.role)) {
+
+                    return children;
+                }
+
+                return <Navigate to="/unauthorized" />
+        }
+
+
+
     }
-
-    return children; // Renderiza el contenido si está autorizado
+    return getSession()
 };
 
 export default ProtectedRoute;

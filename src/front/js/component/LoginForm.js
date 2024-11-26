@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Form, Button, Row, Col, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import styles from "../../styles/LoginForm.module.css";
@@ -11,6 +11,33 @@ const LoginForm = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
+
+    useEffect(() => {
+
+        if (store.role) {
+            navigate(redirect(store.role))
+        }
+
+    }, [])
+
+    const redirect = (role) => {
+        let route = "/dashboard/"
+        switch (role) {
+            case "admin":
+                route += "admin"
+                break
+            case "docente":
+                route += "teacher"
+                break
+            case "representante":
+                route += "parent"
+                break
+            default:
+                route = null
+        }
+        return route
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
@@ -19,23 +46,16 @@ const LoginForm = () => {
             setError('Por favor, complete todos los campos');
             return;
         }
-    
+
         const response = await actions.handleLogin({ email, password });
-        console.log("Resultado de handleLogin:", response);
 
         if (response.success) {
-            const route = 
-                store.role === "admin" ? "/dashboardAdmin" :
-                store.role === "docente" ? "/dashboardTeacher" :
-                store.role === "representante" ? "/dashboardRepresentante" :
-                null;
-                console.log(route) 
-
+            const route = redirect(store.role)
             route ? navigate(route) : setError("Rol no reconocido.");
         } else {
             setError(response.message);
         }
-        
+
     };
 
     return (
@@ -71,7 +91,7 @@ const LoginForm = () => {
                         <Button
                             variant="link"
                             onClick={() => navigate('/register')}
-                            className="w-100 mt-3 text-center" style={{'text-decoration': 'none'}}
+                            className="w-100 mt-3 text-center" style={{ 'text-decoration': 'none' }}
                         >
                             <span className={`${styles.spanLog}`}>¿No tienes cuenta? Regístrate</span>
                         </Button>

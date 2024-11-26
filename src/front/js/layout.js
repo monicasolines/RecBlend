@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 
@@ -15,7 +15,11 @@ import ParentDashboard from "./pages/ParentDashboard.jsx";
 import ProtectedRoute from "./component/ProtectedRoutes";
 import Unauthorized from "./pages/Unauthorized";
 
+
+import { Context } from "./store/appContext";
+
 const Layout = () => {
+    const { store } = useContext(Context)
     const basename = process.env.BASENAME || "";
 
     if (!process.env.BACKEND_URL || process.env.BACKEND_URL === "") {
@@ -31,11 +35,10 @@ const Layout = () => {
                         {/* Rutas Públicas */}
                         <Route element={<Home />} path="/home" />
                         <Route element={<Home />} path="/" />
-                        <Route element={<ParentDashboard />} path="/dashboard/parent" />
                         <Route element={<RegistrationForm />} path="/register" />
                         <Route element={<LoginForm />} path="/login" />
                         <Route
-                            path="/dashboardAdmin"
+                            path="/dashboard/admin"
                             element={
                                 <ProtectedRoute roles={["admin"]}>
                                     <DashboardAdmin />
@@ -43,7 +46,7 @@ const Layout = () => {
                             }
                         />
                         <Route
-                            path="/dashboardTeacher"
+                            path="/dashboard/teacher"
                             element={
                                 <ProtectedRoute roles={["docente"]}>
                                     <DashboardTeacher />
@@ -51,13 +54,13 @@ const Layout = () => {
                             }
                         />
                         <Route
-                            path="/dashboardRepresentante"
+                            path="/dashboard/parent"
                             element={
                                 <ProtectedRoute roles={["representante"]}>
-                                    <DashboardRepresentative />
+                                    <ParentDashboard />
                                 </ProtectedRoute>
-                            }
-                        />
+                            } />
+
                         <Route element={<Unauthorized />} path="/unauthorized" />
                     </Routes>
                     <Footer />
