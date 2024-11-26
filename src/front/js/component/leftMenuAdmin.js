@@ -153,7 +153,7 @@ const FormCommon = ({ type }) => {
                 {/* Vista para editar estudiantes */}
 
                 {type === 'updateStudents' && (
-                    <table class="table table-hover">
+                    <table className="table table-hover">
                         <thead>
                             <tr>
                                 <th>Nombre</th>
@@ -185,7 +185,7 @@ const FormCommon = ({ type }) => {
                 {/* Vista para editar profesores */}
 
                 {type === 'updateTeachers' && (
-                    <table class="table table-hover ">
+                    <table className="table table-hover ">
                         <thead className="table-design">
                             <tr>
                                 <th>Nombre</th>

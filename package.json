@@ -79,7 +79,7 @@
 		"prop-types": "^15.6.1",
 		"react": "^16.8.4",
 		"react-bootstrap": "^2.10.5",
-		"react-calendar": "^3.5.0",
+		"react-calendar": "^3.9.0",
 		"react-datepicker": "^7.5.0",
 		"react-dom": "^16.8.4",
 		"react-gauge-component": "^1.2.62",
