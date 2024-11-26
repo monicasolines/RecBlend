@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext"; // Adjust path if needed
 import Logo from "../../img/Logo.png";
+import gear from "../../img/gear.png";
 
 export const Navbar = () => {
 	const { store, actions } = useContext(Context); // Access Flux store and actions
@@ -37,6 +38,28 @@ export const Navbar = () => {
                         <button className="btn btn-outline-success" type="submit">Search</button>
                     </form>
                 </div>
+				{/* Dropdown Menu */}
+<div className="dropdown">
+    <img
+        src={gear} // Replace with the path to your image
+        alt="Profile"
+        width="40"
+        height="40"
+        className="rounded-circle dropdown-toggle"
+        id="profileDropdown"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+        style={{ cursor: "pointer" }}
+    />
+    <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+        <li><span className="dropdown-item-text">Hello, {username}</span></li>
+        <li><Link className="dropdown-item" to="/profile">Profile</Link></li>
+        <li><Link className="dropdown-item" to="/settings">Settings</Link></li>
+        <li><hr className="dropdown-divider" /></li>
+        <li><button className="dropdown-item" onClick={() => actions.logout()}>Logout</button></li>
+    </ul>
+</div>
+
             </div>
         </nav>
     );
