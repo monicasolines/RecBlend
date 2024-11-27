@@ -15,6 +15,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			],
 			username: null, // Initially no user is logged in
+            favorites: [],
+            Wallet: [],
 			coins: [],
 			loadingCoins: true,
             showModal: false,
@@ -88,6 +90,13 @@ const getState = ({ getStore, getActions, setStore }) => {
                 });
                 setStore({ demo: demo });
             },
+            addToFavs: (id, name, symbol, ) => {
+				const exist = getStore().favorites.find((favorite) => favorite.name === favorite.name)
+				if (!exist) {
+					let newFav = { name: name, uid: uid, type: type };
+					let newArr = [...getStore().favorites, newFav];
+					setStore({ favorites: newArr });
+				} else { console.log("favorite exists") }
         },
     };
 };
