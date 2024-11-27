@@ -27,7 +27,7 @@ export const Userdashboard = () => {
                         <a className="toggleButton nav-link" data-bs-toggle="tab" href="#" onClick={()=>{ actions.setShowWallet()}}>Wallet</a>
                     </li>
                     <li className="nav-item">
-                        <a className="toggleButton nav-link" data-bs-toggle="tab" href="#" onClick={()=>{ actions.setShowFavorites()}}>Favorites</a>
+                        <a className="toggleButton nav-link" data-bs-toggle="tab" href="#favorite" onClick={()=>{ actions.setShowFavorites()}}>Favorites</a>
                     </li>
                 </ul>
             </div>

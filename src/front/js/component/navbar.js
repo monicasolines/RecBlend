@@ -1,10 +1,12 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import Logo from "../../img/Logo.png";
 import gear from "../../img/gear.png";
+import { useNavigate } from "react-router-dom";
 
 export const Navbar = () => {
+    const navigate = useNavigate()
     const { store, actions } = useContext(Context);
     const username = store.username;
     const [showModal, setShowModal] = useState(false);
@@ -37,6 +39,11 @@ export const Navbar = () => {
         actions.signUp(email.value, password.value);
         setShowModal(false); // Close the modal
     };
+
+    const switchToFavs = () => {
+        navigate("/userdashboard#favorite");
+        actions.setShowFavorites()
+    }
 
     return (
         <>
@@ -87,7 +94,7 @@ export const Navbar = () => {
                         <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
                             <li><span className="dropdown-item-text">Hello, {username || "Guest"}</span></li>
                             <li><Link className="dropdown-item" to="/profile">Profile</Link></li>
-                            <li><Link className="dropdown-item" to="/favorites">Favorites</Link></li>
+                            <li><span className="dropdown-item" to="/userdashbord" onClick={()=>{switchToFavs()}}>Favorites</span></li>
                             <li><Link className="dropdown-item" to="/settings">Settings</Link></li>
                             <li><hr className="dropdown-divider" /></li>
                             <li><button className="dropdown-item" onClick={() => actions.logout()}>Logout</button></li>
