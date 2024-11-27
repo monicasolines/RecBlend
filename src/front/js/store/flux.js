@@ -15,13 +15,34 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			],
 			username: null, // Initially no user is logged in
+            favorites: [],
+            Wallet: [],
 			coins: [],
 			loadingCoins: true,
-            showModal: false
+            showContactModal: false,
+            showModal: false,
+            showOverallHoldings: false,
+            showWallet: false,
+            showFavorites: false,
 		},
         actions: {
-            setShowModal: () => {
-                setStore({ showModal: !getStore().showModal })
+            setShowContactModal: () => {
+                setStore({ showContactModal: !getStore().showContactModal })
+            },
+            setShowOverallHoldings: () => {
+                setStore({ showOverallHoldings: true})
+                setStore({ showWallet: false})
+                setStore({ showFavorites: false})
+            },
+            setShowWallet: () => {
+                setStore({ showWallet: true})
+                setStore({ showOverallHoldings: false})
+                setStore({ showFavorites: false})
+            },
+            setShowFavorites: () => {
+                setStore({ showFavorites: true})
+                setStore({ showWallet: false})
+                setStore({ showOverallHoldings: false})
             },
             fetchCoins: async () => {
 				setStore({ loadingCoins: true });
@@ -69,6 +90,14 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return elm;
                 });
                 setStore({ demo: demo });
+            },
+            addToFavs: (id, name, symbol, current_price) => {
+				const exist = getStore().favorites.find((favorite) => favorite.name === name)
+				if (!exist) {
+					let newFav = { name: name, id: id, symbol: symbol, current_price: current_price };
+					let newArr = [...getStore().favorites, newFav];
+					setStore({ favorites: newArr });
+				} else { console.log("favorite exists") }
             },
         },
     };
