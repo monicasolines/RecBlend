@@ -162,6 +162,8 @@
     animation-range-start: cover;
     animation-range-end: 50vh */
 }
+
+
 /* Listing page CSS */
 
 .coin-container {
@@ -218,6 +220,35 @@
     color: #333;
     margin: 5px 0;
 }
+
+/* user dashboard CSS */
+
+#dashboardWhole {
+  display: flex;
+}
+
+#togglePages {
+  display:block;
+  background-color: black;
+  color: #39ff14;
+  height: 100vh;
+}
+
+.nav-link {
+  color: #39ff14
+}
+
+.nav-pills .nav-link.active {
+  background-color: #39ff14;
+  color: black;
+  text-decoration: black;
+
+}
+
+#dashboardContent {
+
+}
+
 /* Favorites CSS */
 
 /* Wallet CSS */
