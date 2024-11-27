@@ -5,6 +5,11 @@
 /* Navbar CSS */
 
 
+
+
+
+
+
 /* Footer CSS */
 .footer {
   border-top: 1px solid white;
@@ -39,22 +44,44 @@
   margin: auto;
 }
 .firstContactDiv {
-  height: 670px;
+  height: 600px;
 }
 
+
 .contact {
-  border: 1px solid black;
-  height: 90%;
-  width: 540px;
+  height: 665px;
+  width: 36%;
   color: black;
-  background-color: white;
-  margin: auto;
+  background-color: silver;
+  margin-left: 32%;
+  margin-right: 32%;
+  margin-top: 10px;
+  border: none;
+  border-radius: 10px;
 }
 .text {
   width: 100%;
-  max-height: 600px;
-  min-height: 573px;
+  max-height: 450px;
+  min-height: 450px;
+  
 }
+.close{
+  font-size: 25px;
+}
+.mainModal{
+  border-radius: 5px;
+  
+}
+
+
+
+
+
+
+
+
+
+
 
 /* Landing page CSS */
 
