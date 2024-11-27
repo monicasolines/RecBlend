@@ -17,7 +17,7 @@ export const Footer = () => {
 			</Link>
 
 			<div
-				onClick={() => actions.setShowModal()}
+				onClick={() => actions.setShowContactModal()}
 				style={{ color: "white", textDecoration: "none" }}>Contact us</div>
 
 			<div>CryptoScope &copy; 2024</div>

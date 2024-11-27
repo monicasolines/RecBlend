@@ -19,14 +19,15 @@ const getState = ({ getStore, getActions, setStore }) => {
             Wallet: [],
 			coins: [],
 			loadingCoins: true,
+            showContactModal: false,
             showModal: false,
             showOverallHoldings: false,
             showWallet: false,
             showFavorites: false,
 		},
         actions: {
-            setShowModal: () => {
-                setStore({ showModal: !getStore().showModal })
+            setShowContactModal: () => {
+                setStore({ showContactModal: !getStore().showContactModal })
             },
             setShowOverallHoldings: () => {
                 setStore({ showOverallHoldings: true})
