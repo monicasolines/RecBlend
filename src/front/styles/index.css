@@ -244,7 +244,40 @@ h1 {
   cursor: pointer;
 }
 
+/* user dashboard CSS */
+
+#dashboardWhole {
+  display: flex;
+}
+#togglePages {
+  display:block;
+  background-color: black;
+  color: #39ff14;
+  height: 100vh;
+}
+.nav-link {
+  color: #39ff14
+}
+.nav-pills .nav-link.active {
+  background-color: #39ff14;
+  color: black;
+  text-decoration: black;
+}
+#dashboardContent {
+}
+
+
 /* Favorites CSS */
+
+.favCard {
+
+}
+
+.favCardTop {
+  height: 20vh;
+  width: 20vw;
+  border: 2px solid black;
+}
 
 /* Wallet CSS */
 
