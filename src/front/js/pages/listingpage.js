@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { SparklineChart } from './sparklineChart';
+import React, { useState, useEffect, useContext } from "react";
+import { Context } from "../store/appContext"; 
+import { SparklineChart } from "./sparklineChart";
 import "../../styles/index.css";
 
 export const Listing = () => {
     const [coins, setCoins] = useState([]);
     const [loading, setLoading] = useState(true);
+    const { store, actions } = useContext(Context); 
 
     useEffect(() => {
         const fetchCoins = async () => {
@@ -27,6 +29,14 @@ export const Listing = () => {
         return <div>Loading...</div>;
     }
 
+    const handleFavoriteToggle = (coin) => {
+        if (store.favorites.some((favCoin) => favCoin.id === coin.id)) {
+            actions.removeFromFavs(coin.id); 
+        } else {
+            actions.addToFavs(coin.id, coin.name, coin.symbol, coin.current_price);
+        }
+    };
+
     return (
         <table className="coin-table">
             <thead>
@@ -34,12 +44,11 @@ export const Listing = () => {
                     <th>Asset</th>
                     <th>Price</th>
                     <th>Chart</th>
-                    <th>Change</th>
+                    <th>Change (24h)</th>
                     <th>Market Cap</th>
                     <th>Volume</th>
                     <th>Actions</th>
                     <th></th>
-
                 </tr>
             </thead>
             <tbody>
@@ -50,16 +59,20 @@ export const Listing = () => {
                                 <img src={coin.image} alt={coin.name} className="coin-image" />
                                 <div>
                                     <div className="coin-name">{coin.name}</div>
-                                    <div className="coin-abbreviation">{coin.symbol.toUpperCase()}</div>
+                                    <div className="coin-symbol">{coin.symbol.toUpperCase()}</div>
                                 </div>
                             </div>
                         </td>
                         <td>${coin.current_price.toLocaleString()}</td>
                         <td>
-                            <SparklineChart data={coin.sparkline_in_7d.price} />
+                            <SparklineChart data={coin.sparkline_in_7d.price} width={400} height={50}/>
                         </td>
                         <td>
-                            <span style={{ color: coin.price_change_percentage_24h >= 0 ? "green" : "red" }}>
+                            <span
+                                style={{
+                                    color: coin.price_change_percentage_24h >= 0 ? "green" : "red",
+                                }}
+                            >
                                 {coin.price_change_percentage_24h.toFixed(2)}%
                             </span>
                         </td>
@@ -69,9 +82,14 @@ export const Listing = () => {
                             <button className="trade-button">Trade</button>
                         </td>
                         <td>
-                            <div className = "coin-favorite">
-                            <button class="bi bi-star"></button>
-                            </div>
+                            <button
+                                className={`star-button ${
+                                    store.favorites.some((favCoin) => favCoin.id === coin.id) ? "favorited" : ""
+                                }`}
+                                onClick={() => handleFavoriteToggle(coin)}
+                            >
+                                {store.favorites.some((favCoin) => favCoin.id === coin.id) ? "★" : "☆"}
+                            </button>
                         </td>
                     </tr>
                 ))}

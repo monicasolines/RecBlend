@@ -103,6 +103,7 @@
 }
 
 #listingPreview {
+  margin: 0;
 }
 
 .previewPhoto {
@@ -195,10 +196,17 @@ h1 {
   border-bottom: 1px solid #eaeaea;
 }
 
+
+.coin-table tbody tr:hover {
+  transform: translateY(-5px);
+  transition: transform ;
+}
+
+
 .coin-info {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 10px; 
 }
 
 
@@ -244,9 +252,42 @@ h1 {
   cursor: pointer;
 }
 
+/* user dashboard CSS */
+
+#dashboardWhole {
+  display: flex;
+}
+#togglePages {
+  display:block;
+  background-color: black;
+  color: #39ff14;
+  height: 100vh;
+}
+.nav-link {
+  color: #39ff14
+}
+.nav-pills .nav-link.active {
+  background-color: #39ff14;
+  color: black;
+  text-decoration: black;
+}
+#dashboardContent {
+}
+
+
 /* Favorites CSS */
 .fav{
   height: 85vh;
+}
+
+.favCard {
+
+}
+
+.favCardTop {
+  height: 20vh;
+  width: 20vw;
+  border: 2px solid black;
 }
 
 /* Wallet CSS */
