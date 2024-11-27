@@ -97,6 +97,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					let newFav = { name: name, id: id, symbol: symbol, current_price: current_price };
 					let newArr = [...getStore().favorites, newFav];
 					setStore({ favorites: newArr });
+                    console.log("favorites:" + getStore().favorites)
 				} else { console.log("favorite exists") }
             },
         },
