@@ -91,13 +91,14 @@ const getState = ({ getStore, getActions, setStore }) => {
                 });
                 setStore({ demo: demo });
             },
-            addToFavs: (id, name, symbol, ) => {
-				const exist = getStore().favorites.find((favorite) => favorite.name === favorite.name)
+            addToFavs: (id, name, symbol, current_price) => {
+				const exist = getStore().favorites.find((favorite) => favorite.name === name)
 				if (!exist) {
-					let newFav = { name: name, uid: uid, type: type };
+					let newFav = { name: name, id: id, symbol: symbol, current_price: current_price };
 					let newArr = [...getStore().favorites, newFav];
 					setStore({ favorites: newArr });
 				} else { console.log("favorite exists") }
+            },
         },
     };
 };
