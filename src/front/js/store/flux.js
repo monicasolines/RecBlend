@@ -17,11 +17,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 			username: null, // Initially no user is logged in
 			coins: [],
 			loadingCoins: true,
-            showModal: false
+            showModal: false,
+            showOverallHoldings: false,
+            showWallet: false,
+            showFavorites: false,
 		},
         actions: {
             setShowModal: () => {
                 setStore({ showModal: !getStore().showModal })
+            },
+            setShowOverallHoldings: () => {
+                setStore({ showOverallHoldings: true})
+                setStore({ showWallet: false})
+                setStore({ showFavorites: false})
+            },
+            setShowWallet: () => {
+                setStore({ showWallet: true})
+                setStore({ showOverallHoldings: false})
+                setStore({ showFavorites: false})
+            },
+            setShowFavorites: () => {
+                setStore({ showFavorites: true})
+                setStore({ showWallet: false})
+                setStore({ showOverallHoldings: false})
             },
             fetchCoins: async () => {
 				setStore({ loadingCoins: true });
