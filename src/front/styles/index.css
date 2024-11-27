@@ -277,12 +277,16 @@ h1 {
 
 /* Favorites CSS */
 
+#favoriteScreen {
+  display: flex
+}
+
 .favCard {
 
 }
 
 .favCardTop {
-  height: 20vh;
+  height: 25vh;
   width: 20vw;
   border: 2px solid black;
 }

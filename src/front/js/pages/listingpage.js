@@ -65,7 +65,7 @@ export const Listing = () => {
                         </td>
                         <td>${coin.current_price.toLocaleString()}</td>
                         <td>
-                            <SparklineChart data={coin.sparkline_in_7d.price} width={400} height={50}/>
+                            <SparklineChart data={coin.sparkline_in_7d.price} width={150} height={50}/>
                         </td>
                         <td>
                             <span
