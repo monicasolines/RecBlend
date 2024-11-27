@@ -13,6 +13,7 @@ import { Footer } from "./component/footer";
 import { ContactUs } from "./pages/contactUs";
 import { SparklineChart } from "./pages/sparklineChart";
 import { Userdashboard } from "./pages/userdashboard";
+import { Favorites } from "./component/Favorites";
 
 //create your first component
 const Layout = () => {
@@ -32,6 +33,7 @@ const Layout = () => {
                         <Route element={<Landing />} path="/" />
                         <Route element={<AboutUs />} path="/about" />
                         <Route element={<Listing />} path="/listingpage" />
+                        <Route element={<Favorites />} path="/favorites" />
                         <Route element={<SparklineChart />} path="/sparklineChart" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />

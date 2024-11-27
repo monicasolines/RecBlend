@@ -7,6 +7,12 @@ export const Favorites = () => {
     const { store, actions } = useContext(Context);
 
     return( 
-        <div>favorites</div>
+        <div className="fav">
+            <div>Favorites</div>
+        
+        
+        
+        
+        </div>
     )
 }
