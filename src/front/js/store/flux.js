@@ -17,11 +17,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 			username: null, // Initially no user is logged in
 			coins: [],
 			loadingCoins: true,
-            showModal: false
+            showContactModal: false
 		},
         actions: {
-            setShowModal: () => {
-                setStore({ showModal: !getStore().showModal })
+            setShowContactModal: () => {
+                setStore({ showContactModal: !getStore().showContactModal })
             },
             fetchCoins: async () => {
 				setStore({ loadingCoins: true });
