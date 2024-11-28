@@ -13,11 +13,11 @@ export const DashboardTeacher = () => {
             <div className="row" >
                 <div className="col mt-5" >
                     <LeftMenuTeacher />
-                    <ChatComponent
+                    {/* <ChatComponent
                         userRole="Docente"
                         userName="Docente Nombre"
                         userAvatar={null}
-                    />
+                    /> */}
                 </div>
             </div>
         </div>

@@ -1,0 +1,7 @@
+.CardChat{
+    /* align-items: center; */
+    color: white;
+    font-weight: bold;
+    background-image: linear-gradient(to right, rgba(31, 118, 146, 0.5), rgba(67, 56, 135, 0.5));
+
+}

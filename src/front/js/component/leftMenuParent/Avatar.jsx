@@ -5,7 +5,7 @@ const AvatarWrapper = styled.div`
   border-radius: 50%;
   overflow: hidden;
   display: inline-block;
-  margin: 20px auto;
+  margin: auto;
   aspect-ratio: 1/1;
 `;
 const StyledAvatar = styled.img`
@@ -13,9 +13,10 @@ const StyledAvatar = styled.img`
   height: 100%;
   objectfit: cover;
 `;
-const Avatar = ({ src, alt = "Avatar", size = 60, name = "" }) => {
+const Avatar = ({ src, alt = "Avatar", size = 60, name = "", onClick }) => {
   return (
-    <div className="container-fluid d-flex flex-column align-items-center text-center">
+    <div className="container-fluid d-flex flex-column align-items-center text-center"
+    onClick={onClick}>
       <AvatarWrapper style={{ width: `${size}px`, height: `${size}px` }}>
         <StyledAvatar src={src} alt={alt} />
       </AvatarWrapper>

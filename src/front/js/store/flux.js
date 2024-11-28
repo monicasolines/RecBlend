@@ -9,6 +9,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			usuarios: [],
 			grados: [],
 			materias: [],
+			userAvatar: null,
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -148,7 +149,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			postTeacher: async (body) => {
 				const actions = getActions()
-				const data = await actions.fetchRoute("teacher", {
+				const data = await actions.fetchRoute("teachers", {
 					method: "POST",
 					body: body,
 					isPrivate: true,
@@ -159,7 +160,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			deleteTeacher: async (id) => {
 				const actions = getActions()
-				const data = await actions.fetchRoute(`teacher/${id}`, {
+				const data = await actions.fetchRoute(`teachers/${id}`, {
 					method: "DELETE",
 					isPrivate: true,
 					bluePrint: 'admin'
@@ -243,7 +244,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			}, handleLogout: async () => {
 				const { fetchRoute } = getActions();
 				try {
-					const resp = await fetchRoute("/logout", {
+					const resp = await fetchRoute("logout", {
 						method: "POST",
 						isPrivate: true,
 						bluePrint: "session"
@@ -254,42 +255,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 						return;
 					}
 
-					setStore({ token: null, role: null });
+					setStore({ token: null, role: null, userAvatar: null }); /// agregando el userAvatar acá
 					localStorage.removeItem("token");
 					localStorage.removeItem("role");
 				} catch (error) {
 					console.error("Error al cerrar sesión:", error);
 				}
 			},
-			// funciones para el chatComponent
-			// getMessages: async () => {
-			//     try {
-			//         const data = await getActions().fetchRoute("messages", {
-			//             method: "GET",
-			//             isPrivate: true,
-			//             bluePrint: "messaging"
-			//         });
-			//         setStore({ mensajes: data });
-			//     } catch (error) {
-			//         console.error("Error al obtener mensajes:", error);
-			//     }
-			// },
-
-			// Enviar un nuevo mensaje al backend
-			// sendMessage: async (message) => {
-			//     try {
-			//         await getActions().fetchRoute("messages", {
-			//             method: "POST",
-			//             body: message,
-			//             isPrivate: true,
-			//             bluePrint: "messaging"
-			//         });
-			//         // Actualizar la lista de mensajes
-			//         await getActions().getMessages();
-			//     } catch (error) {
-			//         console.error("Error al enviar mensaje:", error);
-			//     }
-			// },
+			handleUserAvatarUpdate: (avatarUrl) => {
+				setStore({ userAvatar: avatarUrl }); // Actualiza el avatar del usuario
+			}
 		}
 	}
 };

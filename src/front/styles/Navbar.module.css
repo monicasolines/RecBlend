@@ -6,40 +6,53 @@
   z-index: 1000;
 }
 
+.ItemAvatar{
+  background-image: linear-gradient(to right, rgba(31, 118, 146, 0.5), rgba(67, 56, 135, 0.5));
+}
+
+.ItemAvatarButtom{
+  color:#ffffff;
+  font-weight: bold;
+}
+
+.ItemAvatarButtom:hover{
+  color:Black;
+  font-weight: bolder;
+  background-color: transparent;
+  text-decoration: underline goldenrod !important;
+}
+
 .dashboard {
   position: fixed;
   top: 0;
   left: 0;
-  /* padding-bottom: 5%; */
-  /* width: 250px; */
   height: 100vh;
   background-color: #060707;
   z-index: 999;
 }
 
-.navbar-custom {
+.navbar-custom { /* este class modifica directamente la navbar */
   background-color: #2b2d42;
   font-weight: bold;
   justify-content: flex-start;
   color: white;
-  height: 100px
+  height: 100px;
+  overflow: visible;
 }
 
 #basic-navbar-nav {
   transition: max-height 1.5s ease;
   max-height: 0;
   color: white;
-  background-color: white;
 }
 
 .collapseCustom {
   background-color: #2b2d42;
-  padding: 1em;
   border-radius: 8px;
   display: flex;
   justify-content: flex-end;
   position: relative;
-  overflow: hidden;
+  overflow:visible;
   width:fit-content;
 }
 

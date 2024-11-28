@@ -8,7 +8,6 @@ import NavBar from "./component/Navbar";
 import { Footer } from "./component/footer";
 import { DashboardAdmin } from "./pages/dashboardAdmin";
 import { DashboardTeacher } from "./pages/dashboardTeacher";
-import { DashboardRepresentative } from "./pages/dashboardRepresentante";
 import RegistrationForm from './component/RegistrationForm';
 import LoginForm from './component/LoginForm';
 import ParentDashboard from "./pages/ParentDashboard.jsx";

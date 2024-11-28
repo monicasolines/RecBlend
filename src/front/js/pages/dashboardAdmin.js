@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
-import { Context } from "../store/appContext";
 import { LeftMenuAdmin } from "../component/leftMenuAdmin";
 import ChatComponent from "../component/chatComponent";
+
 
 export const DashboardAdmin = () => {
     return (

@@ -7,9 +7,8 @@
 //     const [subject, setSubject] = useState("");
 //     const [message, setMessage] = useState("");
 
-//     // Obtener mensajes al cargar el componente
 //     useEffect(() => {
-//         actions.getMessages();
+//         actions.getMessages(); 
 //     }, []);
 
 //     const handleSendMessage = () => {
@@ -22,7 +21,7 @@
 //                 text: message,
 //                 timestamp: new Date().toISOString(),
 //             };
-//             actions.sendMessage(newMessage); // Enviar mensaje al backend
+//             actions.sendMessage(newMessage);
 //             setMessage("");
 //             setSubject("");
 //         }
@@ -109,6 +108,7 @@
 
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import styles from "../../styles/ChatComponent.module.css";
 
 const MensajesFicticios = [
     {
@@ -151,13 +151,13 @@ const ChatComponent = ({ userRole, userName, userAvatar }) => {
     };
 
     return (
-        <div className="card my-3 shadow-sm">
-            <div className="card-header bg-primary text-white">
+        <div className={`${styles.CardChat} card my-3 shadow-sm`} >
+            <div className="card-header bg-secondary text-white">
                 <h5 className="mb-0">Chat</h5>
             </div>
             <div
-                className="card-body"
-                style={{ height: "300px", overflowY: "auto", backgroundColor: "#f8f9fa" }}
+                className={`${styles.CardChat} card-body`}
+                style={{ height: "200px", overflowY: "auto", backgroundColor: "#f8f9fa" }}
             >
                 {messages.length > 0 ? (
                     messages.map((msg, index) => (
@@ -216,7 +216,7 @@ const ChatComponent = ({ userRole, userName, userAvatar }) => {
                         onChange={(e) => setMessage(e.target.value)}
                     />
                     <button
-                        className="btn btn-primary"
+                        className="btn btn-secondary"
                         onClick={handleSendMessage}
                         disabled={message.trim() === "" || subject.trim() === ""}
                     >
