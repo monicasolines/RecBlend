@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 export const Demo = () => {
+// y otro checkpoint del profe aca
 	const { store, actions } = useContext(Context);
 
 	return (
