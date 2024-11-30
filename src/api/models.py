@@ -60,17 +60,45 @@ class Product(db.Model):
             "imagen_url": self.imagen_url,
         }
 
-# aqui hare la definición de la clase Order
+
+# Clase Cart
+class Cart(db.Model):
+    __tablename__ = 'cart'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
+    quantity = db.Column(db.Integer, nullable=False, default=1)
+    created_at = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
+    updated_at = db.Column(db.DateTime, nullable=True, onupdate=db.func.current_timestamp())
+
+    # Relaciones
+    user = db.relationship('User', backref='cart_items', lazy=True)
+    product = db.relationship('Product', backref='cart_items', lazy=True)
+
+    def __repr__(self):
+        return f'<Cart user_id={self.user_id} product_id={self.product_id}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "product_id": self.product_id,
+            "quantity": self.quantity,
+            "created_at": self.created_at,
+            "updated_at": self.updated_at,
+        }
+
+# aqui la clase Order o sea pedido =)
 class Order(db.Model):
     __tablename__ = 'order'
     
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)  # Relación con User
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     total_amount = db.Column(db.Float, nullable=False)
     status = db.Column(db.String(50), nullable=False, default='pending')
     created_at = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
     
-    # Relación con OrderItem
     order_items = db.relationship('OrderItem', backref='order', lazy=True)
 
     def __repr__(self):
@@ -84,14 +112,13 @@ class Order(db.Model):
             "status": self.status,
             "created_at": self.created_at,
         }
-
-# Aqui hice la definición de la clase OrderItem
+# Clase OrderItem
 class OrderItem(db.Model):
     __tablename__ = 'order_item'
     
     id = db.Column(db.Integer, primary_key=True)
-    order_id = db.Column(db.Integer, db.ForeignKey('order.id'), nullable=False)  # Relación con Order
-    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)  # Relación con Product
+    order_id = db.Column(db.Integer, db.ForeignKey('order.id'), nullable=False)
+    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
     price = db.Column(db.Float, nullable=False)
 
