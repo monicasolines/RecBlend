@@ -10,7 +10,7 @@ api = Blueprint('api', __name__)
 
 # Allow CORS requests to this API
 CORS(api)
-
+# Admin
 @api.route('/admin/pending-users', methods=['GET'])
 @jwt_required()
 def get_pending_users():
@@ -24,23 +24,29 @@ def get_pending_users():
     pending_users = User.query.filter_by(status='en_revision').all()
     return jsonify([user.serialize() for user in pending_users]), 200
 
-@app.route('/admin/approve-user/<int:user_id>', methods=['PATCH'])
+@api.route('/admin/users/<int:user_id>/status', methods=['PATCH'])
 @jwt_required()
-def approve_user(user_id):
-    current_user = get_jwt_identity()
-    user = User.query.filter_by(id=current_user).first()
+def update_user_status(user_id):
+    current_user_id = get_jwt_identity()
+    current_user = User.query.get(current_user_id)
     
-    if user.role != 'admin':
-        return jsonify({"msg": "Unauthorized"}), 403
-
-    user_to_approve = User.query.get(user_id)
-    if not user_to_approve:
-        return jsonify({"msg": "User not found"}), 404
-
-    # Cambia únicamente el estado del usuario
-    user_to_approve.status = "activo"
+    if not current_user or current_user.role != 'admin':
+        return jsonify({"error": "Unauthorized"}), 403
+    
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+    
+    body = request.get_json()
+    new_status = body.get('status')
+    
+    if new_status not in ['activo', 'en_revision']:
+        return jsonify({"error": "Invalid status"}), 400
+    
+    user.status = new_status
     db.session.commit()
-    return jsonify({"msg": f"User {user_to_approve.username} approved"}), 200
+    
+    return jsonify({"message": "User status updated successfully"}), 200
 
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
