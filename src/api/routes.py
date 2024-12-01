@@ -11,6 +11,18 @@ api = Blueprint('api', __name__)
 # Allow CORS requests to this API
 CORS(api)
 
+@api.route('/admin/pending-users', methods=['GET'])
+@jwt_required()
+def get_pending_users():
+    current_user_id = get_jwt_identity()
+    current_user = User.query.get(current_user_id)
+    
+    if current_user.role != 'admin':
+        return jsonify({"msg": "Unauthorized"}), 403
+
+    # Obteniendo usuarios con el estado 'en_revision'
+    pending_users = User.query.filter_by(status='en_revision').all()
+    return jsonify([user.serialize() for user in pending_users]), 200
 
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
