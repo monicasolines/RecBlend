@@ -13,6 +13,7 @@ import { Footer } from "./component/footer";
 import { ContactUs } from "./pages/contactUs";
 import { SparklineChart } from "./pages/sparklineChart";
 import { Userdashboard } from "./pages/userdashboard";
+import { Favorites } from "./component/Favorites";
 
 //create your first component
 const Layout = () => {

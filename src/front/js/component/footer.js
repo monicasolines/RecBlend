@@ -16,7 +16,7 @@ export const Footer = () => {
 				<div style={{ color: "white", textDecoration: "none" }}>About us</div>
 			</Link>
 
-			<div
+			<div type="submit"
 				onClick={() => actions.setShowContactModal()}
 				style={{ color: "white", textDecoration: "none" }}>Contact us</div>
 

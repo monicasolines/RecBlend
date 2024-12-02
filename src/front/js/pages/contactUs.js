@@ -14,7 +14,7 @@ export const ContactUs = props => {
             <div className="abc modal-dialog">
 
                 <div className="modal-content" style={{backgroundColor:"silver", border:"none"}}>
-                    <span className="close" id="closeModal" onClick={() => actions.setShowContactModal()} style={{height:"5px"}}>&times;</span>
+                    <span type="submit" className="close" id="closeModal" onClick={() => actions.setShowContactModal()} style={{height:"5px"}}>&times;</span>
                     <h2 style={{ margin: "auto", marginTop:"0px", color:"#39ff14", backgroundColor:"silver" }}>Contact Us</h2>
                     <form id="contactForm" >
                         <label for="email" style={{}}>Email:</label>

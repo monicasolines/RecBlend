@@ -1,14 +1,21 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { Modal } from "./Modal"; // Import the new Modal component
 import Logo from "../../img/Logo.png";
 import gear from "../../img/gear.png";
+import { useNavigate } from "react-router-dom";
 
 export const Navbar = () => {
+    const navigate = useNavigate()
     const { store, actions } = useContext(Context);
     const username = store.username;
     const [showModal, setShowModal] = useState(false); // Control modal visibility
+
+    const switchToFavs = () => {
+        navigate("/userdashboard#favorite");
+        actions.setShowFavorites()
+    }
 
     return (
         <>
