@@ -1107,7 +1107,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             setShowFavorites: () => {
                 setStore({ showFavorites: true })
-                console.log("runcode")
                 setStore({ showWallet: false })
                 setStore({ showOverallHoldings: false })
             },
