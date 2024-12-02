@@ -57,14 +57,14 @@ export const Navbar = () => {
                         <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
                             <li><span className="dropdown-item-text">Hello, {username || "Guest"}</span></li>
                             <li><Link className="dropdown-item" to="/profile">Profile</Link></li>
-                            <li><Link className="dropdown-item" to="/favorites">Favorites</Link></li>
+                            <li><Link className="dropdown-item" to="/userdashboard#favorites" onClick={() => actions.setShowFavorites()}> Favorites</Link></li>
                             <li><Link className="dropdown-item" to="/userdashboard">Dashboard</Link></li>
                             <li><hr className="dropdown-divider" /></li>
                             <li><button className="dropdown-item" onClick={() => actions.logout()}>Logout</button></li>
                         </ul>
                     </div>
                 </div>
-            </nav>
+            </nav >
 
             {showModal && (
                 <Modal
@@ -73,7 +73,8 @@ export const Navbar = () => {
                     onLogin={(username, password) => actions.login(username, password)}
                     onSignUp={(email, password) => actions.signUp(email, password)}
                 />
-            )}
+            )
+            }
         </>
     );
 };
