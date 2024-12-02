@@ -8,12 +8,12 @@ export const Favorites = () => {
     const { store, actions } = useContext(Context);
 
     return (
-        <div>
+        <div id="favoriteScreen">
             {store.favorites.map((favorite, index) => {
                 return (
                     <div className="favCard card" style={{ width: "20vw"}}>
                         <div className="favCardTop card-img-top">
-                            <SparklineChart data={favorite.sparkline_in_7d.price} />
+                            <SparklineChart data={favorite.sparkline_in_7d.price}  width={290} height={150} />
                         </div>
                         <div className="card-body">
                             <h5 className="card-title">{favorite.name}</h5>
